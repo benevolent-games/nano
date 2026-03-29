@@ -1,7 +1,8 @@
 
 import {Randy, Vec2} from "@benev/math"
 import {Gridworld} from "./types.js"
-import {initGridworld} from "./utils/utils.js"
+import {initGridworld} from "./utils/grid.js"
+import {carveDrunkenPathsBetweenWaypoints, getPointsAroundBorder, getRandomPointNearMiddle, southernFlooringGradient, splotchySubstrate} from "./utils/stages.js"
 
 export const generateGridworld = (seed: number, extent: Vec2): Gridworld => {
 	const grid = initGridworld(extent)
@@ -21,13 +22,17 @@ export const generateGridworld = (seed: number, extent: Vec2): Gridworld => {
 		},
 	})
 
-	carveDrunkenPathsBetweenWaypoints(
-		getPointsAroundBorder()
-			.map(point => ({from: point, to: navel}))
-	)
+	carveDrunkenPathsBetweenWaypoints({
+		grid,
+		randy,
+		paths: getPointsAroundBorder(grid, randy, 64)
+			.map(point => ({from: point, to: navel})),
+		thickness: 3,
+		subdivisionDistance: 24,
+		deviation: 10,
+	})
 
-	southernFlooringGradient(grid, randy, 0.25)
+	southernFlooringGradient(grid, randy, 0.25, 0.08)
 
 	return grid
 }
-
