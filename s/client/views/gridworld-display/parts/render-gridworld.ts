@@ -1,6 +1,6 @@
 
 import {assert} from "../../../utils/assert.js"
-import {Gridworld, TileKind} from "../../../../lib/gridworld/sketch.js"
+import {Gridworld, TileKind} from "../../../../lib/gridworld/types.js"
 
 const look = {
 	background: {

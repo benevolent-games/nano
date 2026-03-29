@@ -1,7 +1,7 @@
 
 import {Vec2} from "@benev/math"
 import {expect, suite, test} from "@e280/science"
-import {generateGridworld} from "./sketch.js"
+import {generateGridworld} from "./generate.js"
 
 export default suite({
 	"render gridworld": test(async() => {

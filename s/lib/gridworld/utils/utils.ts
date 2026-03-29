@@ -1,23 +1,12 @@
 
 import {count, count2d} from "@e280/stz"
-import {Randy, Vec2, makeNoiseSampler} from "@benev/math"
-
-export type Gridworld = {
-	extent: Vec2
-	tiles: Uint8Array
-}
+import {makeNoiseSampler, Randy, Vec2} from "@benev/math"
+import {Gridworld, TileKind} from "../types.js"
 
 export const initGridworld = (extent: Vec2): Gridworld => ({
 	extent,
 	tiles: new Uint8Array(extent.x * extent.y),
 })
-
-export enum TileKind {
-	Pit,
-	Floor,
-	Wall,
-	Coltan,
-}
 
 export const index = (extent: Vec2, vec: Vec2) => {
 	return (vec.y * extent.x) + vec.x
@@ -50,15 +39,6 @@ export const setTiles = (
 			tiles[row + x] = kind
 		}
 	}
-}
-
-export const generateGridworld = (seed: number, extent: Vec2): Gridworld => {
-	const grid = initGridworld(extent)
-	const randy = new Randy(seed)
-	drawSplotchyTileSubstrate(grid, randy)
-	connectWaypointsWithFlooring(grid, randy)
-	drawBorder(grid, 1, TileKind.Floor)
-	return grid
 }
 
 export const drawBorder = (
@@ -267,3 +247,4 @@ export const drawSplotchyTileSubstrate = (grid: Gridworld, randy: Randy) => {
 		setTiles(grid, tile2, tempVec.set_(x, y))
 	}
 }
+

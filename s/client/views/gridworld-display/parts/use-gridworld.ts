@@ -2,14 +2,14 @@
 import {Vec2} from "@benev/math"
 import {debounce} from "@e280/stz"
 import {useEffect, useSignal} from "@e280/sly"
-import {generateGridworld, Gridworld} from "../../../../lib/gridworld/sketch.js"
+import {generateGridworld} from "../../../../lib/gridworld/generate.js"
 
 export function useGridworld() {
 	const $seed = useSignal(1)
 	const $x = useSignal(256)
 	const $y = useSignal(256)
 
-	const $gridworld = useSignal<Gridworld>(generateGridworld($seed(), new Vec2($x(), $y())))
+	const $gridworld = useSignal(generateGridworld($seed(), new Vec2($x(), $y())))
 	const $generationMs = useSignal(0)
 
 	const generate = debounce(200, () => {
