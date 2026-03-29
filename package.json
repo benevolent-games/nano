@@ -16,7 +16,7 @@
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"dependencies": {
-		"@benev/math": "^0.2.0",
+		"@benev/math": "^0.3.0-3",
 		"@e280/strata": "^0.3.0-2",
 		"@e280/stz": "^0.2.24"
 	},
