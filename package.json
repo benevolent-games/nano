@@ -1,0 +1,43 @@
+{
+	"name": "@benev/nano",
+	"version": "0.1.0-0",
+	"description": "a little game",
+	"license": "MIT",
+	"type": "module",
+	"main": "./x/index.js",
+	"files": [
+		"x",
+		"s"
+	],
+	"scripts": {
+		"build": "rm -rf x && mkdir x && tsc",
+		"dev": "octo 'tsc -w' 'node --watch x/test.js'",
+		"test": "node x/test.js",
+		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
+	},
+	"dependencies": {
+		"@benev/math": "^0.2.0",
+		"@e280/strata": "^0.3.0-2",
+		"@e280/stz": "^0.2.24"
+	},
+	"devDependencies": {
+		"@e280/hottie": "^0.1.0-4",
+		"@e280/octo": "^0.1.0-12",
+		"@e280/science": "^0.1.8",
+		"@e280/scute": "^0.3.0-1",
+		"typescript": "^6.0.2"
+	},
+	"author": "Chase Moskal <chasemoskal@gmail.com>",
+	"homepage": "https://github.com/benev/nano#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/benev/nano.git"
+	},
+	"bugs": {
+		"url": "https://github.com/benev/nano/issues"
+	},
+	"keywords": [
+		"nanoshooter game",
+		"web game"
+	]
+}
