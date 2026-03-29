@@ -74,8 +74,8 @@ export const drawBorder = (
 }
 
 export const connectWaypointsWithFlooring = (grid: Gridworld, randy: Randy) => {
-	const horizontalCount = Math.min(4, Math.ceil(grid.extent.x / 64))
-	const verticalCount = Math.min(4, Math.ceil(grid.extent.y / 64))
+	const horizontalCount = Math.ceil(grid.extent.x / 64)
+	const verticalCount = Math.ceil(grid.extent.y / 64)
 	const lastX = grid.extent.x - 1
 	const lastY = grid.extent.y - 1
 	const randomX = () => randy.integerRange(0, lastX)
@@ -85,34 +85,38 @@ export const connectWaypointsWithFlooring = (grid: Gridworld, randy: Randy) => {
 	const east = [...count(verticalCount)].map(() => new Vec2(lastX, randomY()))
 	const west = [...count(verticalCount)].map(() => new Vec2(0, randomY()))
 	const mid = grid.extent.dup().half().floor()
-	const waypoints = [mid, ...north, ...south, ...east, ...west]
-	connectAllWaypointsTogetherViaDrunkenFloorWandering({
-		grid,
-		randy,
-		waypoints,
-		wobble: 0.4,
-		thickness: ((grid.extent.x * grid.extent.y) >= 128 ** 2)
-			? 2
-			: 1,
-	})
+	const waypoints = [...north, ...south, ...east, ...west]
+	const thickness = ((grid.extent.x * grid.extent.y) >= 128 ** 2)
+		? 2
+		: 1
+
+	for (const waypoint of waypoints) {
+		connectWaypointPairViaDrunkenFloorWandering({
+			grid,
+			randy,
+			from: waypoint,
+			to: mid,
+			wobble: 0.4,
+			thickness,
+		})
+	}
 }
 
-export const connectAllWaypointsTogetherViaDrunkenFloorWandering = ({
+export const connectWaypointPairViaDrunkenFloorWandering = ({
 	grid,
 	randy,
-	waypoints,
+	from,
+	to,
 	thickness,
 	wobble,
 }: {
 	grid: Gridworld
 	randy: Randy
-	waypoints: Vec2[]
+	from: Vec2
+	to: Vec2
 	thickness: number
 	wobble: number
 }) => {
-	if (waypoints.length < 2)
-		return
-
 	const tempVec = Vec2.zero()
 	const tempRect = Vec2.zero()
 	const lastX = grid.extent.x - 1
@@ -136,55 +140,78 @@ export const connectAllWaypointsTogetherViaDrunkenFloorWandering = ({
 		)
 	}
 
+	let x = from.x
+	let y = from.y
+	paint(x, y)
+
+	let safety = grid.tiles.length * 4
+
+	while ((x !== to.x || y !== to.y) && safety-- > 0) {
+		const dx = to.x - x
+		const dy = to.y - y
+
+		const goHorizontal = dx !== 0 && (dy === 0 || randy.random() < 0.5)
+		const towardX = dx === 0 ? 0 : Math.sign(dx)
+		const towardY = dy === 0 ? 0 : Math.sign(dy)
+
+		let stepX = 0
+		let stepY = 0
+
+		if (randy.random() < wobble) {
+			const options = [
+				[1, 0],
+				[-1, 0],
+				[0, 1],
+				[0, -1],
+			].filter(([ox, oy]) => {
+				const nx = clampX(x + ox)
+				const ny = clampY(y + oy)
+				return nx !== x || ny !== y
+			}) as [number, number][]
+
+			const dir = randy.choose(options)
+			stepX = dir[0]
+			stepY = dir[1]
+		}
+		else if (goHorizontal) {
+			stepX = towardX
+		}
+		else {
+			stepY = towardY
+		}
+
+		x = clampX(x + stepX)
+		y = clampY(y + stepY)
+		paint(x, y)
+	}
+}
+
+export const connectAllWaypointsTogetherViaDrunkenFloorWandering = ({
+	grid,
+	randy,
+	waypoints,
+	thickness,
+	wobble,
+}: {
+	grid: Gridworld
+	randy: Randy
+	waypoints: Vec2[]
+	thickness: number
+	wobble: number
+}) => {
+	if (waypoints.length < 2)
+		return
+
 	for (let i = 0; i < waypoints.length; i++) {
 		for (let j = i + 1; j < waypoints.length; j++) {
-			const from = waypoints[i]!
-			const to = waypoints[j]!
-
-			let x = from.x
-			let y = from.y
-			paint(x, y)
-
-			let safety = grid.tiles.length * 4
-
-			while ((x !== to.x || y !== to.y) && safety-- > 0) {
-				const dx = to.x - x
-				const dy = to.y - y
-
-				const goHorizontal = dx !== 0 && (dy === 0 || randy.random() < 0.5)
-				const towardX = dx === 0 ? 0 : Math.sign(dx)
-				const towardY = dy === 0 ? 0 : Math.sign(dy)
-
-				let stepX = 0
-				let stepY = 0
-
-				if (randy.random() < wobble) {
-					const options = [
-						[1, 0],
-						[-1, 0],
-						[0, 1],
-						[0, -1],
-					].filter(([ox, oy]) => {
-						const nx = clampX(x + ox)
-						const ny = clampY(y + oy)
-						return nx !== x || ny !== y
-					}) as [number, number][]
-
-					const dir = randy.choose(options)
-					stepX = dir[0]
-					stepY = dir[1]
-				}
-				else if (goHorizontal) {
-					stepX = towardX
-				}
-				else {
-					stepY = towardY
-				}
-
-				x = clampX(x + stepX)
-				y = clampY(y + stepY)
-				paint(x, y)
-			}
+			connectWaypointPairViaDrunkenFloorWandering({
+				grid,
+				randy,
+				from: waypoints[i]!,
+				to: waypoints[j]!,
+				thickness,
+				wobble,
+			})
 		}
 	}
 }
@@ -208,4 +235,3 @@ export const drawSplotchyTileSubstrate = (grid: Gridworld, randy: Randy) => {
 		setTiles(grid, tile2, tempVec.set_(x, y))
 	}
 }
-
