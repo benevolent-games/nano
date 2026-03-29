@@ -6,6 +6,8 @@ export default css`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	min-height: 0;
+	overflow: hidden;
 }
 
 header {
@@ -25,8 +27,8 @@ canvas {
 	flex: 1 1 auto;
 	display: block;
 	width: 100%;
+	min-height: 0;
 	background: #000;
 }
 
 `
-
