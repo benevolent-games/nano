@@ -2,7 +2,7 @@
 import {useLife} from "@e280/sly"
 import {debounce} from "@e280/stz"
 
-export function useCanvas() {
+export function useCanvas(onResize?: () => void) {
 	return useLife(() => {
 		const canvas = document.createElement("canvas")
 
@@ -10,6 +10,7 @@ export function useCanvas() {
 			const rect = canvas.getBoundingClientRect()
 			canvas.width = rect.width
 			canvas.height = rect.height
+			onResize?.()
 		})
 
 		resize()

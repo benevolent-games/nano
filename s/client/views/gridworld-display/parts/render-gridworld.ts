@@ -45,12 +45,15 @@ const look = {
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n))
 
 export function renderGridworld(gridworld: Gridworld, canvas: HTMLCanvasElement | OffscreenCanvas) {
+	const start = performance.now()
+	const done = () => performance.now() - start
+
 	const ctx = assert(canvas.getContext("2d"), "failed to get 2d canvas")
 	const {x: tilesWide, y: tilesHigh} = gridworld.extent
 	const {width, height} = canvas
 
 	if (width <= 0 || height <= 0 || tilesWide <= 0 || tilesHigh <= 0)
-		return
+		return done()
 
 	ctx.clearRect(0, 0, width, height)
 	ctx.imageSmoothingEnabled = false
@@ -162,4 +165,6 @@ export function renderGridworld(gridworld: Gridworld, canvas: HTMLCanvasElement 
 	vignette.addColorStop(1, look.background.vignette)
 	ctx.fillStyle = vignette
 	ctx.fillRect(0, 0, width, height)
+
+	return done()
 }

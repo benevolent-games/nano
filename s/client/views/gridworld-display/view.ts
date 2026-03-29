@@ -12,19 +12,16 @@ export const GridworldDisplay = shadow(() => {
 	useName("gridworld-display")
 	useCss(theme(), stylesCss)
 
-	const $renderMs = useSignal(0)
-	const canvas = useCanvas()
 	const {$gridworld, $generationMs, $seed, $x, $y} = useGridworld()
+	const $renderMs = useSignal(0)
+	const render = () => $renderMs(renderGridworld($gridworld(), canvas))
+
+	const canvas = useCanvas(render)
+	useEffect(render)
 
 	const updateNumber = ($signal: Signal<number>) => (e: Event) => $signal(
 		Number((e.currentTarget as HTMLInputElement).value)
 	)
-
-	useEffect(() => {
-		const start = performance.now()
-		renderGridworld($gridworld(), canvas)
-		$renderMs(performance.now() - start)
-	})
 
 	return html`
 		<header class=controls>
@@ -35,12 +32,12 @@ export const GridworldDisplay = shadow(() => {
 
 			<label>
 				<span>x</span>
-				<input type=number step=1 value="${$x()}" @input="${updateNumber($x)}"/>
+				<input type=number step=64 min="8" value="${$x()}" @input="${updateNumber($x)}"/>
 			</label>
 
 			<label>
 				<span>y</span>
-				<input type=number step=1 value="${$y()}" @input="${updateNumber($y)}"/>
+				<input type=number step=64 min="8" value="${$y()}" @input="${updateNumber($y)}"/>
 			</label>
 
 			<output class=metrics>
