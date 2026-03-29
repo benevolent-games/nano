@@ -142,6 +142,8 @@ export const connectWaypointPairViaDrunkenFloorWandering = ({
 
 	let x = from.x
 	let y = from.y
+	const startDistance = Math.max(1, Math.hypot(to.x - from.x, to.y - from.y))
+	let headingBias = (randy.random() - 0.5) * Math.PI * 1.4
 	paint(x, y)
 
 	let safety = grid.tiles.length * 4
@@ -149,36 +151,66 @@ export const connectWaypointPairViaDrunkenFloorWandering = ({
 	while ((x !== to.x || y !== to.y) && safety-- > 0) {
 		const dx = to.x - x
 		const dy = to.y - y
+		const distance = Math.hypot(dx, dy)
+		const closeness = 1 - Math.min(1, distance / startDistance)
+		const biasStrength = 1 - (closeness ** 3.2)
+		const targetHeading = Math.atan2(dy, dx)
+		const drift = (randy.random() - 0.5) * wobble * 1.9
+		headingBias += drift
+		headingBias *= 0.975
+		headingBias = Math.atan2(Math.sin(headingBias), Math.cos(headingBias))
+		const heading = targetHeading + (headingBias * biasStrength)
 
-		const goHorizontal = dx !== 0 && (dy === 0 || randy.random() < 0.5)
-		const towardX = dx === 0 ? 0 : Math.sign(dx)
-		const towardY = dy === 0 ? 0 : Math.sign(dy)
+		const options = [
+			[-1, -1], [0, -1], [1, -1],
+			[-1, 0],            [1, 0],
+			[-1, 1],  [0, 1],  [1, 1],
+		].map(([stepX, stepY]) => {
+			const nx = clampX(x + stepX)
+			const ny = clampY(y + stepY)
+			return {
+				stepX,
+				stepY,
+				nx,
+				ny,
+			}
+		}).filter(option =>
+			option.nx !== x || option.ny !== y
+		)
 
-		let stepX = 0
-		let stepY = 0
+		let best = options[0]!
+		let bestScore = Number.NEGATIVE_INFINITY
 
-		if (randy.random() < wobble) {
-			const options = [
-				[1, 0],
-				[-1, 0],
-				[0, 1],
-				[0, -1],
-			].filter(([ox, oy]) => {
-				const nx = clampX(x + ox)
-				const ny = clampY(y + oy)
-				return nx !== x || ny !== y
-			}) as [number, number][]
+		for (const option of options) {
+			const afterDx = to.x - option.nx
+			const afterDy = to.y - option.ny
+			const distanceAfter = Math.hypot(afterDx, afterDy)
+			const optionHeading = Math.atan2(option.stepY, option.stepX)
+			const headingDelta = Math.atan2(
+				Math.sin(optionHeading - heading),
+				Math.cos(optionHeading - heading),
+			)
+			const distanceProgress = distance - distanceAfter
+			const progressWeight = 1.25 + (closeness * 8.5)
+			const headingWeight = 4.2 * (0.5 + biasStrength)
+			const overshootPenalty = distanceAfter > distance ? 3.5 : 0
+			const meanderNoise = (randy.random() - 0.5) * wobble * 1.25
 
-			const dir = randy.choose(options)
-			stepX = dir[0]
-			stepY = dir[1]
+			const score = (
+				(distanceProgress * progressWeight) -
+				(Math.abs(headingDelta) * headingWeight) -
+				overshootPenalty +
+				meanderNoise
+			)
+
+			if (score > bestScore) {
+				best = option
+				bestScore = score
+			}
 		}
-		else if (goHorizontal) {
-			stepX = towardX
-		}
-		else {
-			stepY = towardY
-		}
+
+		const stepX = best.nx - x
+		const stepY = best.ny - y
 
 		x = clampX(x + stepX)
 		y = clampY(y + stepY)
