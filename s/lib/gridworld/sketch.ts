@@ -202,32 +202,12 @@ export const drawSplotchyTileSubstrate = (grid: Gridworld, randy: Randy) => {
 			noise(x + (offset * 2), y + (offset * 2), scale2)
 		) / 2
 
-		const wallness = duplex(1, 0.05, 0.20)
+		const wallness = duplex(1, 0.01, 0.2)
 		const pitness = duplex(z, 0.1, 0.1)
 
 		const tile1 = wallness < 0.5 ? TileKind.Wall : TileKind.Floor
 		const tile2 = pitness < 0.25 ? TileKind.Pit : tile1
 		setTiles(grid, tile2, tempVec.set_(x, y))
 	}
-}
-
-export const asciiGridworld = (grid: Gridworld) => {
-	const lines: string[] = []
-	const {extent, tiles} = grid
-	const tempVec = new Vec2(0, 0)
-
-	for (const y of count(extent.y)) {
-		const line: string[] = []
-
-		for (const x of count(extent.x)) {
-			const i = index(extent, tempVec.set_(x, y))
-			const kind = tiles[i] as TileKind
-			line.push(glyphs[kind])
-		}
-
-		lines.push(line.join(""))
-	}
-
-	return lines.join("\n")
 }
 
