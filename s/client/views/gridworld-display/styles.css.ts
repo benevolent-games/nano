@@ -11,6 +11,14 @@ export default css`
 header {
 	display: flex;
 	gap: var(--space);
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.metrics {
+	margin-left: auto;
+	font: inherit;
+	opacity: 0.9;
 }
 
 canvas {
