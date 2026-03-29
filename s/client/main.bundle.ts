@@ -1,7 +1,7 @@
 
 import {dom} from "@e280/sly"
-import {Mapper} from "./views/mapper.js"
+import {GridworldDisplay} from "./views/gridworld-display/view.js"
 
-dom.render(dom(".app"), Mapper())
+dom.render(dom(".app"), GridworldDisplay())
 console.log("🧬 nano")
 

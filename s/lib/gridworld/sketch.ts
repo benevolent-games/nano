@@ -1,6 +1,6 @@
 
 import {count, count2d} from "@e280/stz"
-import {makeNoise, Randy, Vec2} from "@benev/math"
+import {Randy, Vec2, makeNoiseSampler} from "@benev/math"
 
 export type Gridworld = {
 	extent: Vec2
@@ -59,9 +59,9 @@ const glyphs = {
 	[TileKind.Coltan]: "▓▓▓",
 } satisfies Record<TileKind, string>
 
-export const generateGridworld = (extent: Vec2): Gridworld => {
+export const generateGridworld = (seed: number, extent: Vec2): Gridworld => {
 	const grid = initGridworld(extent)
-	const randy = new Randy()
+	const randy = new Randy(seed)
 	drawSplotchyTileSubstrate(grid, randy)
 	connectWaypointsWithFlooring(grid, randy)
 	drawBorder(grid, 1, TileKind.Floor)
@@ -193,7 +193,7 @@ export const connectAllWaypointsTogetherViaDrunkenFloorWandering = ({
 
 export const drawSplotchyTileSubstrate = (grid: Gridworld, randy: Randy) => {
 	const tempVec = Vec2.zero()
-	const noise = makeNoise(randy.random)
+	const noise = makeNoiseSampler(randy.random)
 	const z = 1_000_000
 
 	for (const [x, y] of count2d(grid.extent.array())) {
@@ -211,7 +211,7 @@ export const drawSplotchyTileSubstrate = (grid: Gridworld, randy: Randy) => {
 	}
 }
 
-export const renderGridworld = (grid: Gridworld) => {
+export const asciiGridworld = (grid: Gridworld) => {
 	const lines: string[] = []
 	const {extent, tiles} = grid
 	const tempVec = new Vec2(0, 0)
