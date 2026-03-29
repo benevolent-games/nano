@@ -12,7 +12,7 @@ export function useGridworld() {
 	const $gridworld = useSignal<Gridworld>(generateGridworld($seed(), new Vec2($x(), $y())))
 	const $generationMs = useSignal(0)
 
-	const generate = debounce(100, () => {
+	const generate = debounce(200, () => {
 		const start = performance.now()
 		const gridworld = generateGridworld($seed(), new Vec2($x(), $y()))
 		$gridworld(gridworld)

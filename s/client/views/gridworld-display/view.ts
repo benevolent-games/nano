@@ -32,12 +32,12 @@ export const GridworldDisplay = shadow(() => {
 
 			<label>
 				<span>x</span>
-				<input type=number step=64 min="8" value="${$x()}" @input="${updateNumber($x)}"/>
+				<input type=number step=64 min="0" max="2048" value="${$x()}" @input="${updateNumber($x)}"/>
 			</label>
 
 			<label>
 				<span>y</span>
-				<input type=number step=64 min="8" value="${$y()}" @input="${updateNumber($y)}"/>
+				<input type=number step=64 min="0" max="2048" value="${$y()}" @input="${updateNumber($y)}"/>
 			</label>
 
 			<output class=metrics>

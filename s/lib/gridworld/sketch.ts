@@ -52,13 +52,6 @@ export const setTiles = (
 	}
 }
 
-const glyphs = {
-	[TileKind.Pit]: "   ",
-	[TileKind.Floor]: "░░░",
-	[TileKind.Wall]: "███",
-	[TileKind.Coltan]: "▓▓▓",
-} satisfies Record<TileKind, string>
-
 export const generateGridworld = (seed: number, extent: Vec2): Gridworld => {
 	const grid = initGridworld(extent)
 	const randy = new Randy(seed)
@@ -81,21 +74,26 @@ export const drawBorder = (
 }
 
 export const connectWaypointsWithFlooring = (grid: Gridworld, randy: Randy) => {
+	const horizontalCount = Math.min(4, Math.ceil(grid.extent.x / 64))
+	const verticalCount = Math.min(4, Math.ceil(grid.extent.y / 64))
 	const lastX = grid.extent.x - 1
 	const lastY = grid.extent.y - 1
 	const randomX = () => randy.integerRange(0, lastX)
 	const randomY = () => randy.integerRange(0, lastY)
-	const north = [new Vec2(randomX(), 0), new Vec2(randomX(), 0)]
-	const south = [new Vec2(randomX(), lastY), new Vec2(randomX(), lastY)]
-	const east = [new Vec2(lastX, randomY()), new Vec2(lastX, randomY())]
-	const west = [new Vec2(0, randomY()), new Vec2(0, randomY())]
-	const waypoints = [...north, ...south, ...east, ...west]
+	const north = [...count(horizontalCount)].map(() => new Vec2(randomX(), 0))
+	const south = [...count(horizontalCount)].map(() => new Vec2(randomX(), lastY))
+	const east = [...count(verticalCount)].map(() => new Vec2(lastX, randomY()))
+	const west = [...count(verticalCount)].map(() => new Vec2(0, randomY()))
+	const mid = grid.extent.dup().half().floor()
+	const waypoints = [mid, ...north, ...south, ...east, ...west]
 	connectAllWaypointsTogetherViaDrunkenFloorWandering({
 		grid,
 		randy,
 		waypoints,
-		thickness: 1,
 		wobble: 0.4,
+		thickness: ((grid.extent.x * grid.extent.y) >= 128 ** 2)
+			? 2
+			: 1,
 	})
 }
 
