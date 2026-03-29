@@ -1,0 +1,26 @@
+
+@layer vars {
+	:root {
+		--bg: #111;
+		--text: color-mix(in lch, var(--alpha), white 50%);
+		--text-shadow: 0.1em 0.1em 0.1em #0004;
+
+		--selection: white;
+		--selection-bg: color-mix(in oklch, transparent, var(--alpha) 90%);
+
+		--pad: 0.5em;
+		--space: 1em;
+		--round: 0.5em;
+		--anim: 200ms;
+		--shadow: 0.1em 0.2em 0.8em #0004;
+
+		--alpha: #00ff93;
+		--link: cyan;
+
+		--happy: #0f0;
+		--sad: #0af;
+		--lame: #888;
+		--angry: #f00;
+	}
+}
+

@@ -1,0 +1,15 @@
+
+@layer page {
+	html, body {
+		font-size: 12px;
+		font-family: sans-serif;
+		min-height: 100%;
+	}
+
+	html {
+		color: var(--text);
+		background: var(--bg);
+		text-shadow: var(--text-shadow);
+	}
+}
+
