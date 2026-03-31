@@ -16,17 +16,17 @@
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"dependencies": {
-		"@benev/math": "^0.3.0-4",
-		"@e280/sly": "^0.3.0-15",
-		"@e280/strata": "^0.3.0",
-		"@e280/stz": "^0.2.24",
+		"@benev/math": "^0.3.0-5",
+		"@e280/sly": "^0.3.1",
+		"@e280/strata": "^0.3.1",
+		"@e280/stz": "^0.2.27",
 		"lit": "^3.3.2"
 	},
 	"devDependencies": {
-		"@e280/hottie": "^0.1.0-4",
-		"@e280/octo": "^0.1.0-12",
-		"@e280/science": "^0.1.8",
-		"@e280/scute": "^0.3.0-1",
+		"@e280/hottie": "^0.1.0",
+		"@e280/octo": "^0.1.0",
+		"@e280/science": "^0.1.9",
+		"@e280/scute": "^0.3.1",
 		"typescript": "^6.0.2"
 	},
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
