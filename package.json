@@ -16,8 +16,11 @@
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"dependencies": {
+		"@babylonjs/core": "^9.0.0",
+		"@babylonjs/loaders": "^9.0.0",
 		"@benev/archimedes": "^0.1.0-3",
 		"@benev/math": "^0.3.0-5",
+		"@benev/tact": "^0.2.0-0",
 		"@e280/sly": "^0.3.1",
 		"@e280/strata": "^0.3.1",
 		"@e280/stz": "^0.2.27",
