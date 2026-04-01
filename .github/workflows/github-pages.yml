@@ -1,5 +1,6 @@
 
-name: 🚀 pages
+name: 🚀 github pages
+
 on:
   push:
     tags:
