@@ -12,13 +12,16 @@
 		text-shadow: var(--text-shadow);
 	}
 
-	body {
-		display: flex;
-		flex-direction: column;
+	.plate {
+		width: 42em;
+		max-width: 100%;
+		margin: auto;
+		padding: 2em;
+		text-align: center;
 
-		.app {
-			flex: 1 1 auto;
-			min-height: 0;
+		> h1 {
+			font-size: 5em;
 		}
 	}
 }
+

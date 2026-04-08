@@ -11,7 +11,7 @@
 	],
 	"scripts": {
 		"build": "rm -rf x && mkdir x && tsc && scute -v",
-		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute -vw' 'hottie x --debounce=100'",
+		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute -vw' 'hottie x --debounce=300'",
 		"test": "node x/test.js",
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},

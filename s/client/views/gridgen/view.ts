@@ -2,15 +2,15 @@
 import {html} from "lit"
 import {Signal} from "@e280/strata"
 import {shadow, useCss, useName, useEffect, useSignal} from "@e280/sly"
+import styleCss from "./style.css.js"
 import {theme} from "../../utils/theme.js"
-import stylesCss from "./styles.css.js"
 import {useCanvas} from "../../utils/use-canvas.js"
 import {useGridworld} from "./parts/use-gridworld.js"
 import {renderGridworld} from "./parts/render-gridworld.js"
 
-export const GridworldDisplay = shadow(() => {
-	useName("gridworld-display")
-	useCss(theme(), stylesCss)
+export const Gridgen = shadow(() => {
+	useName("gridgen")
+	useCss(theme(), styleCss)
 
 	const {$gridworld, $generationMs, $seed, $x, $y} = useGridworld()
 	const $renderMs = useSignal(0)

@@ -27,8 +27,10 @@ export default template(import.meta.url, async orb => html`
 		</head>
 		<body>
 			<nano-app>
-				<h1>🔬 nano</h1>
-				<p>v${orb.packageVersion()}</p>
+				<section class=plate>
+					<h1>🔬 nano</h1>
+					<p>v${orb.packageVersion()}</p>
+				</section>
 			</nano-app>
 		</body>
 	</html>

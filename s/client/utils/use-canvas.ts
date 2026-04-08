@@ -1,9 +1,9 @@
 
-import {useLife} from "@e280/sly"
 import {debounce} from "@e280/stz"
+import {useLifecycle} from "@e280/sly"
 
 export function useCanvas(onResize?: () => void) {
-	return useLife(() => {
+	return useLifecycle(() => {
 		const canvas = document.createElement("canvas")
 
 		const resize = debounce(100, () => {
