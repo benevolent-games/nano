@@ -6,7 +6,10 @@ export type GameComponents = {
 		seed: number
 		extent: XyArray
 	}
-	health: number
-	bleed: number
+
+	gridchunk: {
+		xy: XyArray
+		hex: string
+	}
 }
 
