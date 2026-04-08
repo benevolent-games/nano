@@ -6,7 +6,7 @@ export default template(import.meta.url, async orb => html`
 	<html>
 		<head>
 			<title>nano</title>
-			<link rel="icon" href="${dataSvgEmoji("🧬")}"/>
+			<link rel="icon" href="${dataSvgEmoji("🔬")}"/>
 
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -26,8 +26,10 @@ export default template(import.meta.url, async orb => html`
 			})}
 		</head>
 		<body>
-			<h1>🧬 nano v${orb.packageVersion()}</h1>
-			<div class=app></div>
+			<nano-app>
+				<h1>🔬 nano</h1>
+				<p>v${orb.packageVersion()}</p>
+			</nano-app>
 		</body>
 	</html>
 `)

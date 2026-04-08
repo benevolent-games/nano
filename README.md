@@ -1,4 +1,4 @@
 
-# nano
-> *a little game*
+# 🔬 nano
+> *it's a little game*
 

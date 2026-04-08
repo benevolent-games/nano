@@ -1,7 +1,6 @@
 
 import {dom} from "@e280/sly"
-import {GridworldDisplay} from "./views/gridworld-display/view.js"
+import {NanoApp} from "./views/nano-app/element.js"
 
-dom.render(dom(".app"), GridworldDisplay())
-console.log("🧬 nano")
+dom.register({NanoApp})
 
