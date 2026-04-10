@@ -8,7 +8,10 @@ import {generateGridworld} from "../gridworld/generate.js"
 export const systems = (space: Space) => asSystems<GameComponents>(change => [
 	lifecycle(space.entities, ["gridworld"], (id, components) => {
 		const {seed, extent} = components.gridworld
+
 		space.gridworlds.guarantee(id, () => generateGridworld(seed, Vec2.from(extent)))
+		change.merge(id, {ready: true})
+
 		return {
 			tick(_id, _components) {},
 			exit(id) {

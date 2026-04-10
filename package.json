@@ -10,8 +10,8 @@
 		"s"
 	],
 	"scripts": {
-		"build": "rm -rf x && mkdir x && tsc && scute -v",
-		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute -vw' 'hottie x --debounce=300'",
+		"build": "bash fix-babylon && rm -rf x && mkdir x && tsc && scute --splitting=no -v",
+		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute --splitting=no -vw' 'hottie x --debounce=700'",
 		"test": "node x/test.js",
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
@@ -22,7 +22,7 @@
 		"@benev/math": "^0.3.0-5",
 		"@benev/tact": "^0.2.0-0",
 		"@e280/shiny": "^0.1.0-20",
-		"@e280/sly": "^0.3.4",
+		"@e280/sly": "^0.3.5",
 		"@e280/strata": "^0.3.2",
 		"@e280/stz": "^0.2.30",
 		"lit": "^3.3.2"
@@ -31,7 +31,7 @@
 		"@e280/hottie": "^0.1.0",
 		"@e280/octo": "^0.1.0",
 		"@e280/science": "^0.1.10",
-		"@e280/scute": "^0.3.1",
+		"@e280/scute": "^0.3.2",
 		"typescript": "^6.0.2"
 	},
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
