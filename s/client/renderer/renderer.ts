@@ -1,13 +1,13 @@
 
 import {makeRendererFns} from "./fns.js"
 import {rafloop} from "./utils/rafloop.js"
-import {Realm} from "../../lib/game/parts/realm.js"
+import {Space} from "../../lib/game/parts/space.js"
 
 export class Renderer {
 	render
 
-	constructor(realm: Realm) {
-		const fns = makeRendererFns(realm)
+	constructor(space: Space) {
+		const fns = makeRendererFns(space)
 		this.render = () => fns.forEach(fn => fn())
 	}
 

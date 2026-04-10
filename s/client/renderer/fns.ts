@@ -1,9 +1,9 @@
 
 import {lifecycle} from "@benev/archimedes"
-import {Realm} from "../../lib/game/parts/realm.js"
+import {Space} from "../../lib/game/parts/space.js"
 
-export const makeRendererFns = (realm: Realm) => [
-	lifecycle(realm.entities, ["gridworld"], params => {
+export const makeRendererFns = (space: Space) => [
+	lifecycle(space.entities, ["gridworld"], params => {
 		return {
 			tick(id, components) {},
 			exit(id) {},
