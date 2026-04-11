@@ -29,7 +29,7 @@ export class Pool<Item> {
 		return this
 	}
 
-	borrow() {
+	lease() {
 		const member = this.#free.pop() ?? this.#make()
 		this.#used.add(member)
 		member.enable()

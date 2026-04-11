@@ -5,9 +5,11 @@ import {poolify} from "./poolify.js"
 import {wall} from "../props/wall.js"
 import {robot} from "../props/robot.js"
 import {floor} from "../props/floor.js"
+import {Gridspace} from "../../../lib/game/parts/units.js"
 
 export class Realm {
 	pools
+	focal = new Gridspace(0, 0)
 
 	constructor(public venue: Venue) {
 		const {scene} = venue
