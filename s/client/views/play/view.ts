@@ -19,10 +19,15 @@ export const Play = shadow(() => {
 		return {game, realm, renderer}
 	})
 
-	return spinner($wait(), x => GameReady(x.game, x.realm, x.renderer))
+	return spinner($wait(), GameReady)
 })
 
-const GameReady = light((game: Game, realm: Realm, renderer: Renderer) => {
+const GameReady = light(({game, realm, renderer}: {
+		game: Game
+		realm: Realm
+		renderer: Renderer
+	}) => {
+
 	const canvas = useCanvas((_canvas, rect) => {
 		realm.canvas.width = rect.width
 		realm.canvas.height = rect.height
