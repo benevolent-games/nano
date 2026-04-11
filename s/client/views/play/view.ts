@@ -7,6 +7,7 @@ import {useCanvas} from "../../utils/use-canvas.js"
 import {Realm} from "../../renderer/parts/realm.js"
 import {Renderer} from "../../renderer/renderer.js"
 import {UserInputs} from "../../utils/user-inputs.js"
+import {makeVenue} from "../../renderer/parts/venue.js"
 
 export const Play = shadow(() => {
 	useName("play")
@@ -15,7 +16,7 @@ export const Play = shadow(() => {
 	const $wait = useWait(async() => {
 		const userInputs = new UserInputs()
 		const game = new Game(userInputs.port.actions, () => userInputs.port.resolve())
-		const realm = await Realm.new()
+		const realm = new Realm(await makeVenue())
 		const renderer = new Renderer(game.space, realm)
 		game.initialize()
 		return {game, realm, renderer}
@@ -31,8 +32,8 @@ const GameReady = light(({game, realm, renderer}: {
 	}) => {
 
 	const canvas = useCanvas((_canvas, rect) => {
-		realm.canvas.width = rect.width
-		realm.canvas.height = rect.height
+		realm.venue.canvas.width = rect.width
+		realm.venue.canvas.height = rect.height
 	})
 
 	const ctx = useOnce(() => canvas.getContext("2d")!)
@@ -40,8 +41,8 @@ const GameReady = light(({game, realm, renderer}: {
 	useMount(() => game.simulationLoop())
 
 	useMount(() => renderer.renderLoop(() => {
-		realm.scene.render()
-		ctx.drawImage(realm.canvas, 0, 0)
+		realm.venue.scene.render()
+		ctx.drawImage(realm.venue.canvas, 0, 0)
 	}))
 
 	useMount(() => () => realm.dispose())
