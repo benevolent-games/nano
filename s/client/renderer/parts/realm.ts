@@ -36,6 +36,7 @@ export class Realm {
 	camera
 	#floorSource
 	#wallSource
+	#robotSource
 
 	constructor(
 			public canvas: OffscreenCanvas,
@@ -53,20 +54,34 @@ export class Realm {
 		)
 		scene.activeCamera = this.camera
 
-		const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene)
+		const light = new HemisphericLight(makeId(), new Vector3(0, 1, 0), scene)
 		light.intensity = 1.0
 
-		const floorMat = new PBRMaterial("floor-mat", scene)
+		const floorMat = new PBRMaterial(makeId(), scene)
 		floorMat.albedoColor = new Color3(0.02, 0.04, 0.08)
 		floorMat.roughness = 1.0
 		floorMat.metallic = 0.0
 
-		const wallMat = new PBRMaterial("wall-mat", scene)
+		const wallMat = new PBRMaterial(makeId(), scene)
 		wallMat.albedoColor = new Color3(0.32, 0.34, 0.38)
 		wallMat.roughness = 1.0
 		wallMat.metallic = 0.0
 
-		const floorSource = MeshBuilder.CreateBox("floor-source", {
+		const robotMat = new PBRMaterial(makeId(), scene)
+		robotMat.albedoColor = new Color3(0.8, 0.2, 0.2)
+		robotMat.roughness = 1.0
+		robotMat.metallic = 0.0
+
+		const rsize = 0.8
+		this.#robotSource = MeshBuilder.CreateBox(makeId(), {
+			width: rsize,
+			depth: rsize,
+			height: rsize * 2,
+		})
+		this.#robotSource.material = robotMat
+		this.#robotSource.isVisible = false
+
+		const floorSource = MeshBuilder.CreateBox(makeId(), {
 			width: 1,
 			depth: 1,
 			height: 1,
@@ -74,7 +89,7 @@ export class Realm {
 		floorSource.material = floorMat
 		floorSource.isVisible = false
 
-		const wallSource = MeshBuilder.CreateBox("wall-source", {
+		const wallSource = MeshBuilder.CreateBox(makeId(), {
 			width: 1,
 			depth: 1,
 			height: 1,
@@ -94,6 +109,12 @@ export class Realm {
 
 	instanceWall(gridspace: Gridspace) {
 		const instance = this.#wallSource.createInstance(makeId())
+		instance.position = resolveGridspace(gridspace, 1)
+		return instance
+	}
+
+	instanceRobot(gridspace: Gridspace) {
+		const instance = this.#robotSource.createInstance(makeId())
 		instance.position = resolveGridspace(gridspace, 1)
 		return instance
 	}

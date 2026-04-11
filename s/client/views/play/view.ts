@@ -6,16 +6,18 @@ import {Game} from "../../../lib/game/game.js"
 import {useCanvas} from "../../utils/use-canvas.js"
 import {Realm} from "../../renderer/parts/realm.js"
 import {Renderer} from "../../renderer/renderer.js"
+import {UserInputs} from "../../utils/user-inputs.js"
 
 export const Play = shadow(() => {
 	useName("play")
 	useCss(theme(), styleCss)
 
 	const $wait = useWait(async() => {
-		const game = new Game()
+		const userInputs = new UserInputs()
+		const game = new Game(userInputs.port.actions, () => userInputs.port.resolve())
 		const realm = await Realm.new()
 		const renderer = new Renderer(game.space, realm)
-		game.initializeGridworld()
+		game.initialize()
 		return {game, realm, renderer}
 	})
 

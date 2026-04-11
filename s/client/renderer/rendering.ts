@@ -4,6 +4,7 @@ import {lifecycle} from "@benev/archimedes"
 import {InstancedMesh} from "@babylonjs/core/Meshes/instancedMesh.js"
 
 import {Realm} from "./parts/realm.js"
+import {resolveGridspace} from "./utils/units.js"
 import {Space} from "../../lib/game/parts/space.js"
 import {TileKind} from "../../lib/gridworld/types.js"
 import {Gridspace} from "../../lib/game/parts/units.js"
@@ -31,6 +32,20 @@ export const makeRenderingFns = (space: Space, realm: Realm) => [
 		return {
 			tick(_id, _components) {},
 			exit(_id) {},
+		}
+	}),
+
+	lifecycle(space.entities, ["position", "graphic"], (_id, components) => {
+		const gridspace = new Gridspace(...components.position)
+		const instance = realm.instanceRobot(gridspace)
+		return {
+			tick(_id, components) {
+				gridspace.set_(...components.position)
+				instance.position = resolveGridspace(gridspace, 1)
+			},
+			exit(_id) {
+				instance.dispose()
+			},
 		}
 	}),
 ]

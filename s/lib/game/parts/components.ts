@@ -14,5 +14,11 @@ export type GameComponents = AsComponents<{
 		xy: XyArray
 		hex: string
 	}
+
+	velocity: XyArray
+	position: XyArray
+	rotation: number
+	controllable: boolean
+	graphic: "robot"
 }>
 
