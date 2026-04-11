@@ -12,12 +12,12 @@ export default template(import.meta.url, async orb => html`
 			<meta name="viewport" content="width=device-width,initial-scale=1"/>
 			<meta name="darkreader-lock"/>
 
-			<style data-theme>${orb.inject("client/styles/layers.css")}</style>
-			<style data-theme>${orb.inject("client/styles/vars.css")}</style>
-			<style data-theme>${orb.inject("client/styles/basics.css")}</style>
-			<style>${orb.inject("client/styles/page.css")}</style>
+			<style data-theme>${orb.inject("styles/layers.css")}</style>
+			<style data-theme>${orb.inject("styles/vars.css")}</style>
+			<style data-theme>${orb.inject("styles/basics.css")}</style>
+			<style>${orb.inject("styles/page.css")}</style>
 
-			<script type="module" src="${orb.hashurl("client/main.bundle.min.js")}"></script>
+			<script type="module" src="${orb.hashurl("main.bundle.min.js")}"></script>
 
 			${socialCard({
 				title: "nano",

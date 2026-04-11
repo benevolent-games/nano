@@ -33,6 +33,10 @@ export const NanoApp = shadowElement(() => {
 		"play": () => Play(),
 	}))
 
-	return route($hash()) ?? html`<section class=notfound>not found</section>`
+	return route($hash()) ?? html`
+		<section class=notfound>
+			not found
+		</section>
+	`
 })
 

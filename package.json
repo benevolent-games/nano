@@ -11,7 +11,7 @@
 	],
 	"scripts": {
 		"build": "bash fix-babylon && rm -rf x && mkdir x && tsc && scute --splitting=no -v",
-		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute --splitting=no -vw' 'hottie x --debounce=700'",
+		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute --splitting=no -vw' 'hottie x/client --debounce=700'",
 		"test": "node x/test.js",
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
