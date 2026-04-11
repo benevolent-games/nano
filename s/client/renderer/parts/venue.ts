@@ -7,7 +7,7 @@ import {ArcRotateCamera} from "@babylonjs/core/Cameras/arcRotateCamera.js"
 import {HemisphericLight} from "@babylonjs/core/Lights/hemisphericLight.js"
 import {setOpenGLOrientationForUV} from "@babylonjs/core/Compat/compatibilityOptions.js"
 
-import {AnyEngine} from "./types.js"
+import {AnyEngine} from "./babtools.js"
 import {makeEngine} from "./make-engine.js"
 import {resolveGridspace} from "../utils/units.js"
 import {Gridspace} from "../../../lib/game/parts/units.js"
