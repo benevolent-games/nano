@@ -14,8 +14,8 @@ export class Realm {
 	constructor(public venue: Venue) {
 		const {scene} = venue
 		this.pools = {
-			floors: new Pool(poolify(floor(scene))).prepopulate(4096),
-			walls: new Pool(poolify(wall(scene))).prepopulate(2048),
+			floors: new Pool(poolify(floor(scene))).prepopulate(2000),
+			walls: new Pool(poolify(wall(scene))).prepopulate(2000),
 			robots: new Pool(poolify(robot(scene))).prepopulate(10),
 		}
 	}

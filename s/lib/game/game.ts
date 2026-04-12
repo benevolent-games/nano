@@ -28,7 +28,7 @@ export class Game {
 	}
 
 	initialize() {
-		const gridworld = generateGridworld(1, new Vec2(64, 64))
+		const gridworld = generateGridworld(1, new Vec2(512, 512))
 		const size = consts.gridChunkSize()
 		const chunks = gridworld.extent.dup().div(size)
 		for (const [chunkX, chunkY] of count2d(chunks.array())) {
