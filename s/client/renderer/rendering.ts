@@ -1,84 +1,64 @@
 
 import {Vec2} from "@benev/math"
-import {count2d, hex} from "@e280/stz"
+import {disposer} from "@e280/stz"
 import {lifecycle} from "@benev/archimedes"
 
 import {Realm} from "./parts/realm.js"
-import {consts} from "../../lib/game/consts.js"
-import {Space} from "../../lib/game/parts/space.js"
+import {Proximal} from "./utils/proximal.js"
 import {TileKind} from "../../lib/gridworld/types.js"
-import {Gridspace} from "../../lib/game/parts/units.js"
+import {Gridchunk} from "../../lib/gridworld/chunk/gridchunk.js"
+import {Gridspace} from "../../lib/gridworld/utils/gridspace.js"
 
-export const makeRenderingFns = (space: Space, realm: Realm) => [
+export const makeRenderingFns = (realm: Realm) => [
 	function updateFocal() {
-		for (const [_id, components] of space.entities.select("controllable", "position")) {
+		for (const [_id, components] of realm.entities.select("controllable", "position")) {
 			const position = Vec2.from(components.position)
 			realm.focal.set(position)
 		}
 	},
 
-	lifecycle(space.entities, ["gridchunk", "position"], () => {
-		const chunkSize = consts.gridChunkSize()
-		const interestThreshold = 20 ** 2
-		let wasInteresting = false
+	lifecycle(realm.entities, ["gridchunk", "position"], (_id, components) => {
+		const chunk = new Gridchunk(new Gridspace().from(components.position))
+		const proximal = new Proximal(realm.focal, 20)
+		const wipe = disposer()
 
-		const disposers = new Set<() => void>()
-		const wipeGraphics = () => {
-			disposers.forEach(d => d())
-			disposers.clear()
-		}
+		function renderFloorsAndWalls(gridchunk: string) {
+			wipe()
+			chunk.hex = gridchunk
+			for (const {tile, position} of chunk) {
+				const center = position.dup().addBy(0.5)
 
-		const isInteresting = (gridspace: Gridspace) => {
-			return gridspace.distanceSquared(realm.focal) < interestThreshold
-		}
-
-		function renderFloorsAndWalls(corner: Gridspace, gridchunk: string) {
-			const data = hex.toBytes(gridchunk)
-
-			let index = 0
-			for (const [x, y] of count2d(chunkSize.array())) {
-				const i = index++
-				const position = corner.dup().add_(x, y)
-				const tile = data.at(i)
-				const hasFloor = tile !== TileKind.Pit
-				if (hasFloor) {
+				if (tile !== TileKind.Pit) {
 					const [graphic, disposer] = realm.pools.floors.lease()
-					disposers.add(disposer)
-					graphic.setPosition(position)
+					wipe.schedule(disposer)
+					graphic.setPosition(center)
 				}
+
 				if (tile === TileKind.Wall) {
 					const [graphic, disposer] = realm.pools.walls.lease()
-					disposers.add(disposer)
-					graphic.setPosition(position)
+					wipe.schedule(disposer)
+					graphic.setPosition(center, 1)
 				}
 			}
 		}
 
 		return {
 			tick(_id, components) {
-				const position = new Gridspace(...components.position)
-				const center = position.dup().add(consts.gridChunkSize().half())
-				const nowInteresting = isInteresting(center)
-				const interestingChange = nowInteresting !== wasInteresting
-				wasInteresting = nowInteresting
-
-				if (interestingChange && nowInteresting) {
-					wipeGraphics()
-					renderFloorsAndWalls(position, components.gridchunk)
-				}
-
-				if (interestingChange && !nowInteresting) {
-					wipeGraphics()
-				}
+				const changed = proximal.check(chunk.center)
+				if (proximal.nearby && chunk.hex !== components.gridchunk)
+					renderFloorsAndWalls(components.gridchunk)
+				else if (changed && proximal.nearby)
+					renderFloorsAndWalls(components.gridchunk)
+				else if (changed && !proximal.nearby)
+					wipe()
 			},
 			exit(_id) {
-				for (const dispose of disposers)
-					dispose()
+				wipe()
 			},
 		}
 	}),
 
-	lifecycle(space.entities, ["position", "graphic"], (_id, components) => {
+	lifecycle(realm.entities, ["position", "graphic"], (_id, components) => {
 		const gridspace = new Gridspace(...components.position)
 		const [robot, disposeRobot] = realm.pools.robots.lease()
 		return {

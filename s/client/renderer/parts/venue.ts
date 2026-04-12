@@ -9,8 +9,8 @@ import {setOpenGLOrientationForUV} from "@babylonjs/core/Compat/compatibilityOpt
 
 import {AnyEngine} from "./babtools.js"
 import {makeEngine} from "./make-engine.js"
-import {resolveGridspace} from "../utils/units.js"
-import {Gridspace} from "../../../lib/game/parts/units.js"
+import {resolveGridspace} from "../utils/resolve-gridspace.js"
+import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
 export type Venue = {
 	canvas: OffscreenCanvas

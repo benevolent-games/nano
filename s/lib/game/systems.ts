@@ -3,8 +3,8 @@ import {Vec2} from "@benev/math"
 import {asSystems} from "@benev/archimedes"
 
 import {Space} from "./parts/space.js"
-import {Gridspace} from "./parts/units.js"
 import {GameComponents} from "./parts/components.js"
+import {Gridspace} from "../gridworld/utils/gridspace.js"
 
 export const systems = (space: Space) => asSystems<GameComponents>(change => [
 	function movement() {

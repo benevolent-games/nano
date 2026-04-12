@@ -1,17 +1,22 @@
 
+import {EntitiesReadonly} from "@benev/archimedes"
 import {Pool} from "./pool.js"
 import {Venue} from "./venue.js"
 import {poolify} from "./poolify.js"
 import {wall} from "../props/wall.js"
 import {robot} from "../props/robot.js"
 import {floor} from "../props/floor.js"
-import {Gridspace} from "../../../lib/game/parts/units.js"
+import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
+import {GameComponents} from "../../../lib/game/parts/components.js"
 
 export class Realm {
 	pools
-	focal = new Gridspace(0, 0)
+	focal = new Gridspace()
 
-	constructor(public venue: Venue) {
+	constructor(
+			public entities: EntitiesReadonly<GameComponents>,
+			public venue: Venue,
+		) {
 		const {scene} = venue
 		this.pools = {
 			floors: new Pool(poolify(floor(scene))).prepopulate(2000),

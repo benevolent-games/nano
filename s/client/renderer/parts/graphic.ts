@@ -1,5 +1,5 @@
 
-import {Gridspace} from "../../../lib/game/parts/units.js"
+import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
 export type Graphic = {
 	setPosition(gridspace: Gridspace, height?: number): void

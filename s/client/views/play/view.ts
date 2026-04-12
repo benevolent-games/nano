@@ -16,8 +16,8 @@ export const Play = shadow(() => {
 	const $wait = useWait(async() => {
 		const userInputs = new UserInputs()
 		const game = new Game(userInputs.port.actions, () => userInputs.port.resolve())
-		const realm = new Realm(await makeVenue())
-		const renderer = new Renderer(game.space, realm)
+		const realm = new Realm(game.entities.readonly, await makeVenue())
+		const renderer = new Renderer(realm)
 		game.initialize()
 		return {game, realm, renderer}
 	})
