@@ -9,7 +9,7 @@ export type PoolMember<Item> = {
 
 export class Pool<Item> {
 	#make
-	#free: PoolMember<Item>[] = []
+	#free = new Set<PoolMember<Item>>()
 	#used = new Set<PoolMember<Item>>()
 
 	constructor(make: () => PoolMember<Item>) {
@@ -17,27 +17,32 @@ export class Pool<Item> {
 	}
 
 	get size() {
-		return this.#free.length + this.#used.size
+		return this.#free.size + this.#used.size
 	}
 
 	prepopulate(n: number) {
 		for (const _ of count(n)) {
 			const member = this.#make()
-			this.#free.push(member)
+			this.#free.add(member)
 			member.disable()
 		}
 		return this
 	}
 
 	lease() {
-		const member = this.#free.pop() ?? this.#make()
+		const member = this.#free.values().next().value ?? this.#make()
+		this.#free.delete(member)
 		this.#used.add(member)
 		member.enable()
 
+		let released = false
+
 		const release = () => {
-			this.#free.push(member)
+			if (released) return
+			this.#free.add(member)
 			this.#used.delete(member)
 			member.disable()
+			released = true
 		}
 
 		return [member.item, release] as [Item, () => void]
