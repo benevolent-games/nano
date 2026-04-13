@@ -10,7 +10,7 @@ import {GameComponents} from "./components.js"
 
 export class Space {
 	timing = new Timing()
-	physicsLattice = new Lattice<Phys>(new Vec2(8, 8))
+	physLattice = new Lattice<Phys>(new Vec2(8, 8))
 
 	constructor(
 		public entities: EntitiesReadonly<GameComponents>,

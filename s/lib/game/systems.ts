@@ -17,7 +17,7 @@ export const systems = [
 		["gridchunk", "position"],
 		(id, components) => {
 			const position = new Gridspace().from(components.position)
-			const gridphys = new Gridphys(space.physicsLattice, id, position)
+			const gridphys = new Gridphys(space.physLattice, id, position)
 			return {
 				tick: (components) => gridphys.update(components.gridchunk),
 				exit: () => gridphys.dump(),
@@ -31,7 +31,7 @@ export const systems = [
 		(id, components) => {
 			const rect = Rect.fromCenter(Vec2.from(components.position), Vec2.from(components.size))
 			const phys = new PhysBox(id, rect, components.mass)
-			space.physicsLattice.upsert(phys, rect)
+			space.physLattice.upsert(phys, rect)
 
 			return {
 				tick(components) {
@@ -40,11 +40,11 @@ export const systems = [
 					const freshRect = Rect.fromCenter(position, size)
 					if (!phys.rect.equals(freshRect)) {
 						phys.rect = freshRect
-						space.physicsLattice.upsert(phys, phys.rect)
+						space.physLattice.upsert(phys, phys.rect)
 					}
 				},
 				exit() {
-					space.physicsLattice.remove(phys)
+					space.physLattice.remove(phys)
 				},
 			}
 		},
@@ -92,13 +92,13 @@ export const systems = [
 				if (components.size) {
 					const size = Vec2.from(components.size)
 					const rect = Rect.fromCenter(position, size)
-					const collision = space.physicsLattice.query(rect)
+					const collision = space.physLattice.query(rect)
 					if (!hit(collision))
 						change.merge(id, {position: position.array()})
 				}
 				else if (components.radius) {
 					const circle = new Circle(position, components.radius)
-					const collision = space.physicsLattice.query(circle.boundingBox())
+					const collision = space.physLattice.query(circle.boundingBox())
 					if (!hit(collision))
 						change.merge(id, {position: position.array()})
 				}
