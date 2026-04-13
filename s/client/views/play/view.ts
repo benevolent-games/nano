@@ -1,5 +1,6 @@
 
-import {light, shadow, spinner, useCss, useMount, useName, useOnce, useWait} from "@e280/sly"
+import {html} from "lit"
+import {light, shadow, spinner, useCss, useMount, useName, useOnce, useSignal, useWait} from "@e280/sly"
 import styleCss from "./style.css.js"
 import {theme} from "../../utils/theme.js"
 import {Game} from "../../../lib/game/game.js"
@@ -8,6 +9,7 @@ import {Realm} from "../../renderer/parts/realm.js"
 import {Renderer} from "../../renderer/renderer.js"
 import {UserInputs} from "../../utils/user-inputs.js"
 import {makeVenue} from "../../renderer/parts/venue.js"
+import { cycle, nap } from "@e280/stz"
 
 export const Play = shadow(() => {
 	useName("play")
@@ -47,6 +49,28 @@ const GameReady = light(({game, realm, renderer}: {
 
 	useMount(() => () => realm.dispose())
 
-	return canvas
+	const $simulateMs = useSignal(game.tickMs)
+	const $renderMs = useSignal(renderer.tickMs)
+
+	useMount(() => cycle(async() => {
+		$simulateMs(game.tickMs)
+		$renderMs(renderer.tickMs)
+		await nap(32)
+	}))
+
+	return html`
+		${canvas}
+
+		<div class=stats>
+			<div>
+				<span>sim</span>
+				<span>${$simulateMs().toFixed(2)}</span>
+			</div>
+			<div>
+				<span>ren</span>
+				<span>${$renderMs().toFixed(2)}</span>
+			</div>
+		</div>
+	`
 })
 

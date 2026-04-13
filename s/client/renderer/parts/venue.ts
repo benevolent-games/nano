@@ -25,8 +25,8 @@ export async function makeVenue(): Promise<Venue> {
 
 	const engine = await makeEngine({
 		canvas,
-		webgl: {}, // enabled
-		webgpu: {}, // enabled
+		webgl: {},
+		// webgpu: {},
 	})
 
 	const scene = new Scene(engine, {

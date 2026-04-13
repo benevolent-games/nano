@@ -12,6 +12,7 @@ import {chunkify} from "../gridworld/chunk/chunkify.js"
 import {generateGridworld} from "../gridworld/generate.js"
 
 export class Game {
+	tickMs = 0
 	entities = new Entities<GameComponents>()
 	change = new Change<GameComponents>(delta => applyDelta(this.entities, delta))
 	space
@@ -21,13 +22,15 @@ export class Game {
 		this.space = new Space(this.entities.readonly, actions)
 		const simtick = makeExecute(this.entities, systems(this.space))
 		this.simulate = () => {
+			const start = performance.now()
 			poll()
 			simtick()
+			this.tickMs = performance.now() - start
 		}
 	}
 
 	initialize() {
-		const gridworld = generateGridworld(1, new Vec2(32, 32))
+		const gridworld = generateGridworld(1, new Vec2(1024, 1024))
 
 		for (const chunk of chunkify(gridworld))
 			this.change.create(chunk)
