@@ -18,8 +18,8 @@
 	"dependencies": {
 		"@babylonjs/core": "^9.2.0",
 		"@babylonjs/loaders": "^9.2.0",
-		"@benev/archimedes": "^0.1.0-6",
-		"@benev/math": "^0.3.3",
+		"@benev/archimedes": "^0.1.0-7",
+		"@benev/math": "^0.3.4",
 		"@benev/tact": "^0.2.0",
 		"@e280/shiny": "^0.1.0-20",
 		"@e280/sly": "^0.3.7",
