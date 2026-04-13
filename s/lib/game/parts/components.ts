@@ -22,8 +22,14 @@ export type GameComponents = AsComponents<{
 	/** direction where the user wants to move */
 	intent: XyArray
 
-	/** direction this entity is being pushed */
-	force: XyArray
+	/** user wants to move faster */
+	sprint: boolean
+
+	/** multiplier on speed when sprint is used */
+	sprintFactor: number
+
+	/** where this entity wants to move in units per second */
+	velocity: XyArray
 
 	/** which 3d model to display */
 	graphic: "robot"

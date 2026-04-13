@@ -50,32 +50,47 @@ export const systems = [
 		},
 	)),
 
-	gsys("forces controllable", (space, change) => () => {
-		for (const [id, components] of space.entities.select("controllable", "speed", "force")) {
-			const a = space.actions.control
+	gsys("user inputs", (space, change) => () => {
+		const a = space.actions.control
 
+		for (const [id] of space.entities.select("controllable", "intent")) {
 			const intent = new Gridspace()
 				.add_(
 					a.move_right.value - a.move_left.value,
 					a.move_down.value - a.move_up.value,
 				)
 				.clampMagnitude(1)
+				.array()
+			change.merge(id, {intent})
+		}
 
-			const accel = intent
+		for (const [id] of space.entities.select("controllable", "sprint")) {
+			change.merge(id, {sprint: !!a.sprint.value})
+		}
+	}),
+
+	gsys("resolve intent to velocity", (space, change) => () => {
+		for (const [id, components] of space.entities.select(
+				"controllable", "velocity", "intent", "speed", "mass",
+			)) {
+
+			const velocityTarget = Vec2.from(components.intent)
 				.mulBy(components.speed)
+				.mulBy(components.sprint && components.sprintFactor || 1)
 				.divBy(components.mass ?? 1)
 
-			const force = Vec2.from(components.force)
-				.lerp(accel, components.lerp ?? 1)
+			const velocity = Vec2.from(components.velocity)
+				.lerp(velocityTarget, components.lerp ?? 1)
+				.array()
 
-			change.merge(id, {force: force.array()})
+			change.merge(id, {velocity})
 		}
 	}),
 
 	gsys("forces physical", (space, change) => () => {
-		for (const [id, components] of space.entities.select("controllable", "force", "position")) {
+		for (const [id, components] of space.entities.select("controllable", "velocity", "position")) {
 			const velocity = Vec2
-				.from(components.force)
+				.from(components.velocity)
 				.mulBy(space.timing.delta / 1000)
 
 			const original = Vec2.from(components.position)
