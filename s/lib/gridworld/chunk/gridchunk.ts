@@ -5,15 +5,18 @@ import {gridChunkSize} from "../utils/grid-chunk-size.js"
 
 export class Gridchunk {
 	#tiles = new Uint8Array(gridChunkSize().x * gridChunkSize().y)
+	#hex = hex.fromBytes(this.#tiles)
 
 	constructor(public position: Gridspace) {}
 
 	get hex() {
-		return hex.fromBytes(this.#tiles)
+		return this.#hex
 	}
 
 	set hex(h: string) {
 		this.#tiles.set(hex.toBytes(h), 0)
+		this.#hex = hex.fromBytes(this.#tiles)
+		if (h !== this.#hex) throw new Error("hex mismatch")
 	}
 
 	get center() {
