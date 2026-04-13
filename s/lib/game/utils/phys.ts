@@ -2,11 +2,19 @@
 import {Circle, Rect} from "@benev/math"
 
 export class PhysBox {
-	constructor(public rect: Rect) {}
+	constructor(
+		public id: string,
+		public rect: Rect,
+		public mass: number | undefined,
+	) {}
 }
 
 export class PhysCircle {
-	constructor(public circle: Circle) {}
+	constructor(
+		public id: string,
+		public circle: Circle,
+		public mass: number | undefined,
+	) {}
 }
 
 export type Phys =

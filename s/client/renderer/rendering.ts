@@ -43,7 +43,7 @@ export const makeRenderingFns = (realm: Realm) => [
 		}
 
 		return {
-			tick(_id, components) {
+			tick(components) {
 				const changed = proximal.check(chunk.center)
 				if (proximal.nearby && chunk.hex !== components.gridchunk)
 					renderFloorsAndWalls(components.gridchunk)
@@ -52,7 +52,7 @@ export const makeRenderingFns = (realm: Realm) => [
 				else if (changed && !proximal.nearby)
 					wipe()
 			},
-			exit(_id) {
+			exit() {
 				wipe()
 			},
 		}
@@ -62,10 +62,10 @@ export const makeRenderingFns = (realm: Realm) => [
 		const gridspace = new Gridspace(...components.position)
 		const [robot, disposeRobot] = realm.pools.robots.lease()
 		return {
-			tick(_id, components) {
+			tick(components) {
 				robot.setPosition(gridspace.set_(...components.position), 1)
 			},
-			exit(_id) {
+			exit() {
 				disposeRobot()
 			},
 		}

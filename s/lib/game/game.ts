@@ -27,12 +27,22 @@ export class Game {
 	}
 
 	initialize() {
-		const gridworld = generateGridworld(1, new Vec2(512, 512))
+		const gridworld = generateGridworld(1, Vec2.all(256))
 
 		for (const chunk of chunkify(gridworld))
 			this.change.create(chunk)
 
-		this.change.create({graphic: "robot", controllable: true, position: [0, 0]})
+		this.change.create({
+			graphic: "robot",
+			controllable: true,
+			position: [0, 0],
+			force: [0, 0],
+			speed: 5,
+			mass: 1,
+			physical: true,
+			radius: 0.4,
+			lerp: 0.5,
+		})
 	}
 
 	simulationLoop() {

@@ -4,10 +4,12 @@ import {Lattice, Vec2} from "@benev/math"
 import {EntitiesReadonly} from "@benev/archimedes"
 
 import {Phys} from "../utils/phys.js"
+import {Timing} from "../utils/timing.js"
 import {GameBindings} from "./bindings.js"
 import {GameComponents} from "./components.js"
 
 export class Space {
+	timing = new Timing()
 	physicsLattice = new Lattice<Phys>(new Vec2(8, 8))
 
 	constructor(
