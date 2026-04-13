@@ -4,9 +4,8 @@ import {lifecycle} from "@benev/archimedes"
 
 import {gsys} from "./utils/gsys.js"
 import {Phys, PhysBox} from "./utils/phys.js"
-import {TileKind} from "../gridworld/types.js"
+import {Gridphys} from "./systems/utils/gridphys.js"
 import {Gridspace} from "../gridworld/utils/gridspace.js"
-import {Gridchunk} from "../gridworld/chunk/gridchunk.js"
 
 export const systems = [
 	gsys("timing", (space) => () => {
@@ -17,41 +16,11 @@ export const systems = [
 		space.entities,
 		["gridchunk", "position"],
 		(id, components) => {
-			const chunk = new Gridchunk(new Gridspace().from(components.position))
-			const phys = new Set<Phys>()
-
-			function dumpPhysics() {
-				for (const p of phys)
-					space.physicsLattice.remove(p)
-				phys.clear()
-			}
-
-			function addPhysics() {
-				for (const {tile, position} of chunk) {
-					if (tile !== TileKind.Floor) {
-						const obstacle = new PhysBox(
-							id,
-							new Rect(position, position.dup().add_(1, 1)),
-							undefined,
-						)
-						space.physicsLattice.upsert(obstacle, obstacle.rect)
-						phys.add(obstacle)
-					}
-				}
-			}
-
+			const position = new Gridspace().from(components.position)
+			const gridphys = new Gridphys(space.physicsLattice, id, position)
 			return {
-				tick(components) {
-					const changed = chunk.hex !== components.gridchunk
-					if (changed) {
-						chunk.hex = components.gridchunk
-						dumpPhysics()
-						addPhysics()
-					}
-				},
-				exit() {
-					dumpPhysics()
-				},
+				tick: (components) => gridphys.update(components.gridchunk),
+				exit: () => gridphys.dump(),
 			}
 		},
 	)),

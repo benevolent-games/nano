@@ -12,19 +12,23 @@ import {chunkify} from "../gridworld/chunk/chunkify.js"
 import {generateGridworld} from "../gridworld/generate.js"
 
 export class Game {
+	space
+	stats
+	simulate
 	entities = new Entities<GameComponents>()
 	change = new Change<GameComponents>(delta => applyDelta(this.entities, delta))
-	space
-	simulate
-	stats
 
 	constructor(actions: Actions<GameBindings>, poll: () => void) {
 		this.space = new Space(this.entities.readonly, actions)
+
 		const {fns, stats} = systematize(systems)
 		this.stats = stats
-		const simtick = makeExecute(this.entities, change => {
-			return fns.map(fn => fn(this.space, change))
-		})
+
+		const simtick = makeExecute(
+			this.entities,
+			change => fns.map(fn => fn(this.space, change)),
+		)
+
 		this.simulate = () => {
 			poll()
 			simtick()
@@ -41,12 +45,12 @@ export class Game {
 			graphic: "robot",
 			controllable: true,
 			position: [0, 0],
-			force: [0, 0],
-			speed: 5,
-			mass: 1,
 			physical: true,
 			radius: 0.4,
+			mass: 1,
 			lerp: 0.5,
+			force: [0, 0],
+			speed: 5,
 		})
 	}
 }
