@@ -1,15 +1,17 @@
 
 import {html} from "lit"
 import {light, shadow, spinner, useCss, useMount, useName, useOnce, useSignal, useWait} from "@e280/sly"
+
 import styleCss from "./style.css.js"
 import {theme} from "../../utils/theme.js"
 import {Game} from "../../../lib/game/game.js"
 import {useCanvas} from "../../utils/use-canvas.js"
 import {Realm} from "../../renderer/parts/realm.js"
 import {Renderer} from "../../renderer/renderer.js"
+import {Pulser} from "../../../lib/tools/pulser.js"
 import {UserInputs} from "../../utils/user-inputs.js"
 import {makeVenue} from "../../renderer/parts/venue.js"
-import { cycle, nap } from "@e280/stz"
+import {rafloop} from "../../renderer/utils/rafloop.js"
 
 export const Play = shadow(() => {
 	useName("play")
@@ -33,6 +35,13 @@ const GameReady = light(({game, realm, renderer}: {
 		renderer: Renderer
 	}) => {
 
+	const $sim = useSignal(0)
+	const $ren = useSignal(0)
+	const $bab = useSignal(0)
+	const $all = useSignal(0)
+
+	useMount(() => () => realm.dispose())
+
 	const canvas = useCanvas((_canvas, rect) => {
 		realm.venue.canvas.width = rect.width
 		realm.venue.canvas.height = rect.height
@@ -40,36 +49,44 @@ const GameReady = light(({game, realm, renderer}: {
 
 	const ctx = useOnce(() => canvas.getContext("2d")!)
 
-	useMount(() => game.simulationLoop())
+	const simPulse = useOnce(() => new Pulser(30))
 
-	useMount(() => renderer.renderLoop(() => {
+	useMount(() => rafloop(() => {
+		const start = performance.now()
+		if (simPulse.check()) {
+			game.simulate()
+			$sim(performance.now() - start)
+		}
+
+		const renStart = performance.now()
+		renderer.render()
+		$ren(performance.now() - renStart)
+
+		const babStart = performance.now()
 		realm.venue.scene.render()
 		ctx.drawImage(realm.venue.canvas, 0, 0)
+		$bab(performance.now() - babStart)
+
+		$all(performance.now() - start)
 	}))
 
-	useMount(() => () => realm.dispose())
-
-	const $simulateMs = useSignal(game.tickMs)
-	const $renderMs = useSignal(renderer.tickMs)
-
-	useMount(() => cycle(async() => {
-		$simulateMs(game.tickMs)
-		$renderMs(renderer.tickMs)
-		await nap(32)
-	}))
+	function renderStat(label: string, ms: number) {
+		return html`
+			<div>
+				<span>${label}</span>
+				<span>${Math.round(ms).toString().padStart(2, "0")}ms</span>
+			</div>
+		`
+	}
 
 	return html`
 		${canvas}
 
 		<div class=stats>
-			<div>
-				<span>sim</span>
-				<span>${$simulateMs().toFixed(2)}</span>
-			</div>
-			<div>
-				<span>ren</span>
-				<span>${$renderMs().toFixed(2)}</span>
-			</div>
+			${renderStat("sim", $sim())}
+			${renderStat("ren", $ren())}
+			${renderStat("bab", $bab())}
+			${renderStat("all", $all())}
 		</div>
 	`
 })
