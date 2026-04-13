@@ -1,6 +1,5 @@
 
 import {Realm} from "./parts/realm.js"
-import {rafloop} from "./utils/rafloop.js"
 import {makeRenderingFns} from "./rendering.js"
 
 export class Renderer {
@@ -11,13 +10,6 @@ export class Renderer {
 		this.render = () => {
 			fns.forEach(fn => fn())
 		}
-	}
-
-	renderLoop(fn: () => void) {
-		return rafloop(() => {
-			this.render()
-			fn()
-		})
 	}
 }
 

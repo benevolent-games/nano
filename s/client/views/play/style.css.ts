@@ -28,7 +28,11 @@ canvas {
 
 	font-family: monospace;
 	font-weight: bold;
-	font-size: 1.4em;
+	font-size: 1em;
+
+	background: #0008;
+	text-shadow: none;
+	border-radius: 0 0 var(--radius) 0;
 }
 
 `

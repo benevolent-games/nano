@@ -70,11 +70,16 @@ const GameReady = light(({game, realm, renderer}: {
 		$all(performance.now() - start)
 	}))
 
+	function num(n: number) {
+		return n.toFixed(1).padStart(4, "0")
+		// return Math.round(n).toString().padStart(2, "0")
+	}
+
 	function renderStat(label: string, ms: number) {
 		return html`
 			<div>
+				<span>${num(ms)}ms</span>
 				<span>${label}</span>
-				<span>${Math.round(ms).toString().padStart(2, "0")}ms</span>
 			</div>
 		`
 	}
@@ -83,10 +88,12 @@ const GameReady = light(({game, realm, renderer}: {
 		${canvas}
 
 		<div class=stats>
-			${renderStat("sim", $sim())}
-			${renderStat("ren", $ren())}
-			${renderStat("bab", $bab())}
-			${renderStat("all", $all())}
+			${renderStat("whole tick", $all())}
+			${renderStat("ecs simulation", $sim())}
+			${renderStat("ecs rendering", $ren())}
+			${renderStat("babylon rendering", $bab())}
+			<br/>
+			${game.stats.map(stats => renderStat(stats.name, stats.ms))}
 		</div>
 	`
 })
