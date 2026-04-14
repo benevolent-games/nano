@@ -54,11 +54,9 @@ export const systems = [
 		const a = space.actions.control
 
 		for (const [id] of space.entities.select("controllable", "intent")) {
-			const intent = new Gridspace()
-				.add_(
-					a.move_right.value - a.move_left.value,
-					a.move_down.value - a.move_up.value,
-				)
+			const x = a.move_right.value - a.move_left.value
+			const y = a.move_down.value - a.move_up.value
+			const intent = new Gridspace(x, y)
 				.clampMagnitude(1)
 				.array()
 			change.merge(id, {intent})
@@ -88,7 +86,10 @@ export const systems = [
 	}),
 
 	gsys("forces physical", (space, change) => () => {
-		for (const [id, components] of space.entities.select("controllable", "velocity", "position")) {
+		for (const [id, components] of space.entities.select(
+				"controllable", "velocity", "position",
+			)) {
+
 			const velocity = Vec2
 				.from(components.velocity)
 				.mulBy(space.timing.delta / 1000)
