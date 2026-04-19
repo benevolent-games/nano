@@ -6,6 +6,11 @@ import {Phys, PhysBox} from "../../utils/phys.js"
 import {TileKind} from "../../../gridworld/types.js"
 import {Gridchunk} from "../../../gridworld/chunk/gridchunk.js"
 import {Gridspace} from "../../../gridworld/utils/gridspace.js"
+import { Physics } from "../../../physics/physics.js"
+
+export function makeGridphys(physics: Physics, id: Id, position: Gridspace) {
+	
+}
 
 export class Gridphys {
 	#id
