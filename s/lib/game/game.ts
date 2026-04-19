@@ -36,7 +36,7 @@ export class Game {
 	}
 
 	initialize() {
-		const gridworld = generateGridworld(1, Vec2.all(512))
+		const gridworld = generateGridworld(1, Vec2.all(64))
 
 		for (const chunk of chunkify(gridworld))
 			this.change.create(chunk)
