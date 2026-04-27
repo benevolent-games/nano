@@ -44,6 +44,7 @@ export class Game {
 		this.change.create({
 			graphic: "robot",
 			controllable: true,
+			intent: [0, 0],
 			position: [0, 0],
 			physical: true,
 			radius: 0.4,

@@ -1,6 +1,6 @@
 
-import {Circle, Rect, Vec2} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
+import {Circle, Rect, Vec2} from "@benev/math"
 
 import {gsys} from "./utils/gsys.js"
 import {Phys, PhysBox} from "./utils/phys.js"

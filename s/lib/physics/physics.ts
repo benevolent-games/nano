@@ -26,7 +26,7 @@ export class Physics {
 	}
 
 	requireBody(id: Id) {
-		return this.#registry.require(id)
+		return this.#registry.need(id)
 	}
 }
 
