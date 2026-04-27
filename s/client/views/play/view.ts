@@ -3,16 +3,17 @@ import {html} from "lit"
 import {light, shadow, spinner, useCss, useMount, useName, useOnce, useSignal, useWait} from "@e280/sly"
 
 import styleCss from "./style.css.js"
+import {consts} from "../../../consts.js"
 import {theme} from "../../utils/theme.js"
 import {Game} from "../../../lib/game/game.js"
-import {useCanvasSizing} from "../../utils/use-canvas-sizing.js"
 import {Realm} from "../../renderer/parts/realm.js"
 import {Renderer} from "../../renderer/renderer.js"
 import {Pulser} from "../../../lib/tools/pulser.js"
 import {UserInputs} from "../../utils/user-inputs.js"
 import {makeVenue} from "../../renderer/parts/venue.js"
 import {rafloop} from "../../renderer/utils/rafloop.js"
-import { consts } from "../../../consts.js"
+import {initialize} from "../../../lib/game/initialize.js"
+import {useCanvasSizing} from "../../utils/use-canvas-sizing.js"
 
 export const Play = shadow(() => {
 	useName("play")
@@ -24,7 +25,7 @@ export const Play = shadow(() => {
 		const game = new Game(userInputs.port.actions, () => userInputs.port.resolve())
 		const realm = new Realm(game.entities.readonly, await makeVenue(canvas))
 		const renderer = new Renderer(realm)
-		game.initialize()
+		initialize(game)
 		return {game, realm, renderer, canvas}
 	})
 
@@ -72,7 +73,6 @@ const GameReady = light(({game, realm, renderer, canvas}: {
 
 	function num(n: number) {
 		return n.toFixed(1).padStart(4, "0")
-		// return Math.round(n).toString().padStart(2, "0")
 	}
 
 	function renderStat(label: string, ms: number) {
