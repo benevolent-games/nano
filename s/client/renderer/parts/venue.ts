@@ -13,7 +13,6 @@ import {resolveGridspace} from "../utils/resolve-gridspace.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
 export type Venue = {
-	canvas: AnyCanvas
 	engine: AnyEngine
 	scene: Scene
 	camera: ArcRotateCamera
@@ -52,6 +51,6 @@ export async function makeVenue(canvas: AnyCanvas): Promise<Venue> {
 
 	scene.activeCamera = camera
 
-	return {canvas, engine, scene, light, camera}
+	return {engine, scene, light, camera}
 }
 
