@@ -46,12 +46,14 @@ export const Perspective = light(({realm, renderer, canvas}: Viewframe) => {
 	}
 
 	return html`
-		${canvas}
+		<div class=perspective>
+			${canvas}
 
-		<div class=stats>
-			${renderStat("whole tick", $all())}
-			${renderStat("ecs rendering", $ren())}
-			${renderStat("babylon rendering", $bab())}
+			<div class=stats>
+				${renderStat("whole tick", $all())}
+				${renderStat("ecs rendering", $ren())}
+				${renderStat("babylon rendering", $bab())}
+			</div>
 		</div>
 	`
 })

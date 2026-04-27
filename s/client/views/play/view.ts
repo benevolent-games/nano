@@ -10,6 +10,7 @@ import {Perspective} from "./subviews/perspective.js"
 import {Multiframe} from "../../utils/multiframe.js"
 import {UserInputs} from "../../utils/user-inputs.js"
 import {initialize} from "../../../lib/game/initialize.js"
+import { html } from "lit"
 
 export const Play = shadow(() => {
 	useName("play")
@@ -31,8 +32,13 @@ export const Play = shadow(() => {
 
 	const multiframe = useOnce(() => new Multiframe(game.entities.readonly))
 	useOnce(() => multiframe.spawn())
+	useOnce(() => multiframe.spawn())
 	const frames = multiframe.list()
 
-	return frames.map($frame => spinner($frame.value, Perspective))
+	return html`
+		<div class=shell>
+			${frames.map($frame => spinner($frame.value, Perspective))}
+		</div>
+	`
 })
 

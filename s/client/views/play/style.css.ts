@@ -2,21 +2,27 @@
 import {css} from "lit"
 export default css`
 
-:host {
-	position: relative;
+.shell {
 	display: flex;
-	flex-direction: column;
 	height: 100%;
-	min-height: 0;
-	overflow: hidden;
+	padding: 1em;
+	gap: 1em;
+}
+
+.perspective {
+	position: relative;
+	flex: 1 1 0;
 }
 
 canvas {
-	flex: 1 1 auto;
 	display: block;
 	width: 100%;
-	min-height: 0;
+	height: 100%;
 	background: #000;
+
+	&:focus {
+		outline: none;
+	}
 }
 
 .stats {
