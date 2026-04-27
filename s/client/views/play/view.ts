@@ -5,13 +5,14 @@ import {light, shadow, spinner, useCss, useMount, useName, useOnce, useSignal, u
 import styleCss from "./style.css.js"
 import {theme} from "../../utils/theme.js"
 import {Game} from "../../../lib/game/game.js"
-import {useCanvas} from "../../utils/use-canvas.js"
+import {useCanvasSizing} from "../../utils/use-canvas-sizing.js"
 import {Realm} from "../../renderer/parts/realm.js"
 import {Renderer} from "../../renderer/renderer.js"
 import {Pulser} from "../../../lib/tools/pulser.js"
 import {UserInputs} from "../../utils/user-inputs.js"
 import {makeVenue} from "../../renderer/parts/venue.js"
 import {rafloop} from "../../renderer/utils/rafloop.js"
+import { consts } from "../../../consts.js"
 
 export const Play = shadow(() => {
 	useName("play")
@@ -19,20 +20,22 @@ export const Play = shadow(() => {
 
 	const $wait = useWait(async() => {
 		const userInputs = new UserInputs()
+		const canvas = document.createElement("canvas")
 		const game = new Game(userInputs.port.actions, () => userInputs.port.resolve())
-		const realm = new Realm(game.entities.readonly, await makeVenue())
+		const realm = new Realm(game.entities.readonly, await makeVenue(canvas))
 		const renderer = new Renderer(realm)
 		game.initialize()
-		return {game, realm, renderer}
+		return {game, realm, renderer, canvas}
 	})
 
 	return spinner($wait(), GameReady)
 })
 
-const GameReady = light(({game, realm, renderer}: {
+const GameReady = light(({game, realm, renderer, canvas}: {
 		game: Game
 		realm: Realm
 		renderer: Renderer
+		canvas: HTMLCanvasElement
 	}) => {
 
 	const $sim = useSignal(0)
@@ -42,14 +45,12 @@ const GameReady = light(({game, realm, renderer}: {
 
 	useMount(() => () => realm.dispose())
 
-	const canvas = useCanvas((_canvas, rect) => {
+	useCanvasSizing(canvas, rect => {
 		realm.venue.canvas.width = rect.width
 		realm.venue.canvas.height = rect.height
 	})
 
-	const ctx = useOnce(() => canvas.getContext("2d")!)
-
-	const simPulse = useOnce(() => new Pulser(30))
+	const simPulse = useOnce(() => new Pulser(consts.simulationHz.max))
 
 	useMount(() => rafloop(() => {
 		const start = performance.now()
@@ -64,7 +65,6 @@ const GameReady = light(({game, realm, renderer}: {
 
 		const babStart = performance.now()
 		realm.venue.scene.render()
-		ctx.drawImage(realm.venue.canvas, 0, 0)
 		$bab(performance.now() - babStart)
 
 		$all(performance.now() - start)

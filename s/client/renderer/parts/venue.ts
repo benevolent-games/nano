@@ -7,22 +7,20 @@ import {ArcRotateCamera} from "@babylonjs/core/Cameras/arcRotateCamera.js"
 import {HemisphericLight} from "@babylonjs/core/Lights/hemisphericLight.js"
 import {setOpenGLOrientationForUV} from "@babylonjs/core/Compat/compatibilityOptions.js"
 
-import {AnyEngine} from "./babtools.js"
 import {makeEngine} from "./make-engine.js"
+import {AnyCanvas, AnyEngine} from "./babtools.js"
 import {resolveGridspace} from "../utils/resolve-gridspace.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
 export type Venue = {
-	canvas: OffscreenCanvas
+	canvas: AnyCanvas
 	engine: AnyEngine
 	scene: Scene
 	camera: ArcRotateCamera
 	light: HemisphericLight
 }
 
-export async function makeVenue(): Promise<Venue> {
-	const canvas = new OffscreenCanvas(120, 60)
-
+export async function makeVenue(canvas: AnyCanvas): Promise<Venue> {
 	const engine = await makeEngine({
 		canvas,
 		webgl: {},

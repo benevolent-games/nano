@@ -72,13 +72,10 @@ export const systems = [
 				"controllable", "velocity", "intent", "speed", "mass",
 			)) {
 
-			const velocityTarget = Vec2.from(components.intent)
+			const velocity = Vec2.from(components.intent)
 				.mulBy(components.speed)
 				.mulBy(components.sprint && components.sprintFactor || 1)
 				.divBy(components.mass ?? 1)
-
-			const velocity = Vec2.from(components.velocity)
-				.lerp(velocityTarget, components.lerp ?? 1)
 				.array()
 
 			change.merge(id, {velocity})

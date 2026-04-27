@@ -1,10 +1,10 @@
 
 import {html} from "lit"
 import {Signal} from "@e280/strata"
-import {shadow, useCss, useName, useEffect, useSignal} from "@e280/sly"
+import {shadow, useCss, useName, useEffect, useSignal, useOnce} from "@e280/sly"
 import styleCss from "./style.css.js"
 import {theme} from "../../utils/theme.js"
-import {useCanvas} from "../../utils/use-canvas.js"
+import {useCanvasSizing} from "../../utils/use-canvas-sizing.js"
 import {useGridworld} from "./parts/use-gridworld.js"
 import {renderGridworld} from "./parts/render-gridworld.js"
 
@@ -14,9 +14,11 @@ export const Gridgen = shadow(() => {
 
 	const {$gridworld, $generationMs, $seed, $x, $y} = useGridworld()
 	const $renderMs = useSignal(0)
+
+	const canvas = useOnce(() => document.createElement("canvas"))
 	const render = () => $renderMs(renderGridworld($gridworld(), canvas))
 
-	const canvas = useCanvas(render)
+	useCanvasSizing(canvas, render)
 	useEffect(render)
 
 	const updateNumber = ($signal: Signal<number>) => (e: Event) => $signal(

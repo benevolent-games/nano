@@ -49,7 +49,7 @@ export class Game {
 			physical: true,
 			radius: 0.4,
 			mass: 1,
-			lerp: 0.5,
+			lerp: 0.4,
 			velocity: [0, 0],
 			speed: 5,
 		})

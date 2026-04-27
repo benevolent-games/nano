@@ -1,5 +1,5 @@
 
-import {Vec2} from "@benev/math"
+import {Scalar, Vec2} from "@benev/math"
 import {disposer} from "@e280/stz"
 import {lifecycle} from "@benev/archimedes"
 
@@ -10,6 +10,10 @@ import {Gridchunk} from "../../lib/gridworld/chunk/gridchunk.js"
 import {Gridspace} from "../../lib/gridworld/utils/gridspace.js"
 
 export const makeRenderingFns = (realm: Realm) => [
+	function updateTiming() {
+		realm.timing.update()
+	},
+
 	function updateFocal() {
 		for (const [_id, components] of realm.entities.select("controllable", "position")) {
 			const position = Vec2.from(components.position)
@@ -58,15 +62,25 @@ export const makeRenderingFns = (realm: Realm) => [
 		}
 	}),
 
-	lifecycle(realm.entities, ["position", "graphic"], (_id, components) => {
+	lifecycle(realm.entities, ["position", "graphic", "lerp"], (_id, components) => {
 		const gridspace = new Gridspace(...components.position)
-		const [robot, disposeRobot] = realm.pools.robots.lease()
+		const [robot, releaseRobot] = realm.pools.robots.lease()
 		return {
 			tick(components) {
-				robot.setPosition(gridspace.set_(...components.position), 1)
+				const factor = Scalar.clamp(
+					1 - Math.pow(1 - components.lerp, realm.timing.delta / 16.6667),
+					0,
+					1,
+				)
+				gridspace.add(
+					Vec2.from(components.position)
+						.sub(gridspace)
+						.mulBy(factor)
+				)
+				robot.setPosition(gridspace, 1)
 			},
 			exit() {
-				disposeRobot()
+				releaseRobot()
 			},
 		}
 	}),

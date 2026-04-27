@@ -45,7 +45,10 @@ export class Pool<Item> {
 			released = true
 		}
 
-		return [member.item, release] as [Item, () => void]
+		return [member.item, release] as [
+			item: Item,
+			release: () => void,
+		]
 	}
 }
 
