@@ -1,5 +1,6 @@
 
 import {html} from "lit"
+import {Deck} from "@benev/tact"
 import {ShinyButton} from "@e280/shiny"
 import {hashNav, hashSignal, router, shadowElement, useCss, useOnce} from "@e280/sly"
 
@@ -8,7 +9,7 @@ import styleCss from "./style.css.js"
 import {theme} from "../../utils/theme.js"
 import {Gridgen} from "../gridgen/view.js"
 
-export const NanoApp = shadowElement(() => {
+export const NanoApp = (deck: Deck) => shadowElement(() => {
 	useCss(theme(), styleCss)
 
 	const $hash = useOnce(() => hashSignal())
@@ -30,7 +31,7 @@ export const NanoApp = shadowElement(() => {
 			</section>
 		`,
 		"gridgen": () => Gridgen(),
-		"play": () => Play(),
+		"play": () => Play(deck),
 	}))
 
 	return route($hash()) ?? html`

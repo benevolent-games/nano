@@ -1,8 +1,15 @@
 
+import {Intent} from "@benev/tact"
 import {XyArray} from "@benev/math"
-import {AsComponents} from "@benev/archimedes"
+import {AsComponents, Id} from "@benev/archimedes"
 
 export type GameComponents = AsComponents<{
+
+	/** player user inputs */
+	intents: Intent[]
+
+	/** which player entity we're controlled by */
+	controlledBy: Id
 
 	/** section of grid tiles, compactly encoded as a hex string */
 	gridchunk: string
@@ -13,14 +20,11 @@ export type GameComponents = AsComponents<{
 	/** angular rotation in radians, counter clockwise */
 	rotation: number
 
-	/** enabled if user inputs should exert influence */
-	controllable: boolean
-
 	/** how much oomph this entity has when it tries to move */
 	speed: number
 
 	/** direction where the user wants to move */
-	intent: XyArray
+	desire: XyArray
 
 	/** user wants to move faster */
 	sprint: boolean

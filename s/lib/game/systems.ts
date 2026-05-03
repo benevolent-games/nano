@@ -1,8 +1,11 @@
 
 import {lifecycle} from "@benev/archimedes"
 import {Circle, Rect, Vec2} from "@benev/math"
+import {makeActionsResolver} from "@benev/tact"
 
 import {gsys} from "./utils/gsys.js"
+import {Actor} from "./utils/actor.js"
+import {bindings} from "./parts/bindings.js"
 import {Phys, PhysBox} from "./utils/phys.js"
 import {Gridphys} from "./systems/utils/gridphys.js"
 import {Gridspace} from "../gridworld/utils/gridspace.js"
@@ -51,28 +54,69 @@ export const systems = [
 	)),
 
 	gsys("user inputs", (space, change) => () => {
-		const a = space.actions.control
-
-		for (const [id] of space.entities.select("controllable", "intent")) {
-			const x = a.move_right.value - a.move_left.value
-			const y = a.move_down.value - a.move_up.value
-			const intent = new Gridspace(x, y)
-				.clampMagnitude(1)
-				.array()
-			change.merge(id, {intent})
+		// ingest exogenous player intents
+		for (const [playerTag, intents] of space.getExogenousPlayerIntents()) {
+			const entityId = space.playerEntityIds.guarantee(playerTag, () => change.create({intents}))
+			change.set(entityId, {intents})
 		}
 
-		for (const [id] of space.entities.select("controllable", "sprint")) {
-			change.merge(id, {sprint: !!a.sprint.value})
+		// resolve player intents into actions
+		for (const [id, {intents}] of space.entities.select("intents")) {
+			const actor = space.actors.guarantee(id, () => {
+				const resolveActions = makeActionsResolver(bindings)
+				return new Actor(resolveActions, resolveActions([]))
+			})
+			actor.resolveActions(intents)
+		}
+
+		const playersThatAreAlive = [...space.entities.select("controlledBy")].map(([,c]) => c.controlledBy)
+
+		// spawn robots
+		for (const [id] of space.entities.select("intents")) {
+			const actor = space.actors.need(id)
+			if (actor.actions.spectate.spawn.changedDown && !playersThatAreAlive.includes(id)) {
+				change.create({
+					controlledBy: id,
+					graphic: "robot",
+					desire: [0, 0],
+					position: [0, 0],
+					physical: true,
+					radius: 0.4,
+					mass: 1,
+					lerp: 0.4,
+					velocity: [0, 0],
+					speed: 5,
+				})
+			}
+		}
+
+		// apply actions to various components
+		for (const [id, components] of space.entities.select("controlledBy")) {
+			if (!components.controlledBy) continue
+			const actor = space.actors.need(components.controlledBy)
+			const a = actor.actions.robot
+
+			if ("desire" in components) {
+				const x = a.move_right.value - a.move_left.value
+				const y = a.move_down.value - a.move_up.value
+				const desire = new Gridspace(x, y)
+					.clampMagnitude(1)
+					.array()
+				change.merge(id, {desire})
+			}
+
+			if ("sprint" in components) {
+				change.merge(id, {sprint: !!a.sprint.value})
+			}
 		}
 	}),
 
 	gsys("resolve intent to velocity", (space, change) => () => {
 		for (const [id, components] of space.entities.select(
-				"controllable", "velocity", "intent", "speed", "mass",
+				"controlledBy", "velocity", "desire", "speed", "mass",
 			)) {
 
-			const velocity = Vec2.from(components.intent)
+			const velocity = Vec2.from(components.desire)
 				.mulBy(components.speed)
 				.mulBy(components.sprint && components.sprintFactor || 1)
 				.divBy(components.mass ?? 1)
@@ -84,7 +128,7 @@ export const systems = [
 
 	gsys("forces physical", (space, change) => () => {
 		for (const [id, components] of space.entities.select(
-				"controllable", "velocity", "position",
+				"velocity", "position",
 			)) {
 
 			const velocity = Vec2

@@ -1,4 +1,6 @@
 
+import {html} from "lit"
+import {Deck} from "@benev/tact"
 import {cycle, nap} from "@e280/stz"
 import {shadow, spinner, useCss, useMount, useName, useOnce} from "@e280/sly"
 
@@ -6,20 +8,17 @@ import styleCss from "./style.css.js"
 import {consts} from "../../../consts.js"
 import {theme} from "../../utils/theme.js"
 import {Game} from "../../../lib/game/game.js"
-import {Perspective} from "./subviews/perspective.js"
 import {Multiframe} from "../../utils/multiframe.js"
-import {UserInputs} from "../../utils/user-inputs.js"
+import {Perspective} from "./subviews/perspective.js"
 import {initialize} from "../../../lib/game/initialize.js"
-import { html } from "lit"
+import {getPortwiseIntentsFromDeck} from "../../utils/get-portwise-intents-from-deck.js"
 
-export const Play = shadow(() => {
+export const Play = shadow((deck: Deck) => {
 	useName("play")
 	useCss(theme(), styleCss)
 
-	const userInputs = useOnce(() => new UserInputs())
-
 	const game = useOnce(() => {
-		const game = new Game(userInputs.port.actions, () => userInputs.port.resolve())
+		const game = new Game(() => getPortwiseIntentsFromDeck(deck))
 		initialize(game)
 		game.entities
 		return game

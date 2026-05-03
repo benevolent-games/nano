@@ -1,12 +1,11 @@
 
-import {Actions} from "@benev/tact/core"
-import {applyDelta, Change, Entities, makeExecute} from "@benev/archimedes"
+import {Intent} from "@benev/tact"
+import {applyDelta, Change, Entities, Id, makeExecute} from "@benev/archimedes"
 
-import {Space} from "./parts/space.js"
 import {systems} from "./systems.js"
-import {GameBindings} from "./parts/bindings.js"
-import {GameComponents} from "./parts/components.js"
+import {Space} from "./parts/space.js"
 import {systematize} from "../tools/ecs-plus/sys.js"
+import {GameComponents} from "./parts/components.js"
 
 export class Game {
 	space
@@ -15,8 +14,8 @@ export class Game {
 	entities = new Entities<GameComponents>()
 	change = new Change<GameComponents>(delta => applyDelta(this.entities, delta))
 
-	constructor(actions: Actions<GameBindings>, poll: () => void) {
-		this.space = new Space(this.entities.readonly, actions)
+	constructor(getExogenousPlayerIntents: () => Map<string, Intent[]>) {
+		this.space = new Space(this.entities.readonly, getExogenousPlayerIntents)
 
 		const {fns, stats} = systematize(systems)
 		this.stats = stats
@@ -27,7 +26,6 @@ export class Game {
 		)
 
 		this.simulate = () => {
-			poll()
 			simtick()
 		}
 	}

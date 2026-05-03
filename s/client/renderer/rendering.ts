@@ -15,7 +15,7 @@ export const makeRenderingFns = (realm: Realm) => [
 	},
 
 	function updateFocal() {
-		for (const [_id, components] of realm.entities.select("controllable", "position")) {
+		for (const [_id, components] of realm.entities.select("controlledBy", "position")) {
 			const position = Vec2.from(components.position)
 			realm.focal.set(position)
 		}
