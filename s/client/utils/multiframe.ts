@@ -1,26 +1,44 @@
 
 import {EntitiesReadonly} from "@benev/archimedes"
-import {RSet, wait, WaitSignal} from "@e280/strata"
+import {RMap, wait, WaitSignal} from "@e280/strata"
 
 import {Viewframe, makeViewframe} from "./viewframe.js"
 import {GameComponents} from "../../lib/game/parts/components.js"
+import {PlayerAssociation} from "../views/play/parts/player-association.js"
 
 export class Multiframe {
-	#frames = new RSet<WaitSignal<Viewframe>>()
+	#frames = new RMap<string, WaitSignal<Viewframe>>()
 	constructor(private entities: EntitiesReadonly<GameComponents>) {}
 
-	list() {
-		return [...this.#frames]
+	listFrames() {
+		return [...this.#frames.values()]
 	}
 
-	spawn() {
-		const $arcade = wait(makeViewframe(this.entities))
-		this.#frames.add($arcade)
-		return $arcade
+	spawn(player: string) {
+		const $viewframe = wait(makeViewframe(this.entities))
+		this.#frames.set(player, $viewframe)
+		return $viewframe
 	}
 
-	despawn($arcade: WaitSignal<Viewframe>) {
-		this.#frames.delete($arcade)
+	despawn(player: string) {
+		this.#frames.delete(player)
+	}
+
+	sync({playerIntents}: PlayerAssociation) {
+		console.log("sync")
+		for (const player of playerIntents.keys()) {
+			if (!this.#frames.has(player)) {
+				console.log("SPAWN", player)
+				this.spawn(player)
+			}
+		}
+
+		for (const player of this.#frames.keys()) {
+			if (!playerIntents.has(player))
+				this.despawn(player)
+		}
+
+		return this.listFrames()
 	}
 }
 

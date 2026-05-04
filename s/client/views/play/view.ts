@@ -11,17 +11,18 @@ import {Game} from "../../../lib/game/game.js"
 import {Multiframe} from "../../utils/multiframe.js"
 import {Perspective} from "./subviews/perspective.js"
 import {initialize} from "../../../lib/game/initialize.js"
-import {getPortwiseIntentsFromDeck} from "../../utils/get-portwise-intents-from-deck.js"
+import {PlayerAssociation} from "./parts/player-association.js"
 
 export const Play = shadow((deck: Deck) => {
 	useName("play")
 	useCss(theme(), styleCss)
 
-	const game = useOnce(() => {
-		const game = new Game(() => getPortwiseIntentsFromDeck(deck))
+	const {game, playerAssociation} = useOnce(() => {
+		const playerAssociation = new PlayerAssociation()
+		const game = new Game(() => playerAssociation.consider(deck, Date.now()))
 		initialize(game)
 		game.entities
-		return game
+		return {game, playerAssociation}
 	})
 
 	useMount(() => cycle(async() => {
@@ -30,9 +31,7 @@ export const Play = shadow((deck: Deck) => {
 	}))
 
 	const multiframe = useOnce(() => new Multiframe(game.entities.readonly))
-	useOnce(() => multiframe.spawn())
-	useOnce(() => multiframe.spawn())
-	const frames = multiframe.list()
+	const frames = multiframe.sync(playerAssociation)
 
 	return html`
 		<div class=shell>

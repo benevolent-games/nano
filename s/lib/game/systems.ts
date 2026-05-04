@@ -54,22 +54,35 @@ export const systems = [
 	)),
 
 	gsys("user inputs", (space, change) => () => {
-		// ingest exogenous player intents
-		for (const [playerTag, intents] of space.getExogenousPlayerIntents()) {
-			const entityId = space.playerEntityIds.guarantee(playerTag, () => change.create({intents}))
-			change.set(entityId, {intents})
+		// update player intents
+		const playerIntents = space.getPlayerIntents()
+		if (playerIntents) {
+
+			// add fresh players
+			for (const [id, intents] of playerIntents) {
+				if (space.entities.has(id))
+					change.set(id, {intents})
+			}
+
+			// delete stale players
+			for (const [id] of space.entities.select("intents")) {
+				if (!playerIntents.has(id))
+					change.delete(id)
+			}
 		}
 
 		// resolve player intents into actions
 		for (const [id, {intents}] of space.entities.select("intents")) {
-			const actor = space.actors.guarantee(id, () => {
-				const resolveActions = makeActionsResolver(bindings)
-				return new Actor(resolveActions, resolveActions([]))
-			})
-			actor.resolveActions(intents)
+			space.actors
+				.guarantee(id, () => {
+					const resolveActions = makeActionsResolver(bindings)
+					return new Actor(resolveActions, resolveActions([]))
+				})
+				.resolveActions(intents)
 		}
 
-		const playersThatAreAlive = [...space.entities.select("controlledBy")].map(([,c]) => c.controlledBy)
+		const playersThatAreAlive = [...space.entities.select("controlledBy")]
+			.map(([,c]) => c.controlledBy)
 
 		// spawn robots
 		for (const [id] of space.entities.select("intents")) {

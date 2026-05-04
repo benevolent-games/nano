@@ -15,13 +15,11 @@ export class Space {
 	timing = new Timing(consts.simulationHz.min, consts.simulationHz.max)
 	physics = new Physics()
 	physLattice = new Lattice<Phys>(new Vec2(8, 8))
-
-	playerEntityIds = new GMap<string, Id>()
 	actors = new GMap<Id, Actor>()
 
 	constructor(
 		public entities: EntitiesReadonly<GameComponents>,
-		public getExogenousPlayerIntents: () => Map<string, Intent[]>,
+		public getPlayerIntents: () => null | Map<string, Intent[]>,
 	) {}
 }
 

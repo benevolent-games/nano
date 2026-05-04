@@ -14,8 +14,8 @@ export class Game {
 	entities = new Entities<GameComponents>()
 	change = new Change<GameComponents>(delta => applyDelta(this.entities, delta))
 
-	constructor(getExogenousPlayerIntents: () => Map<string, Intent[]>) {
-		this.space = new Space(this.entities.readonly, getExogenousPlayerIntents)
+	constructor(getPlayerIntents: () => Map<string, Intent[]>) {
+		this.space = new Space(this.entities.readonly, getPlayerIntents)
 
 		const {fns, stats} = systematize(systems)
 		this.stats = stats
