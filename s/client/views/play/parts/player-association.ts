@@ -12,12 +12,12 @@ export class PlayerAssociation {
 	#playerByPort = new GMap<Port, Player>()
 
 	get playerIntents() {
-		tracker.notifyRead(this)
+		tracker.read(this)
 		return this.#playerIntents
 	}
 
 	consider(deck: Deck, now: number) {
-		tracker.notifyRead(this)
+		tracker.read(this)
 
 		let changes = 0
 		const activePlayers: Player[] = []
@@ -43,7 +43,7 @@ export class PlayerAssociation {
 			})
 
 		if (changes > 0)
-			tracker.notifyWrite(this)
+			tracker.write(this)
 
 		return this.playerIntents
 	}

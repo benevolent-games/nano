@@ -35,7 +35,7 @@ export const Play = shadow((deck: Deck) => {
 
 	return html`
 		<div class=shell>
-			${frames.map($frame => spinner($frame.value, Perspective))}
+			${frames.map($frame => spinner($frame(), Perspective))}
 		</div>
 	`
 })

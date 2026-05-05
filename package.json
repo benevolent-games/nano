@@ -16,15 +16,15 @@
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"dependencies": {
-		"@babylonjs/core": "^9.5.0",
-		"@babylonjs/loaders": "^9.5.0",
+		"@babylonjs/core": "^9.5.1",
+		"@babylonjs/loaders": "^9.5.1",
 		"@benev/archimedes": "^0.1.0-7",
 		"@benev/math": "^0.3.4",
 		"@benev/tact": "^0.2.0",
 		"@e280/shiny": "^0.1.0-21",
-		"@e280/sly": "^0.3.12",
-		"@e280/strata": "^0.3.5",
-		"@e280/stz": "^0.2.35",
+		"@e280/sly": "^0.4.0-next.2",
+		"@e280/strata": "^0.4.0-next.4",
+		"@e280/stz": "^0.2.36",
 		"lit": "^3.3.2"
 	},
 	"devDependencies": {

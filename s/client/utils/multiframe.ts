@@ -1,13 +1,13 @@
 
 import {EntitiesReadonly} from "@benev/archimedes"
-import {RMap, wait, WaitSignal} from "@e280/strata"
+import {RMap, wait, WaitDerived} from "@e280/strata"
 
 import {Viewframe, makeViewframe} from "./viewframe.js"
 import {GameComponents} from "../../lib/game/parts/components.js"
 import {PlayerAssociation} from "../views/play/parts/player-association.js"
 
 export class Multiframe {
-	#frames = new RMap<string, WaitSignal<Viewframe>>()
+	#frames = new RMap<string, WaitDerived<Viewframe>>()
 	constructor(private entities: EntitiesReadonly<GameComponents>) {}
 
 	listFrames() {
