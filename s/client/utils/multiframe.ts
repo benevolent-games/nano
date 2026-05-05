@@ -34,8 +34,10 @@ export class Multiframe {
 		}
 
 		for (const player of this.#frames.keys()) {
-			if (!playerIntents.has(player))
+			if (!playerIntents.has(player)) {
+				console.log("DESPAWN", player)
 				this.despawn(player)
+			}
 		}
 
 		return this.listFrames()

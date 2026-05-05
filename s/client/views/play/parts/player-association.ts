@@ -2,9 +2,8 @@
 import {GMap} from "@e280/stz"
 import {tracker} from "@e280/strata"
 import {makeId} from "@benev/archimedes"
-import {Deck, Intent} from "@benev/tact"
+import {Deck, Intent, Port} from "@benev/tact"
 
-type Port = string
 type Player = string
 
 export class PlayerAssociation {
@@ -22,15 +21,13 @@ export class PlayerAssociation {
 		let changes = 0
 		const activePlayers: Player[] = []
 
-		console.log("ports", [...deck.ports])
-
 		// update active
 		for (const port of deck.ports) {
 			const player = this.#playerByPort.guarantee(port, () => {
 				changes++
 				return makeId()
 			})
-			this.playerIntents.set(player, deck.resolvePort(port, now))
+			this.playerIntents.set(player, port.resolveIntents(now))
 			activePlayers.push(player)
 		}
 

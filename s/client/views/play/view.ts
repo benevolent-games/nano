@@ -17,12 +17,14 @@ export const Play = shadow((deck: Deck) => {
 	useName("play")
 	useCss(theme(), styleCss)
 
-	const {game, playerAssociation} = useOnce(() => {
+	const playerAssociation = useOnce(() => new PlayerAssociation())
+
+	const game = useOnce(() => {
 		const playerAssociation = new PlayerAssociation()
 		const game = new Game(() => playerAssociation.consider(deck, Date.now()))
 		initialize(game)
 		game.entities
-		return {game, playerAssociation}
+		return game
 	})
 
 	useMount(() => cycle(async() => {
@@ -30,6 +32,7 @@ export const Play = shadow((deck: Deck) => {
 		await nap(1000 / consts.simulationHz.max)
 	}))
 
+	console.log("render")
 	const multiframe = useOnce(() => new Multiframe(game.entities.readonly))
 	const frames = multiframe.sync(playerAssociation)
 
