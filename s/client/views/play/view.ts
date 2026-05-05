@@ -20,7 +20,6 @@ export const Play = shadow((deck: Deck) => {
 	const playerAssociation = useOnce(() => new PlayerAssociation())
 
 	const game = useOnce(() => {
-		const playerAssociation = new PlayerAssociation()
 		const game = new Game(() => playerAssociation.consider(deck, Date.now()))
 		initialize(game)
 		game.entities

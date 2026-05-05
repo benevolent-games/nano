@@ -25,7 +25,7 @@ export class Multiframe {
 	}
 
 	sync({playerIntents}: PlayerAssociation) {
-		console.log("sync")
+		console.log("sync", playerIntents.array(), this.#frames.array())
 		for (const player of playerIntents.keys()) {
 			if (!this.#frames.has(player)) {
 				console.log("SPAWN", player)

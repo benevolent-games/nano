@@ -7,12 +7,12 @@ import {Deck, Intent, Port} from "@benev/tact"
 type Player = string
 
 export class PlayerAssociation {
-	#playerIntents = new GMap<Player, Intent[]>
-	#playerByPort = new GMap<Port, Player>()
+	#intents = new GMap<Player, Intent[]>
+	#players = new GMap<Port, Player>()
 
 	get playerIntents() {
 		tracker.read(this)
-		return this.#playerIntents
+		return this.#intents
 	}
 
 	consider(deck: Deck, now: number) {
@@ -23,7 +23,7 @@ export class PlayerAssociation {
 
 		// update active
 		for (const port of deck.ports) {
-			const player = this.#playerByPort.guarantee(port, () => {
+			const player = this.#players.guarantee(port, () => {
 				changes++
 				return makeId()
 			})
