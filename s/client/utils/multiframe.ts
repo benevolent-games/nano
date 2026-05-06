@@ -4,43 +4,40 @@ import {RMap, wait, Waiter} from "@e280/strata"
 
 import {Viewframe, makeViewframe} from "./viewframe.js"
 import {GameComponents} from "../../lib/game/parts/components.js"
-import {PlayerAssociation} from "../views/play/parts/player-association.js"
+import {Players} from "../views/play/parts/players.js"
 
 export class Multiframe {
 	#frames = new RMap<string, Waiter<Viewframe>>()
 	constructor(private entities: EntitiesReadonly<GameComponents>) {}
 
-	listFrames() {
+	get frames() {
 		return [...this.#frames.values()]
 	}
 
-	spawn(player: string) {
+	#addPlayer(player: string) {
 		const $viewframe = wait(makeViewframe(this.entities))
 		this.#frames.set(player, $viewframe)
 		return $viewframe
 	}
 
-	despawn(player: string) {
+	#deletePlayer(player: string) {
 		this.#frames.delete(player)
 	}
 
-	sync({playerIntents}: PlayerAssociation) {
-		console.log("sync", playerIntents.array(), this.#frames.array())
+	sync({intents: playerIntents}: Players) {
 		for (const player of playerIntents.keys()) {
 			if (!this.#frames.has(player)) {
-				console.log("SPAWN", player)
-				this.spawn(player)
+				this.#addPlayer(player)
 			}
 		}
 
 		for (const player of this.#frames.keys()) {
 			if (!playerIntents.has(player)) {
-				console.log("DESPAWN", player)
-				this.despawn(player)
+				this.#deletePlayer(player)
 			}
 		}
 
-		return this.listFrames()
+		return this.frames
 	}
 }
 

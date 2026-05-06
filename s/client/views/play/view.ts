@@ -11,16 +11,18 @@ import {Game} from "../../../lib/game/game.js"
 import {Multiframe} from "../../utils/multiframe.js"
 import {Perspective} from "./subviews/perspective.js"
 import {initialize} from "../../../lib/game/initialize.js"
-import {PlayerAssociation} from "./parts/player-association.js"
+import {Players} from "./parts/players.js"
+import { effect } from "@e280/strata"
 
 export const Play = shadow((deck: Deck) => {
 	useName("play")
 	useCss(theme(), styleCss)
 
-	const playerAssociation = useOnce(() => new PlayerAssociation())
+	const players = useOnce(() => new Players(deck))
+	useMount(() => effect(() => players.update()))
 
 	const game = useOnce(() => {
-		const game = new Game(() => playerAssociation.consider(deck, Date.now()))
+		const game = new Game(() => players.resolveIntents(Date.now()))
 		initialize(game)
 		game.entities
 		return game
@@ -31,13 +33,12 @@ export const Play = shadow((deck: Deck) => {
 		await nap(1000 / consts.simulationHz.max)
 	}))
 
-	console.log("render")
 	const multiframe = useOnce(() => new Multiframe(game.entities.readonly))
-	const frames = multiframe.sync(playerAssociation)
+	useMount(() => effect(() => multiframe.sync(players)))
 
 	return html`
 		<div class=shell>
-			${frames.map($frame => spinner($frame(), Perspective))}
+			${multiframe.frames.map($frame => spinner($frame(), Perspective))}
 		</div>
 	`
 })
