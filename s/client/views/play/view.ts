@@ -1,8 +1,8 @@
 
 import {html} from "lit"
+import {Deck} from "@benev/tact"
 import {effect} from "@e280/strata"
-import {cycle, GMap, nap} from "@e280/stz"
-import {Deck, IntentBucket} from "@benev/tact"
+import {cycle, nap} from "@e280/stz"
 import {shadow, spinner, useCss, useMount, useName, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
@@ -11,20 +11,15 @@ import {theme} from "../../utils/theme.js"
 import {Game} from "../../../lib/game/game.js"
 import {Multiframe} from "../../utils/multiframe.js"
 import {Perspective} from "./subviews/perspective.js"
+import {ActorMap} from "../../../lib/game/utils/actor.js"
 import {initialize} from "../../../lib/game/initialize.js"
-import {PlayerId} from "../../../lib/game/utils/players.js"
 import {IntentBucketMap, Recruiter} from "./parts/recruiter.js"
-import {Actor, ActorMap} from "../../../lib/game/utils/actor.js"
-
-export class Seat {
-	actors = new GMap<PlayerId, Actor>()
-	intentBuckets = new GMap<PlayerId, IntentBucket>()
-}
 
 export const Play = shadow((deck: Deck) => {
 	useName("play")
 	useCss(theme(), styleCss)
 
+	// teeing off the game intent buckets vs meta intent buckets which are sampled at differing rates
 	const gamePlayers = useOnce(() => new IntentBucketMap())
 	const metaPlayers = useOnce(() => new IntentBucketMap())
 	const players = useOnce(() => new Recruiter(deck, [gamePlayers, metaPlayers]))
@@ -50,6 +45,7 @@ export const Play = shadow((deck: Deck) => {
 	})
 
 	useMount(() => cycle(async() => {
+		// TODO probably inject intents into the game simulation from here (not from a system fn which is inside-out)
 		game.simulate()
 		await nap(1000 / consts.simulationHz.max)
 	}))
