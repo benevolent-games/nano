@@ -2,6 +2,10 @@
 import {asBindings} from "@benev/tact"
 
 export const bindings = asBindings({
+	meta: {
+		menu: ["or", "KeyT", "Esc", "Tab"],
+	},
+
 	spectator: {
 		spawn: "keyboard.any",
 	},

@@ -1,11 +1,8 @@
 
 import {lifecycle} from "@benev/archimedes"
 import {Circle, Rect, Vec2} from "@benev/math"
-import {makeActionsResolver} from "@benev/tact"
 
 import {gsys} from "./utils/gsys.js"
-import {Actor} from "./utils/actor.js"
-import {bindings} from "./parts/bindings.js"
 import {Phys, PhysBox} from "./utils/phys.js"
 import {Gridphys} from "./systems/utils/gridphys.js"
 import {Gridspace} from "../gridworld/utils/gridspace.js"
@@ -54,31 +51,26 @@ export const systems = [
 	)),
 
 	gsys("user inputs", (space, change) => () => {
-		// update player intents
-		const playerIntents = space.getPlayerIntents()
-		if (playerIntents) {
-			for (const [id, intents] of playerIntents) {
-				if (space.entities.has(id))
-					change.merge(id, {intents})
-				else
-					change.set(id, {intents})
+		// lifecycling for player entities based on players map
+		if (space.players) {
+
+			// add fresh players
+			for (const [id, playerIntents] of space.players) {
+				const intents = playerIntents.take()
+				if (space.entities.has(id)) change.merge(id, {intents})
+				else change.set(id, {intents})
 			}
 
 			// delete stale players
 			for (const [id] of space.entities.select("intents")) {
-				if (!playerIntents.has(id))
+				if (!space.players.has(id))
 					change.delete(id)
 			}
 		}
 
 		// resolving actions
 		for (const [id, {intents}] of space.entities.select("intents")) {
-			space.actors
-				.guarantee(id, () => {
-					const resolveActions = makeActionsResolver(bindings)
-					return new Actor(resolveActions)
-				})
-				.resolveActions(intents)
+			space.actors.getActor(id).resolveActions(intents)
 		}
 
 		const playersThatAreAlive = [...space.entities.select("controlledBy")]

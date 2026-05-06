@@ -6,6 +6,9 @@ export const stockProfiles = {
 	standard: {label: "📜standard", bindings},
 
 	xinput: {label: "🎮xinput", bindings: asBindings<typeof bindings>({
+		meta: {
+			menu: ["or", "gamepad.button.10", "KeyT", "Esc", "Tab"],
+		},
 		spectator: {
 			spawn: "gamepad.button.any",
 		},
@@ -27,6 +30,9 @@ export const stockProfiles = {
 	})},
 
 	micro: {label: "🦠micro", bindings: asBindings<typeof bindings>({
+		meta: {
+			menu: ["or", "gamepad.button.6", "KeyT", "Esc", "Tab"],
+		},
 		spectator: {
 			spawn: "gamepad.button.any",
 		},

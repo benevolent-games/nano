@@ -3,8 +3,8 @@ import {EntitiesReadonly} from "@benev/archimedes"
 import {RMap, wait, Waiter} from "@e280/strata"
 
 import {Viewframe, makeViewframe} from "./viewframe.js"
+import {Recruiter} from "../views/play/parts/recruiter.js"
 import {GameComponents} from "../../lib/game/parts/components.js"
-import {Players} from "../views/play/parts/players.js"
 
 export class Multiframe {
 	#frames = new RMap<string, Waiter<Viewframe>>()
@@ -24,15 +24,15 @@ export class Multiframe {
 		this.#frames.delete(player)
 	}
 
-	sync({intents: playerIntents}: Players) {
-		for (const player of playerIntents.keys()) {
+	sync(recruiter: Recruiter) {
+		for (const player of recruiter.listPlayers()) {
 			if (!this.#frames.has(player)) {
 				this.#addPlayer(player)
 			}
 		}
 
 		for (const player of this.#frames.keys()) {
-			if (!playerIntents.has(player)) {
+			if (!recruiter.has(player)) {
 				this.#deletePlayer(player)
 			}
 		}
