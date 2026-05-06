@@ -58,13 +58,10 @@ export const systems = [
 		const playerIntents = space.getPlayerIntents()
 		if (playerIntents) {
 			for (const [id, intents] of playerIntents) {
-				change.set(id, {intents})
-				space.actors
-					.guarantee(id, () => {
-						const resolveActions = makeActionsResolver(bindings)
-						return new Actor(resolveActions, resolveActions([]))
-					})
-					.resolveActions(intents)
+				if (space.entities.has(id))
+					change.merge(id, {intents})
+				else
+					change.set(id, {intents})
 			}
 
 			// delete stale players
@@ -74,15 +71,24 @@ export const systems = [
 			}
 		}
 
+		// resolving actions
+		for (const [id, {intents}] of space.entities.select("intents")) {
+			space.actors
+				.guarantee(id, () => {
+					const resolveActions = makeActionsResolver(bindings)
+					return new Actor(resolveActions)
+				})
+				.resolveActions(intents)
+		}
+
 		const playersThatAreAlive = [...space.entities.select("controlledBy")]
 			.map(([,c]) => c.controlledBy)
 
 		// spawn robots
 		for (const [id] of space.entities.select("intents")) {
+			if (playersThatAreAlive.includes(id)) continue
 			const actor = space.actors.need(id)
-			const {spawn} = actor.actions.spectate
-			if (spawn.changed) console.log("SPAWNPLZ", spawn.previous, spawn.value)
-			if (actor.actions.spectate.spawn.changedDown && !playersThatAreAlive.includes(id)) {
+			if (actor.actions.spectator.spawn.changedDown) {
 				change.create({
 					controlledBy: id,
 					graphic: "robot",

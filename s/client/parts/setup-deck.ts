@@ -26,13 +26,12 @@ export async function setupDeck() {
 
 	onPad(pad => {
 		const handle = `(${pad.gamepad.index + 1}) ${pad.gamepad.id}`
-		const controller = deck.createController(handle, bindings, new GamepadDevice(pad))
+		const controller = deck.createController(handle, stockProfiles.xinput.bindings, new GamepadDevice(pad))
 		labels.set(controller, `🎮${handle}`)
 
 		const port = deck.createPort()
 		port.plug(controller)
 
-		// TODO we need to delete the port and remove this async shit
 		console.log("new controller and port", controller.handle)
 
 		return () => {

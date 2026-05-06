@@ -2,9 +2,10 @@
 import {asBindings} from "@benev/tact"
 
 export const bindings = asBindings({
-	spectate: {
+	spectator: {
 		spawn: "keyboard.any",
 	},
+
 	robot: {
 
 		/** activate primary equipment, eg shoot weapon */

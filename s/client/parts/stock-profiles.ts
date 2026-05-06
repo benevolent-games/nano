@@ -6,7 +6,7 @@ export const stockProfiles = {
 	standard: {label: "📜standard", bindings},
 
 	xinput: {label: "🎮xinput", bindings: asBindings<typeof bindings>({
-		spectate: {
+		spectator: {
 			spawn: "gamepad.button.any",
 		},
 		robot: {
@@ -27,7 +27,7 @@ export const stockProfiles = {
 	})},
 
 	micro: {label: "🦠micro", bindings: asBindings<typeof bindings>({
-		spectate: {
+		spectator: {
 			spawn: "gamepad.button.any",
 		},
 		robot: {

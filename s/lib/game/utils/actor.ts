@@ -1,11 +1,13 @@
 
-import {Actions, makeActionsResolver} from "@benev/tact"
-import {bindings} from "../parts/bindings.js"
+import {Bindings, makeActionsResolver} from "@benev/tact"
 
-export class Actor {
+export class Actor<B extends Bindings> {
+	readonly actions
+
 	constructor(
-		public resolveActions: ReturnType<typeof makeActionsResolver>,
-		public actions: Actions<typeof bindings>,
-	) {}
+			public resolveActions: ReturnType<typeof makeActionsResolver<B>>,
+		) {
+		this.actions = resolveActions([])
+	}
 }
 
