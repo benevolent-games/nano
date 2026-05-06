@@ -1,6 +1,6 @@
 
 import {html} from "lit"
-import {Deck} from "@benev/tact"
+import {DeskView} from "@benev/tact/ui"
 import {ShinyButton} from "@e280/shiny"
 import {hashNav, hashSignal, router, shadowElement, useCss, useOnce} from "@e280/sly"
 
@@ -8,11 +8,13 @@ import {Play} from "../play/view.js"
 import styleCss from "./style.css.js"
 import {theme} from "../../utils/theme.js"
 import {Gridgen} from "../gridgen/view.js"
+import {setupDeck} from "../../parts/setup-deck.js"
 
-export const NanoApp = (deck: Deck) => shadowElement(() => {
+export const NanoApp = shadowElement(() => {
 	useCss(theme(), styleCss)
 
 	const $hash = useOnce(() => hashSignal())
+	const {deck, getControllerLabel} = useOnce(() => setupDeck())
 
 	const nav = useOnce(() => hashNav({
 		"home": () => ``,
@@ -28,6 +30,7 @@ export const NanoApp = (deck: Deck) => shadowElement(() => {
 					${ShinyButton("gridgen", {onClick: nav.gridgen})}
 					${ShinyButton("play", {onClick: nav.play, vibe: "happy"})}
 				</nav>
+				${DeskView(deck, {getControllerLabel})}
 			</section>
 		`,
 		"gridgen": () => Gridgen(),
