@@ -18,8 +18,8 @@ export const makeRenderingFns = (realm: Realm) => [
 		const {cam} = realm.venue
 		for (const [_id, components] of realm.entities.select("controlledBy", "position")) {
 			if (components.controlledBy === realm.playerId) {
-				const position = Vec2.from(components.position)
-				cam.focal = cam.focal.dup().lerp(position, 0.1)
+				realm.focal.from(components.position)
+				cam.focal = cam.focal.dup().lerp(realm.focal, 0.1)
 				cam.swivel = degrees(45)
 				cam.zoom = 20
 			}
