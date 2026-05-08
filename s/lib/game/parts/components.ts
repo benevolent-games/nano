@@ -23,6 +23,9 @@ export type GameComponents = AsComponents<{
 	/** how much oomph this entity has when it tries to move */
 	speed: number
 
+	/** angle in radians that the camera is swiveled */
+	swivel: number
+
 	/** direction where the user wants to move */
 	desire: XyArray
 

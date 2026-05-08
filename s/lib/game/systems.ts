@@ -1,6 +1,6 @@
 
 import {lifecycle} from "@benev/archimedes"
-import {Circle, Rect, Vec2} from "@benev/math"
+import {Circle, degrees, Rect, Vec2} from "@benev/math"
 
 import {gsys} from "./utils/gsys.js"
 import {Phys, PhysBox} from "./utils/phys.js"
@@ -84,6 +84,7 @@ export const systems = [
 				change.create({
 					controlledBy: id,
 					graphic: "robot",
+					swivel: degrees(45),
 					desire: [0, 0],
 					position: [0, 0],
 					physical: true,
@@ -107,6 +108,7 @@ export const systems = [
 				const y = a.move_down.value - a.move_up.value
 				const desire = new Gridspace(x, y)
 					.clampMagnitude(1)
+					.rotate(components.swivel ?? 0)
 					.array()
 				change.merge(id, {desire})
 			}
