@@ -1,5 +1,5 @@
 
-import {Scalar, Vec2} from "@benev/math"
+import {degrees, Scalar, Vec2} from "@benev/math"
 import {disposer} from "@e280/stz"
 import {lifecycle} from "@benev/archimedes"
 
@@ -14,10 +14,15 @@ export const makeRenderingFns = (realm: Realm) => [
 		realm.timing.update()
 	},
 
-	function updateFocal() {
+	function updateCam() {
+		const {cam} = realm.venue
 		for (const [_id, components] of realm.entities.select("controlledBy", "position")) {
-			const position = Vec2.from(components.position)
-			realm.focal.set(position)
+			if (components.controlledBy === realm.playerId) {
+				const position = Vec2.from(components.position)
+				cam.focal = cam.focal.dup().lerp(position, 0.1)
+				cam.swivel = degrees(45)
+				cam.zoom = 20
+			}
 		}
 	},
 

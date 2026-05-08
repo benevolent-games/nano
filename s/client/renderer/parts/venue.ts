@@ -3,23 +3,16 @@ import {makeId} from "@benev/archimedes"
 import {Scene} from "@babylonjs/core/scene.js"
 import {Color4} from "@babylonjs/core/Maths/math.color.js"
 import {Vector3} from "@babylonjs/core/Maths/math.vector.js"
-import {ArcRotateCamera} from "@babylonjs/core/Cameras/arcRotateCamera.js"
 import {HemisphericLight} from "@babylonjs/core/Lights/hemisphericLight.js"
 import {setOpenGLOrientationForUV} from "@babylonjs/core/Compat/compatibilityOptions.js"
 
+import {Cam} from "./cam.js"
+import {AnyCanvas} from "./babtools.js"
 import {makeEngine} from "./make-engine.js"
-import {AnyCanvas, AnyEngine} from "./babtools.js"
-import {resolveGridspace} from "../utils/resolve-gridspace.js"
-import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
-export type Venue = {
-	engine: AnyEngine
-	scene: Scene
-	camera: ArcRotateCamera
-	light: HemisphericLight
-}
+export type Venue = Awaited<ReturnType<typeof makeVenue>>
 
-export async function makeVenue(canvas: AnyCanvas): Promise<Venue> {
+export async function makeVenue(canvas: AnyCanvas) {
 	const engine = await makeEngine({
 		canvas,
 		webgl: {},
@@ -40,17 +33,9 @@ export async function makeVenue(canvas: AnyCanvas): Promise<Venue> {
 	const light = new HemisphericLight(makeId(), new Vector3(0, 1, 0), scene)
 	light.intensity = 1.0
 
-	const camera = new ArcRotateCamera(
-		"camera",
-		-Math.PI / 2,   // alpha
-		0.15,           // beta -- near topdown, but not exactly 0
-		90,             // radius / zoom distance
-		resolveGridspace(new Gridspace(32, 32)),
-		scene,
-	)
+	const cam = new Cam(scene)
+	scene.activeCamera = cam.camera
 
-	scene.activeCamera = camera
-
-	return {engine, scene, light, camera}
+	return {engine, scene, light, cam}
 }
 

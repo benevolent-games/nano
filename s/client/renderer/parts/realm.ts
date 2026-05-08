@@ -7,16 +7,18 @@ import {wall} from "../props/wall.js"
 import {robot} from "../props/robot.js"
 import {floor} from "../props/floor.js"
 import {Timing} from "../../../lib/tools/timing.js"
+import {PlayerId} from "../../../lib/game/utils/players.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 import {GameComponents} from "../../../lib/game/parts/components.js"
 
 export class Realm {
 	pools
-	focal = new Gridspace()
 	timing = new Timing(10, 240)
+	readonly focal = new Gridspace()
 
 	constructor(
 			public entities: EntitiesReadonly<GameComponents>,
+			public playerId: PlayerId,
 			public venue: Venue,
 		) {
 		const {scene} = venue
