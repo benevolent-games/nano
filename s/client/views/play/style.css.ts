@@ -5,8 +5,6 @@ export default css`
 .shell {
 	display: flex;
 	height: 100%;
-	padding: 1em;
-	gap: 1em;
 }
 
 .perspective {
@@ -30,6 +28,7 @@ canvas {
 	position: absolute;
 	top: 0;
 
+	opacity: 0.4;
 	padding: var(--pad);
 
 	font-family: monospace;

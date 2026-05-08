@@ -18,6 +18,13 @@ export default css`
 		justify-content: center;
 		gap: var(--pad);
 	}
+
+	[view="desk"] {
+		display: flex;
+		justify-content: center;
+		padding: var(--pad);
+		background: #0004;
+	}
 }
 
 `

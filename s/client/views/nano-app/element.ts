@@ -26,10 +26,12 @@ export const NanoApp = shadowElement(() => {
 		"": () => html`
 			<section class=homeplate>
 				<slot></slot>
+
 				<nav>
 					${ShinyButton("gridgen", {onClick: nav.gridgen})}
 					${ShinyButton("play", {onClick: nav.play, vibe: "happy"})}
 				</nav>
+
 				${DeskView(deck, {getControllerLabel})}
 			</section>
 		`,
