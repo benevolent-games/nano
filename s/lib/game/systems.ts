@@ -1,9 +1,11 @@
 
+import {Vec2} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
-import {Circle, degrees, Rect, Vec2} from "@benev/math"
 
 import {gsys} from "./utils/gsys.js"
 import {Phys, PhysBox} from "./utils/phys.js"
+import {getShape} from "./utils/get-shape.js"
+import {makeRobot} from "./archetypes/robot.js"
 import {Gridphys} from "./systems/utils/gridphys.js"
 import {Gridspace} from "../gridworld/utils/gridspace.js"
 
@@ -27,17 +29,20 @@ export const systems = [
 
 	gsys("phys bodies", (space) => lifecycle(
 		space.entities,
-		["physical", "position", "size"],
+		["physical", "position"],
 		(id, components) => {
-			const rect = Rect.fromCenter(Vec2.from(components.position), Vec2.from(components.size))
+			const shape = getShape(components)
+			if (!shape) throw new Error(`physical with position lacks required size or radius`)
+
+			const rect = shape.boundingBox()
 			const phys = new PhysBox(id, rect, components.mass)
 			space.physLattice.upsert(phys, rect)
 
 			return {
 				tick(components) {
-					const position = Vec2.from(components.position)
-					const size = Vec2.from(components.size)
-					const freshRect = Rect.fromCenter(position, size)
+					const freshShape = getShape(components)
+					if (!freshShape) throw new Error(`physical with position lacks required size or radius`)
+					const freshRect = freshShape.boundingBox()
 					if (!phys.rect.equals(freshRect)) {
 						phys.rect = freshRect
 						space.physLattice.upsert(phys, phys.rect)
@@ -86,24 +91,11 @@ export const systems = [
 			.map(([,c]) => c.controlledBy)
 
 		// spawn robots
-		for (const [id] of space.entities.select("intents")) {
-			if (playersThatAreAlive.includes(id)) continue
-			const actor = space.actors.need(id)
-			if (actor.actions.spectator.spawn.changedDown) {
-				change.create({
-					controlledBy: id,
-					graphic: "robot",
-					swivel: degrees(45),
-					desire: [0, 0],
-					position: [0, 0],
-					physical: true,
-					radius: 0.4,
-					mass: 1,
-					lerp: 0.4,
-					velocity: [0, 0],
-					speed: 5,
-				})
-			}
+		for (const [controlledBy] of space.entities.select("intents")) {
+			if (playersThatAreAlive.includes(controlledBy)) continue
+			const actor = space.actors.need(controlledBy)
+			if (actor.actions.spectator.spawn.changedDown)
+				change.create({...makeRobot(), controlledBy})
 		}
 
 		// apply actions to various components
@@ -152,8 +144,6 @@ export const systems = [
 				.from(components.velocity)
 				.mulBy(space.timing.delta / 1000)
 
-			const original = Vec2.from(components.position)
-			const position = original.dup().add(velocity)
 
 			const hit = (physes: Iterable<Phys>) => {
 				for (const phys of physes)
@@ -162,27 +152,32 @@ export const systems = [
 				return false
 			}
 
-			if (components.physical) {
-				if (components.size) {
-					const size = Vec2.from(components.size)
-					const rect = Rect.fromCenter(position, size)
-					const collision = space.physLattice.query(rect)
-					if (!hit(collision))
-						change.merge(id, {position: position.array()})
-				}
-				else if (components.radius) {
-					const circle = new Circle(position, components.radius)
-					const collision = space.physLattice.query(circle.boundingBox())
-					if (!hit(collision))
-						change.merge(id, {position: position.array()})
-				}
-				else {
-					change.merge(id, {position: position.array()})
-				}
+			const canMoveTo = (position: Vec2) => {
+				if (!components.physical) return true
+				const shape = getShape({position: position.array(), size: components.size, radius: components.radius})
+				if (shape) return !hit(space.physLattice.query(shape.boundingBox()))
+				return true
 			}
-			else {
+
+			const original = Vec2.from(components.position)
+			let position = original.dup()
+
+			// attempt x
+			{
+				const next = position.dup().add(new Vec2(velocity.x, 0))
+				if (canMoveTo(next))
+					position = next
+			}
+
+			// attempt y
+			{
+				const next = position.dup().add(new Vec2(0, velocity.y))
+				if (canMoveTo(next))
+					position = next
+			}
+
+			if (!position.equals(original))
 				change.merge(id, {position: position.array()})
-			}
 		}
 	}),
 ]
