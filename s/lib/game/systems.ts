@@ -62,9 +62,18 @@ export const systems = [
 			}
 
 			// delete stale players
-			for (const [id] of space.entities.select("intents")) {
-				if (!space.players.has(id))
-					change.delete(id)
+			for (const [playerId] of space.entities.select("intents")) {
+				if (!space.players.has(playerId)) {
+
+					// delete player entity
+					change.delete(playerId)
+
+					// delete any robots this player owns
+					for (const [id2, c] of space.entities.select("controlledBy")) {
+						if (c.controlledBy === playerId)
+							change.delete(id2)
+					}
+				}
 			}
 		}
 
