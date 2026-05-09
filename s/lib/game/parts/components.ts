@@ -11,6 +11,9 @@ export type GameComponents = AsComponents<{
 	/** which player entity we're controlled by */
 	controlledBy: Id
 
+	/** specifies the total gridworld at play */
+	gridworld: {extent: XyArray}
+
 	/** section of grid tiles, compactly encoded as a hex string */
 	gridchunk: string
 

@@ -4,7 +4,7 @@ import {archetype} from "../utils/archetype.js"
 
 export const makeRobot = () => archetype({
 	graphic: "robot",
-	swivel: degrees(45),
+	swivel: degrees(0),
 	desire: [0, 0],
 	position: [0, 0],
 	rotation: 0,

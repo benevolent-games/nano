@@ -1,18 +1,36 @@
 
 import {lifecycle} from "@benev/archimedes"
-import {Circular, degrees, Vec2} from "@benev/math"
+import {Circular, degrees, Randy, Vec2} from "@benev/math"
 
 import {gsys} from "./utils/gsys.js"
+import {need} from "../tools/need.js"
 import {Phys, PhysBox} from "./utils/phys.js"
 import {getShape} from "./utils/get-shape.js"
 import {makeRobot} from "./archetypes/robot.js"
 import {Gridphys} from "./systems/utils/gridphys.js"
+import {initGridworld} from "../gridworld/utils/grid.js"
 import {Gridspace} from "../gridworld/utils/gridspace.js"
+import {chooseSpawnpoint} from "../gridworld/utils/choose-spawnpoint.js"
 
 export const systems = [
 	gsys("timing", (space) => () => {
 		space.timing.update()
 	}),
+
+	gsys("gridworld", (space) => lifecycle(
+		space.entities,
+		["gridworld"],
+		(_id, components) => {
+			const extent = Vec2.from(components.gridworld.extent)
+			space.gridworld = initGridworld(extent)
+			return {
+				tick: () => {},
+				exit: () => {
+					space.gridworld = undefined
+				},
+			}
+		},
+	)),
 
 	gsys("phys grid", (space) => lifecycle(
 		space.entities,
@@ -94,8 +112,11 @@ export const systems = [
 		for (const [controlledBy] of space.entities.select("intents")) {
 			if (playersThatAreAlive.includes(controlledBy)) continue
 			const actor = space.actors.need(controlledBy)
-			if (actor.actions.spectator.spawn.changedDown)
-				change.create({...makeRobot(), controlledBy})
+			if (actor.actions.spectator.spawn.changedDown) {
+				const gridworld = need(space.gridworld)
+				const position = chooseSpawnpoint(gridworld, new Randy(space.timing.tick)).array()
+				change.create({...makeRobot(), controlledBy, position})
+			}
 		}
 
 		// apply actions to various components
@@ -124,11 +145,9 @@ export const systems = [
 			if ("rotation" in components && !components.sprint) {
 				const x = a.look_left.value - a.look_right.value
 				const y = a.look_down.value - a.look_up.value
-				const lookIntent = new Gridspace(x, y)
-					.clampMagnitude(1)
-					.rotate(components.swivel ?? 0)
+				const lookIntent = new Gridspace(x, y).clampMagnitude(1)
 				if (lookIntent.magnitude() > 0.1) {
-					const rotation = lookIntent.rotation()
+					const rotation = lookIntent.rotation() + degrees(90) - (components.swivel ?? 0)
 					change.merge(id, {rotation})
 				}
 			}

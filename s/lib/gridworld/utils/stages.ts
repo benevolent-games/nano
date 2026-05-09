@@ -215,7 +215,7 @@ export const southernFlooringGradient = (
 	noiseScale: number,
 ) => {
 	const noise = makeNoiseSampler(randy.random)
-	const fadeStartY = grid.extent.y * (1 - fraction)
+	const fadeStartY = Math.ceil(grid.extent.y * (1 - fraction))
 
 	forEachCell(grid, point => {
 		if (point.y < fadeStartY)

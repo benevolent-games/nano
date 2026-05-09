@@ -5,8 +5,8 @@ import {initGridworld} from "./utils/grid.js"
 import {carveDrunkenPathsBetweenWaypoints, getPointsAroundBorder, getRandomPointNearMiddle, southernFlooringGradient, splotchySubstrate} from "./utils/stages.js"
 
 export const generateGridworld = (seed: number, extent: Xy): Gridworld => {
-	const grid = initGridworld(Vec2.from(extent))
 	const randy = new Randy(seed)
+	const grid = initGridworld(Vec2.from(extent))
 	const navel = getRandomPointNearMiddle(grid, randy, 0.25)
 
 	splotchySubstrate({
