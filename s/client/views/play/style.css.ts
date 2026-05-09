@@ -5,6 +5,7 @@ export default css`
 .shell {
 	display: flex;
 	height: 100%;
+	gap: 0.2em;
 }
 
 .perspective {

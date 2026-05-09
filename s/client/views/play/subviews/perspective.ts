@@ -4,18 +4,19 @@ import {light, useMount, useSignal} from "@e280/sly"
 
 import {Viewframe} from "../../../utils/viewframe.js"
 import {rafloop} from "../../../renderer/utils/rafloop.js"
-import {useCanvasSizing} from "../../../utils/use-canvas-sizing.js"
+import {useResizeObserver} from "../../../utils/use-resize-observer.js"
 
 export const Perspective = light(({realm, renderer, canvas}: Viewframe) => {
+	const $resolution = useSignal(0.5)
 	const $ren = useSignal(0)
 	const $bab = useSignal(0)
 	const $all = useSignal(0)
 
 	useMount(() => () => realm.dispose())
 
-	useCanvasSizing(canvas, rect => {
-		canvas.width = rect.width
-		canvas.height = rect.height
+	useResizeObserver(canvas, rect => {
+		canvas.width = Math.floor(rect.width * $resolution()) || 1
+		canvas.height = Math.floor(rect.height * $resolution()) || 1
 	})
 
 	useMount(() => rafloop(() => {
@@ -57,5 +58,4 @@ export const Perspective = light(({realm, renderer, canvas}: Viewframe) => {
 		</div>
 	`
 })
-
 

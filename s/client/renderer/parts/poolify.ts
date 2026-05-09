@@ -18,8 +18,8 @@ export function poolify(prop: Prop): () => PoolMember<Graphic> {
 				setPosition: (gridspace, height) => {
 					instance.position = resolveGridspace(gridspace, height)
 				},
-				setRotation: (_radians) => {
-					throw new Error("TODO")
+				setRotation: (radians) => {
+					instance.rotation.y = radians
 				},
 			},
 		}

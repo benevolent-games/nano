@@ -1,6 +1,6 @@
 
-import {Vec2} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
+import {Circular, degrees, Vec2} from "@benev/math"
 
 import {gsys} from "./utils/gsys.js"
 import {Phys, PhysBox} from "./utils/phys.js"
@@ -110,8 +110,27 @@ export const systems = [
 				const desire = new Gridspace(x, y)
 					.clampMagnitude(1)
 					.rotate(components.swivel ?? 0)
-					.array()
-				change.merge(id, {desire})
+				change.merge(id, {desire: desire.array()})
+
+				if ("rotation" in components) {
+					if (desire.magnitude() > 0.1) {
+						const target = degrees(270) - desire.rotation()
+						const rotation = Circular.lerp(components.rotation ?? 0, target, components.lerp ?? 1)
+						change.merge(id, {rotation})
+					}
+				}
+			}
+
+			if ("rotation" in components && !components.sprint) {
+				const x = a.look_left.value - a.look_right.value
+				const y = a.look_down.value - a.look_up.value
+				const lookIntent = new Gridspace(x, y)
+					.clampMagnitude(1)
+					.rotate(components.swivel ?? 0)
+				if (lookIntent.magnitude() > 0.1) {
+					const rotation = lookIntent.rotation()
+					change.merge(id, {rotation})
+				}
 			}
 
 			if ("sprint" in components) {

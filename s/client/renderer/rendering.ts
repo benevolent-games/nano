@@ -1,7 +1,7 @@
 
 import {disposer} from "@e280/stz"
 import {lifecycle} from "@benev/archimedes"
-import {degrees, Scalar, Vec2} from "@benev/math"
+import {Circular, Scalar, Vec2} from "@benev/math"
 
 import {Realm} from "./parts/realm.js"
 import {Proximal} from "./utils/proximal.js"
@@ -16,11 +16,11 @@ export const makeRenderingFns = (realm: Realm) => [
 
 	function updateCam() {
 		const {cam} = realm.venue
-		for (const [_id, components] of realm.entities.select("controlledBy", "position")) {
+		for (const [_id, components] of realm.entities.select("controlledBy", "position", "swivel")) {
 			if (components.controlledBy === realm.playerId) {
 				realm.focal.from(components.position)
 				cam.focal = cam.focal.dup().lerp(realm.focal, 0.1)
-				cam.swivel = degrees(45)
+				cam.swivel = components.swivel
 				cam.zoom = 20
 			}
 		}
@@ -67,8 +67,9 @@ export const makeRenderingFns = (realm: Realm) => [
 		}
 	}),
 
-	lifecycle(realm.entities, ["position", "graphic", "lerp"], (_id, components) => {
+	lifecycle(realm.entities, ["position", "graphic", "rotation", "lerp"], (_id, components) => {
 		const gridspace = new Gridspace(...components.position)
+		let rotation = components.rotation
 		const [robot, releaseRobot] = realm.pools.robots.lease()
 		return {
 			tick(components) {
@@ -83,6 +84,8 @@ export const makeRenderingFns = (realm: Realm) => [
 						.mulBy(factor)
 				)
 				robot.setPosition(gridspace, 1)
+				rotation = Circular.lerp(rotation, components.rotation, components.lerp ?? 1)
+				robot.setRotation(rotation)
 			},
 			exit() {
 				releaseRobot()
