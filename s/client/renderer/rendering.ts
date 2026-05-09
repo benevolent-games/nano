@@ -28,7 +28,7 @@ export const makeRenderingFns = (realm: Realm) => [
 
 	lifecycle(realm.entities, ["gridchunk", "position"], (_id, components) => {
 		const chunk = new Gridchunk(new Gridspace().from(components.position))
-		const proximal = new Proximal(realm.focal, 20)
+		const proximal = new Proximal(realm.focal, 40)
 		const wipe = disposer()
 
 		function renderFloorsAndWalls(gridchunk: string) {

@@ -5,7 +5,7 @@ import {chunkify} from "../gridworld/chunk/chunkify.js"
 import {generateGridworld} from "../gridworld/generate.js"
 
 export function initialize(game: Game) {
-	const extent = Vec2.all(256)
+	const extent = Vec2.all(128)
 	const gridworld = generateGridworld(1, extent)
 
 	game.space.gridworld = gridworld

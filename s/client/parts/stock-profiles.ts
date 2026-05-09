@@ -15,7 +15,7 @@ export const stockProfiles = {
 		robot: {
 			primary: "gamepad.axis.7",
 			secondary: "gamepad.axis.8",
-			sprint: "gamepad.button.11",
+			sprint: ["or", "gamepad.button.11", "gamepad.button.4"],
 			use: "gamepad.button.6",
 			drop: "gamepad.button.5",
 			move_up: "gamepad.axis.2.pos",
