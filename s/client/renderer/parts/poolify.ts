@@ -5,15 +5,15 @@ import {instantiate, Prop} from "./babtools.js"
 import {resolveGridspace} from "../utils/resolve-gridspace.js"
 
 export function poolify(prop: Prop): () => PoolMember<Graphic> {
-	prop.isVisible = false
+	prop.setEnabled(false)
 
 	return () => {
 		const instance = instantiate(prop)
-		instance.isVisible = true
+		instance.setEnabled(true)
 
 		return {
-			enable: () => { instance.isVisible = true },
-			disable: () => { instance.isVisible = false },
+			enable: () => { instance.setEnabled(true) },
+			disable: () => { instance.setEnabled(false) },
 			item: {
 				setPosition: (gridspace, height) => {
 					instance.position = resolveGridspace(gridspace, height)

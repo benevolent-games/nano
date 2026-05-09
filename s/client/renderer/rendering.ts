@@ -1,7 +1,7 @@
 
-import {degrees, Scalar, Vec2} from "@benev/math"
 import {disposer} from "@e280/stz"
 import {lifecycle} from "@benev/archimedes"
+import {degrees, Scalar, Vec2} from "@benev/math"
 
 import {Realm} from "./parts/realm.js"
 import {Proximal} from "./utils/proximal.js"
