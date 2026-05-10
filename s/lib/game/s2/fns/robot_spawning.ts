@@ -17,7 +17,9 @@ export const robot_spawning = system(pod => () => {
 		const actor = pod.actors.need(controlledBy)
 		if (actor.actions.spectator.spawn.changedDown) {
 			const gridworld = need(pod.gridworld)
-			const position = chooseSpawnpoint(gridworld, new Randy(pod.timing.tick)).array()
+			const position = chooseSpawnpoint(gridworld, new Randy(pod.timing.tick))
+				.add_(0.5, 0.5)
+				.array()
 			pod.change.create({...makeRobot(), controlledBy, position})
 		}
 	}

@@ -7,8 +7,8 @@ import {resolveGridspace} from "../utils/resolve-gridspace.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
 export class Cam {
-	#camera
 	#focal
+	#camera
 	#swivelCenter = degrees(-90)
 
 	constructor(scene: Scene) {
@@ -16,11 +16,12 @@ export class Cam {
 		this.#camera = new ArcRotateCamera(
 			"camera",
 			this.#swivelCenter, // swivel
-			degrees(20), // verticality
-			20,
+			degrees(10), // verticality
+			8,
 			resolveGridspace(this.#focal),
 			scene,
 		)
+		this.#camera.fov = degrees(80)
 	}
 
 	get focal() {

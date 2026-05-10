@@ -9,7 +9,7 @@ export const makeRobot = () => archetype({
 	position: [0, 0],
 	rotation: 0,
 	physical: true,
-	radius: 0.40,
+	radius: 0.30,
 	mass: 1,
 	lerp: 0.4,
 	velocity: [0, 0],

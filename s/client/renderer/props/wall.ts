@@ -5,7 +5,7 @@ import {MeshBuilder} from "@babylonjs/core/Meshes/meshBuilder.js"
 import {quickMaterial} from "../parts/quick-material.js"
 
 export function wall(scene: Scene) {
-	const s = 1
+	const s = 0.9
 	const mesh = MeshBuilder.CreateBox(makeId(), {width: s, depth: s, height: s}, scene)
 	mesh.material = quickMaterial(scene, 0.32, 0.34, 0.38)
 	return mesh

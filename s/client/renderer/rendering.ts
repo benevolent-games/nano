@@ -21,7 +21,6 @@ export const makeRenderingFns = (realm: Realm) => [
 				realm.focal.from(components.position)
 				cam.focal = cam.focal.dup().lerp(realm.focal, 0.1)
 				cam.swivel = components.swivel
-				cam.zoom = 20
 			}
 		}
 	},
