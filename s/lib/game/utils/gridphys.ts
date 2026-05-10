@@ -2,11 +2,11 @@
 import {Id} from "@benev/archimedes"
 import {Lattice, Rect} from "@benev/math"
 
-import {Phys, PhysBox} from "../../utils/phys.js"
-import {TileKind} from "../../../gridworld/types.js"
-import {Gridchunk} from "../../../gridworld/chunk/gridchunk.js"
-import {Gridspace} from "../../../gridworld/utils/gridspace.js"
-import { Physics } from "../../../physics/physics.js"
+import {Phys, PhysBox} from "./phys.js"
+import {TileKind} from "../../gridworld/types.js"
+import {Gridchunk} from "../../gridworld/chunk/gridchunk.js"
+import {Gridspace} from "../../gridworld/utils/gridspace.js"
+import { Physics } from "../../physics/physics.js"
 
 export function makeGridphys(physics: Physics, id: Id, position: Gridspace) {
 	

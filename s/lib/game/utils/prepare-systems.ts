@@ -1,7 +1,7 @@
 
-import {Pod} from "../pod.js"
+import {Pod} from "../parts/pod.js"
 
-export function systems(
+export function prepareSystems(
 		chapters: Record<string, Record<string, (pod: Pod) => () => void>>,
 	) {
 

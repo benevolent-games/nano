@@ -1,8 +1,8 @@
 
 import {Vec2} from "@benev/math"
-import {system} from "../utils/system.js"
+import {asSystem} from "../utils/as-system.js"
 
-export const resolve_velocity = system(pod => () => {
+export const resolve_velocity = asSystem(pod => () => {
 	for (const [id, components] of pod.entities.select(
 			"controlledBy", "velocity", "desire", "speed", "mass",
 		)) {

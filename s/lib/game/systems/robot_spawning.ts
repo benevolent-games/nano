@@ -1,11 +1,11 @@
 
 import {Randy} from "@benev/math"
-import {system} from "../utils/system.js"
-import {need} from "../../../tools/need.js"
-import {makeRobot} from "../../archetypes/robot.js"
-import {chooseSpawnpoint} from "../../../gridworld/utils/choose-spawnpoint.js"
+import {asSystem} from "../utils/as-system.js"
+import {need} from "../../tools/need.js"
+import {makeRobot} from "../archetypes/robot.js"
+import {chooseSpawnpoint} from "../../gridworld/utils/choose-spawnpoint.js"
 
-export const robot_spawning = system(pod => () => {
+export const robot_spawning = asSystem(pod => () => {
 
 	// players that are alive
 	const playersThatAreAlive = [...pod.entities.select("controlledBy")]

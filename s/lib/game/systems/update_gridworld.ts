@@ -2,10 +2,10 @@
 import {Vec2} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
 
-import {system} from "../utils/system.js"
-import {initGridworld} from "../../../gridworld/utils/grid.js"
+import {asSystem} from "../utils/as-system.js"
+import {initGridworld} from "../../gridworld/utils/grid.js"
 
-export const update_gridworld = system(pod => lifecycle(
+export const update_gridworld = asSystem(pod => lifecycle(
 	pod.entities,
 	["gridworld"],
 	(_id, components) => {

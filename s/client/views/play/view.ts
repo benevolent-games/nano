@@ -12,7 +12,6 @@ import {Game} from "../../../lib/game/game.js"
 import {Multiframe} from "../../utils/multiframe.js"
 import {Perspective} from "./subviews/perspective.js"
 import {ActorMap} from "../../../lib/game/utils/actor.js"
-import {initialize} from "../../../lib/game/initialize.js"
 import {IntentBucketMap, Recruiter} from "./parts/recruiter.js"
 
 export const Play = shadow((deck: Deck) => {
@@ -38,11 +37,7 @@ export const Play = shadow((deck: Deck) => {
 		await nap(1000 / 120)
 	}))
 
-	const game = useOnce(() => {
-		const game = new Game(gamePlayers)
-		initialize(game)
-		return game
-	})
+	const game = useOnce(() => new Game(gamePlayers).init())
 
 	useMount(() => cycle(async() => {
 		// TODO probably inject intents into the game simulation from here (not from a system fn which is inside-out)

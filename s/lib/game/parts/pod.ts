@@ -8,7 +8,7 @@ import {ActorMap} from "../utils/actor.js"
 import {Timing} from "../../tools/timing.js"
 import {Physics} from "../../physics/physics.js"
 import {Gridworld} from "../../gridworld/types.js"
-import {GameComponents} from "../parts/components.js"
+import {GameComponents} from "./components.js"
 import {IntentBucketMap} from "../../../client/views/play/parts/recruiter.js"
 
 export class Pod {
