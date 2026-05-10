@@ -1,7 +1,7 @@
 
 import {Circular, degrees} from "@benev/math"
 import {Pod} from "../parts/pod.js"
-import {asSystem} from "../utils/as-system.js"
+import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {Gridspace} from "../../gridworld/utils/gridspace.js"
 
 export const control_movements_and_rotations = asSystem<Pod>(pod => () => {

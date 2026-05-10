@@ -2,7 +2,7 @@
 import {Randy} from "@benev/math"
 import {Pod} from "../parts/pod.js"
 import {need} from "../../tools/need.js"
-import {asSystem} from "../utils/as-system.js"
+import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {makeRobot} from "../archetypes/robot.js"
 import {chooseSpawnpoint} from "../../gridworld/utils/choose-spawnpoint.js"
 

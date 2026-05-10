@@ -1,7 +1,7 @@
 
 import {Vec2} from "@benev/math"
 import {Pod} from "../parts/pod.js"
-import {asSystem} from "../utils/as-system.js"
+import {asSystem} from "../../tools/ecs-plus/as-system.js"
 
 export const resolve_velocity = asSystem<Pod>(pod => () => {
 	for (const [id, components] of pod.entities.select(

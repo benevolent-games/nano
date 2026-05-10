@@ -1,6 +1,6 @@
 
 import {Pod} from "../parts/pod.js"
-import {asSystem} from "../utils/as-system.js"
+import {asSystem} from "../../tools/ecs-plus/as-system.js"
 
 export const ingest_player_intents = asSystem<Pod>(pod => () => {
 	const {players, entities, change, actors} = pod

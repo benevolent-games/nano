@@ -2,7 +2,7 @@
 import {Vec2} from "@benev/math"
 import {Pod} from "../parts/pod.js"
 import {Phys} from "../utils/phys.js"
-import {asSystem} from "../utils/as-system.js"
+import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {getShape} from "../utils/get-shape.js"
 
 export const physical_forces = asSystem<Pod>(pod => () => {

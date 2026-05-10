@@ -2,7 +2,7 @@
 import {Vec2} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
 
-import {asSystem} from "../utils/as-system.js"
+import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {initGridworld} from "../../gridworld/utils/grid.js"
 import { Pod } from "../parts/pod.js"
 

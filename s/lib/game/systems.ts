@@ -1,7 +1,7 @@
 
 import {Pod} from "./parts/pod.js"
 import {update_timing} from "./systems/update_timing.js"
-import {prepareSystems} from "./utils/prepare-systems.js"
+import {prepareSystems} from "../tools/ecs-plus/prepare-systems.js"
 import {robot_spawning} from "./systems/robot_spawning.js"
 import {physics_bodies} from "./systems/physics_bodies.js"
 import {physical_forces} from "./systems/physical_forces.js"
