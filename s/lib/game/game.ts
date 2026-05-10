@@ -1,34 +1,22 @@
 
 import {Intent} from "@benev/tact"
-import {applyDelta, Change, Entities, Id, makeExecute} from "@benev/archimedes"
+import {applyDelta, Change, Entities, Id} from "@benev/archimedes"
 
-import {systems} from "./systems.js"
-import {Space} from "./parts/space.js"
-import {systematize} from "../tools/ecs-plus/sys.js"
+import {Pod} from "./s2/pod.js"
+import {runSystems} from "./s2/run-systems.js"
 import {GameComponents} from "./parts/components.js"
 import {IntentBucketMap} from "../../client/views/play/parts/recruiter.js"
 
 export class Game {
-	space
-	stats
+	pod
 	simulate
 	entities = new Entities<GameComponents>()
 	change = new Change<GameComponents>(delta => applyDelta(this.entities, delta))
 
 	constructor(players: IntentBucketMap | null) {
-		this.space = new Space(this.entities.readonly, players)
-
-		const {fns, stats} = systematize(systems)
-		this.stats = stats
-
-		const simtick = makeExecute(
-			this.entities,
-			change => fns.map(fn => fn(this.space, change)),
-		)
-
-		this.simulate = () => {
-			simtick()
-		}
+		const change = new Change(delta => applyDelta(this.entities, delta))
+		this.pod = new Pod(this.entities.readonly, change, players)
+		this.simulate = runSystems(this.pod)
 	}
 }
 
