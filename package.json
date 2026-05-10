@@ -10,7 +10,7 @@
 		"s"
 	],
 	"scripts": {
-		"link": "npm link ../../@e280/strata ../../@e280/sly ../../@e280/shiny ../tact",
+		"link": "npm link ../../@e280/strata ../../@e280/sly ../../@e280/shiny ../tact ../math",
 		"build": "bash fix-babylon && rm -rf x && mkdir x && tsc && scute --splitting=no -v",
 		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute --splitting=no -vw' 'hottie x/client --debounce=700'",
 		"test": "node x/test.js",
