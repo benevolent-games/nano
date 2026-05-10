@@ -1,8 +1,8 @@
 
 import {system} from "../utils/system.js"
 
-export const ingest_player_intents = system(weave => () => {
-	const {players, entities, change, actors} = weave
+export const ingest_player_intents = system(pod => () => {
+	const {players, entities, change, actors} = pod
 
 	// lifecycling for player entities based on players map
 	if (players) {

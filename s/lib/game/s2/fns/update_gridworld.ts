@@ -5,16 +5,16 @@ import {lifecycle} from "@benev/archimedes"
 import {system} from "../utils/system.js"
 import {initGridworld} from "../../../gridworld/utils/grid.js"
 
-export const update_gridworld = system(weave => lifecycle(
-	weave.entities,
+export const update_gridworld = system(pod => lifecycle(
+	pod.entities,
 	["gridworld"],
 	(_id, components) => {
 		const extent = Vec2.from(components.gridworld.extent)
-		weave.gridworld = initGridworld(extent)
+		pod.gridworld = initGridworld(extent)
 		return {
 			tick: () => {},
 			exit: () => {
-				weave.gridworld = undefined
+				pod.gridworld = undefined
 			},
 		}
 	},

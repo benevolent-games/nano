@@ -2,8 +2,8 @@
 import {Vec2} from "@benev/math"
 import {system} from "../utils/system.js"
 
-export const resolve_velocity = system(weave => () => {
-	for (const [id, components] of weave.entities.select(
+export const resolve_velocity = system(pod => () => {
+	for (const [id, components] of pod.entities.select(
 			"controlledBy", "velocity", "desire", "speed", "mass",
 		)) {
 
@@ -13,7 +13,7 @@ export const resolve_velocity = system(weave => () => {
 			.divBy(components.mass ?? 1)
 			.array()
 
-		weave.change.merge(id, {velocity})
+		pod.change.merge(id, {velocity})
 	}
 })
 

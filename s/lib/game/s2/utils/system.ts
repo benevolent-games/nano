@@ -1,7 +1,7 @@
 
-import {Weave} from "../weave.js"
+import {Pod} from "../pod.js"
 
-export function system(fn: (weave: Weave) => () => void) {
+export function system(fn: (pod: Pod) => () => void) {
 	return fn
 }
 

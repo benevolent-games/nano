@@ -4,8 +4,8 @@ import {system} from "../utils/system.js"
 import {PhysBox} from "../../utils/phys.js"
 import {getShape} from "../../utils/get-shape.js"
 
-export const physics_bodies = system(weave => lifecycle(
-	weave.entities,
+export const physics_bodies = system(pod => lifecycle(
+	pod.entities,
 	["physical", "position"],
 	(id, components) => {
 		const shape = getShape(components)
@@ -13,7 +13,7 @@ export const physics_bodies = system(weave => lifecycle(
 
 		const rect = shape.boundingBox()
 		const phys = new PhysBox(id, rect, components.mass)
-		weave.physLattice.upsert(phys, rect)
+		pod.physLattice.upsert(phys, rect)
 
 		return {
 			tick(components) {
@@ -22,11 +22,11 @@ export const physics_bodies = system(weave => lifecycle(
 				const freshRect = freshShape.boundingBox()
 				if (!phys.rect.equals(freshRect)) {
 					phys.rect = freshRect
-					weave.physLattice.upsert(phys, phys.rect)
+					pod.physLattice.upsert(phys, phys.rect)
 				}
 			},
 			exit() {
-				weave.physLattice.remove(phys)
+				pod.physLattice.remove(phys)
 			},
 		}
 	},

@@ -4,14 +4,14 @@ import {Phys} from "../../utils/phys.js"
 import {system} from "../utils/system.js"
 import {getShape} from "../../utils/get-shape.js"
 
-export const physical_forces = system(weave => () => {
-	for (const [id, components] of weave.entities.select(
+export const physical_forces = system(pod => () => {
+	for (const [id, components] of pod.entities.select(
 			"velocity", "position",
 		)) {
 
 		const velocity = Vec2
 			.from(components.velocity)
-			.mulBy(weave.timing.delta / 1000)
+			.mulBy(pod.timing.delta / 1000)
 
 
 		const hit = (physes: Iterable<Phys>) => {
@@ -24,7 +24,7 @@ export const physical_forces = system(weave => () => {
 		const canMoveTo = (position: Vec2) => {
 			if (!components.physical) return true
 			const shape = getShape({position: position.array(), size: components.size, radius: components.radius})
-			if (shape) return !hit(weave.physLattice.query(shape.boundingBox()))
+			if (shape) return !hit(pod.physLattice.query(shape.boundingBox()))
 			return true
 		}
 
@@ -46,7 +46,7 @@ export const physical_forces = system(weave => () => {
 		}
 
 		if (!position.equals(original))
-			weave.change.merge(id, {position: position.array()})
+			pod.change.merge(id, {position: position.array()})
 	}
 })
 

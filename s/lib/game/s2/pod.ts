@@ -11,7 +11,7 @@ import {Gridworld} from "../../gridworld/types.js"
 import {GameComponents} from "../parts/components.js"
 import {IntentBucketMap} from "../../../client/views/play/parts/recruiter.js"
 
-export class Weave {
+export class Pod {
 	timing = new Timing(consts.simulationHz.min, consts.simulationHz.max)
 	physics = new Physics()
 	physLattice = new Lattice<Phys>(new Vec2(8, 8))

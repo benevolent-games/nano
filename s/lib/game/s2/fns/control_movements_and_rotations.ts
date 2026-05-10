@@ -3,10 +3,10 @@ import {Circular, degrees} from "@benev/math"
 import {system} from "../utils/system.js"
 import {Gridspace} from "../../../gridworld/utils/gridspace.js"
 
-export const control_movements_and_rotations = system(weave => () => {
-	for (const [id, components] of weave.entities.select("controlledBy")) {
+export const control_movements_and_rotations = system(pod => () => {
+	for (const [id, components] of pod.entities.select("controlledBy")) {
 		if (!components.controlledBy) continue
-		const actor = weave.actors.need(components.controlledBy)
+		const actor = pod.actors.need(components.controlledBy)
 		const a = actor.actions.robot
 
 		if ("desire" in components) {
@@ -15,13 +15,13 @@ export const control_movements_and_rotations = system(weave => () => {
 			const desire = new Gridspace(x, y)
 				.clampMagnitude(1)
 				.rotate(components.swivel ?? 0)
-			weave.change.merge(id, {desire: desire.array()})
+			pod.change.merge(id, {desire: desire.array()})
 
 			if ("rotation" in components) {
 				if (desire.magnitude() > 0.1) {
 					const target = degrees(270) - desire.rotation()
 					const rotation = Circular.lerp(components.rotation ?? 0, target, components.lerp ?? 1)
-					weave.change.merge(id, {rotation})
+					pod.change.merge(id, {rotation})
 				}
 			}
 		}
@@ -32,12 +32,12 @@ export const control_movements_and_rotations = system(weave => () => {
 			const lookIntent = new Gridspace(x, y).clampMagnitude(1)
 			if (lookIntent.magnitude() > 0.1) {
 				const rotation = lookIntent.rotation() + degrees(90) - (components.swivel ?? 0)
-				weave.change.merge(id, {rotation})
+				pod.change.merge(id, {rotation})
 			}
 		}
 
 		if ("sprint" in components) {
-			weave.change.merge(id, {sprint: !!a.sprint.value})
+			pod.change.merge(id, {sprint: !!a.sprint.value})
 		}
 	}
 })
