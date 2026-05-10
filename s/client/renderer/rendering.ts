@@ -16,11 +16,17 @@ export const makeRenderingFns = (realm: Realm) => [
 
 	function updateCam() {
 		const {cam} = realm.venue
-		for (const [_id, components] of realm.entities.select("controlledBy", "position", "swivel")) {
+		for (const [_id, components] of realm.entities.select("controlledBy", "position", "cam")) {
 			if (components.controlledBy === realm.playerId) {
 				realm.focal.from(components.position)
-				cam.focal = cam.focal.dup().lerp(realm.focal, 0.1)
-				cam.swivel = components.swivel
+				cam.lerpTowards({
+					focal: realm.focal.array(),
+					fov: components.cam.fov,
+					swivel: components.cam.swivel,
+					tilt: components.cam.tilt,
+					zoom: components.cam.zoom,
+					lerp: components.cam.lerp,
+				})
 			}
 		}
 	},

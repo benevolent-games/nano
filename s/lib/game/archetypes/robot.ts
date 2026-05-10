@@ -1,10 +1,10 @@
 
-import {degrees} from "@benev/math"
 import {archetype} from "../utils/archetype.js"
+import {defaultCamSettings} from "../utils/default-cam.js"
 
 export const makeRobot = () => archetype({
 	graphic: "robot",
-	swivel: degrees(0),
+	cam: defaultCamSettings(),
 	desire: [0, 0],
 	position: [0, 0],
 	rotation: 0,

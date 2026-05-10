@@ -1,56 +1,59 @@
 
-import {degrees} from "@benev/math"
+import {degrees, Scalar} from "@benev/math"
 import {Scene} from "@babylonjs/core/scene.js"
 import {ArcRotateCamera} from "@babylonjs/core/Cameras/arcRotateCamera.js"
 
 import {resolveGridspace} from "../utils/resolve-gridspace.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
+import {GameComponents} from "../../../lib/game/parts/components.js"
+import {defaultCamSettings} from "../../../lib/game/utils/default-cam.js"
+
+type Settings = GameComponents["cam"]
 
 export class Cam {
-	#focal
 	#camera
-	#swivelCenter = degrees(-90)
+	#swivelOffset = degrees(-90)
 
-	constructor(scene: Scene) {
-		this.#focal = new Gridspace(32, 32)
+	#state = {
+		focal: new Gridspace(),
+		zoom: new Scalar(),
+		tilt: new Scalar(),
+		swivel: new Scalar(),
+		fov: new Scalar(),
+	}
+
+	constructor(scene: Scene, settings = defaultCamSettings()) {
 		this.#camera = new ArcRotateCamera(
 			"camera",
-			this.#swivelCenter, // swivel
-			degrees(10), // verticality
-			8,
-			resolveGridspace(this.#focal),
+			this.#swivelOffset + settings.swivel, // swivel
+			settings.tilt, // verticality
+			settings.zoom,
+			resolveGridspace(new Gridspace().from(settings.focal)),
 			scene,
 		)
-		this.#camera.fov = degrees(80)
-	}
-
-	get focal() {
-		return this.#focal
-	}
-
-	set focal(gridspace: Gridspace) {
-		this.#focal = gridspace
-		this.#camera.target.copyFrom(resolveGridspace(gridspace))
-	}
-
-	get swivel() {
-		return this.#camera.alpha - this.#swivelCenter
-	}
-
-	set swivel(radians: number) {
-		this.#camera.alpha = this.#swivelCenter + radians
-	}
-
-	get zoom() {
-		return this.#camera.radius
-	}
-
-	set zoom(radius: number) {
-		this.#camera.radius = radius
+		this.#camera.fov = settings.fov
 	}
 
 	get camera() {
 		return this.#camera
+	}
+
+	lerpTowards(settings: Settings) {
+		const {lerp} = settings
+		const c = this.#camera
+		const state = this.#state
+
+		state.focal.lerp(new Gridspace().from(settings.focal), lerp)
+		state.zoom.lerp(settings.zoom, lerp)
+		state.tilt.lerp(settings.tilt, lerp)
+		state.swivel.lerp(settings.swivel, lerp)
+		state.fov.lerp(settings.fov, lerp)
+
+		c.target.copyFrom(resolveGridspace(state.focal))
+		c.alpha = this.#swivelOffset + state.swivel.x
+		c.beta = state.tilt.x
+		c.radius = state.zoom.x
+		c.fov = state.fov.x
 	}
 }
 

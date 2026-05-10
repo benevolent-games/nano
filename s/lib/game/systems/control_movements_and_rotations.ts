@@ -14,7 +14,7 @@ export const control_movements_and_rotations = asSystem(pod => () => {
 			const y = a.move_down.value - a.move_up.value
 			const desire = new Gridspace(x, y)
 				.clampMagnitude(1)
-				.rotate(components.swivel ?? 0)
+				.rotate(components.cam?.swivel ?? 0)
 			pod.change.merge(id, {desire: desire.array()})
 
 			if ("rotation" in components) {
@@ -31,7 +31,7 @@ export const control_movements_and_rotations = asSystem(pod => () => {
 			const y = a.look_down.value - a.look_up.value
 			const lookIntent = new Gridspace(x, y).clampMagnitude(1)
 			if (lookIntent.magnitude() > 0.1) {
-				const rotation = lookIntent.rotation() + degrees(90) - (components.swivel ?? 0)
+				const rotation = lookIntent.rotation() + degrees(90) - (components.cam?.swivel ?? 0)
 				pod.change.merge(id, {rotation})
 			}
 		}

@@ -8,14 +8,24 @@ export type GameComponents = AsComponents<{
 	/** player user inputs */
 	intents: Intent[]
 
-	/** which player entity we're controlled by */
-	controlledBy: Id
-
 	/** specifies the total gridworld at play */
 	gridworld: {extent: XyArray}
 
 	/** section of grid tiles, compactly encoded as a hex string */
 	gridchunk: string
+
+	/** which player entity we're controlled by */
+	controlledBy: Id
+
+	/** camera settings */
+	cam: {
+		focal: XyArray
+		zoom: number
+		tilt: number
+		swivel: number
+		fov: number
+		lerp: number
+	}
 
 	/** centerpoint position in gridspace coordinates */
 	position: XyArray
@@ -25,9 +35,6 @@ export type GameComponents = AsComponents<{
 
 	/** how much oomph this entity has when it tries to move */
 	speed: number
-
-	/** angle in radians that the camera is swiveled */
-	swivel: number
 
 	/** direction where the user wants to move */
 	desire: XyArray
