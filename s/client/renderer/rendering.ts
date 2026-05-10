@@ -99,7 +99,7 @@ export const makeRenderingFns = (realm: Realm) => [
 		}
 	}),
 
-	lifecycle(realm.entities, ["position", "graphic", "rotation", "lerp"], (_id, components) => {
+	lifecycle(realm.entities, ["position", "graphic", "rotation", "lerp"], (_id, _components) => {
 		const [selbox, release] = realm.pools.selboxes.lease()
 		return {
 			tick(components) {
