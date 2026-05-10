@@ -39,6 +39,9 @@ export type GameComponents = AsComponents<{
 	/** direction where the user wants to move */
 	desire: XyArray
 
+	/** can interact with interactables */
+	interactor: boolean
+
 	/** user wants to move faster */
 	sprint: boolean
 

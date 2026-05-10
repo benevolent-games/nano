@@ -1,9 +1,10 @@
 
 import {disposer} from "@e280/stz"
 import {lifecycle} from "@benev/archimedes"
-import {Circular, Scalar, Vec2} from "@benev/math"
+import {Circular, degrees, Scalar, Vec2} from "@benev/math"
 
 import {Realm} from "./parts/realm.js"
+import {consts} from "../../consts.js"
 import {Proximal} from "./utils/proximal.js"
 import {TileKind} from "../../lib/gridworld/types.js"
 import {Gridchunk} from "../../lib/gridworld/chunk/gridchunk.js"
@@ -94,6 +95,27 @@ export const makeRenderingFns = (realm: Realm) => [
 			},
 			exit() {
 				releaseRobot()
+			},
+		}
+	}),
+
+	lifecycle(realm.entities, ["position", "graphic", "rotation", "lerp"], (_id, components) => {
+		const [selbox, release] = realm.pools.selboxes.lease()
+		return {
+			tick(components) {
+				const offset = new Gridspace(1, 0)
+					.rotate(degrees(270) - components.rotation)
+					.normalize()
+					.mulBy(consts.interactorReach)
+
+				const target = new Gridspace()
+					.from(components.position)
+					.add(offset)
+
+				selbox.setPosition(target, 1)
+			},
+			exit() {
+				release()
 			},
 		}
 	}),
