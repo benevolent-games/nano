@@ -1,7 +1,8 @@
 
+import {Pod} from "../parts/pod.js"
 import {asSystem} from "../utils/as-system.js"
 
-export const ingest_player_intents = asSystem(pod => () => {
+export const ingest_player_intents = asSystem<Pod>(pod => () => {
 	const {players, entities, change, actors} = pod
 
 	// lifecycling for player entities based on players map

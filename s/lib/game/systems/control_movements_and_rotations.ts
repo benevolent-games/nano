@@ -1,9 +1,10 @@
 
 import {Circular, degrees} from "@benev/math"
+import {Pod} from "../parts/pod.js"
 import {asSystem} from "../utils/as-system.js"
 import {Gridspace} from "../../gridworld/utils/gridspace.js"
 
-export const control_movements_and_rotations = asSystem(pod => () => {
+export const control_movements_and_rotations = asSystem<Pod>(pod => () => {
 	for (const [id, components] of pod.entities.select("controlledBy")) {
 		if (!components.controlledBy) continue
 		const actor = pod.actors.need(components.controlledBy)

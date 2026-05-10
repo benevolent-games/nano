@@ -1,10 +1,11 @@
 
 import {lifecycle} from "@benev/archimedes"
-import {asSystem} from "../utils/as-system.js"
+import {Pod} from "../parts/pod.js"
 import {PhysBox} from "../utils/phys.js"
+import {asSystem} from "../utils/as-system.js"
 import {getShape} from "../utils/get-shape.js"
 
-export const physics_bodies = asSystem(pod => lifecycle(
+export const physics_bodies = asSystem<Pod>(pod => lifecycle(
 	pod.entities,
 	["physical", "position"],
 	(id, components) => {

@@ -1,10 +1,11 @@
 
 import {lifecycle} from "@benev/archimedes"
-import {asSystem} from "../utils/as-system.js"
+import {Pod} from "../parts/pod.js"
 import {Gridphys} from "../utils/gridphys.js"
+import {asSystem} from "../utils/as-system.js"
 import {Gridspace} from "../../gridworld/utils/gridspace.js"
 
-export const gridchunk_physics = asSystem(pod => lifecycle(
+export const gridchunk_physics = asSystem<Pod>(pod => lifecycle(
 	pod.entities,
 	["gridchunk", "position"],
 	(id, components) => {
