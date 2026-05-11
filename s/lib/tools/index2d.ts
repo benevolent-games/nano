@@ -1,7 +1,7 @@
 
-import {Vec2} from "@benev/math"
+import {Xy} from "@benev/math"
 
-export const index2d = (extent: Vec2, vec: Vec2) => {
+export const index2d = (extent: Xy, vec: Xy) => {
 	return (vec.y * extent.x) + vec.x
 }
 

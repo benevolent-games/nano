@@ -6,6 +6,7 @@ import {Gridworld, TileKind} from "../types.js"
 export const initGridworld = (extent: Vec2): Gridworld => ({
 	extent,
 	tiles: new Uint8Array(extent.x * extent.y),
+	integrity: new Uint8Array(extent.x * extent.y).fill(255),
 })
 
 export const inBounds = (grid: Gridworld, {x, y}: Vec2) => {
