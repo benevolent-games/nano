@@ -1,5 +1,5 @@
 
-import {GMap} from "@e280/stz"
+import {guarantee} from "@e280/stz"
 import {makeActionsResolver} from "@benev/tact"
 
 import {PlayerId} from "./players.js"
@@ -15,9 +15,9 @@ export class Actor {
 	}
 }
 
-export class ActorMap extends GMap<PlayerId, Actor> {
+export class ActorMap extends Map<PlayerId, Actor> {
 	getActor(playerId: PlayerId) {
-		return this.guarantee(playerId, () => {
+		return guarantee(this, playerId, () => {
 			const resolveActions = makeActionsResolver(bindings)
 			return new Actor(resolveActions)
 		})

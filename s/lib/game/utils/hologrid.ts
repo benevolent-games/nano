@@ -1,7 +1,7 @@
 
 import {Id} from "@benev/archimedes"
-import {count2d, GMap, hex} from "@e280/stz"
 import {Rect, Scalar, XyArray} from "@benev/math"
+import {count2d, guarantee, hex, need} from "@e280/stz"
 
 import {index2d} from "../../tools/index2d.js"
 import {Gridworld, TileKind} from "../../gridworld/types.js"
@@ -38,8 +38,8 @@ function fractionToU8(fraction: number) {
 
 export class Hologrid {
 	#gridworld
-	#chunkById = new GMap<Id, Chunk>()
-	#chunkByKey = new GMap<ChunkKey, Chunk>()
+	#chunkById = new Map<Id, Chunk>()
+	#chunkByKey = new Map<ChunkKey, Chunk>()
 	#changedChunkIds = new Set<Id>()
 
 	constructor(extent: Gridspace) {
@@ -48,7 +48,7 @@ export class Hologrid {
 
 	updateChunk(id: Id, components: {position: XyArray, gridchunk: string}) {
 		const position = new Gridspace().from(components.position)
-		const chunk = this.#chunkById.guarantee(id, () => {
+		const chunk = guarantee(this.#chunkById, id, () => {
 			const c = {
 				id,
 				position,
@@ -69,7 +69,7 @@ export class Hologrid {
 	}
 
 	cell(position: Gridspace) {
-		const {id} = this.#chunkByKey.need(chunkKey(position))
+		const {id} = need(this.#chunkByKey, chunkKey(position))
 		const changed = () => this.#changedChunkIds.add(id)
 		return new Holocell(this.#gridworld, position, changed)
 	}
@@ -86,7 +86,7 @@ export class Hologrid {
 	flushChanges() {
 		const chunks: Chunk[] = []
 		for (const id of this.#changedChunkIds) {
-			const chunk = this.#chunkById.need(id)
+			const chunk = need(this.#chunkById, id)
 			chunk.gridchunk = serializeChunk(this.#gridworld, chunk.position)
 			chunks.push(chunk)
 		}

@@ -1,11 +1,12 @@
 
 import {RMap} from "@e280/strata"
 import {makeId} from "@benev/archimedes"
-import {cycle, GMap, nap} from "@e280/stz"
+import {cycle, guarantee, nap, need} from "@e280/stz"
+
 import {Deck, IntentBucket, Port} from "@benev/tact"
 import {PlayerId} from "../../../../lib/game/utils/players.js"
 
-export class IntentBucketMap extends GMap<PlayerId, IntentBucket> {}
+export class IntentBucketMap extends Map<PlayerId, IntentBucket> {}
 
 export class Recruiter {
 	#players = new RMap<Port, PlayerId>()
@@ -14,7 +15,7 @@ export class Recruiter {
 	constructor(private deck: Deck, private intentBuckets: IntentBucketMap[]) {}
 
 	getPort(playerId: string) {
-		return this.#ports.need(playerId)
+		return need(this.#ports, playerId)
 	}
 
 	listPlayers() {
@@ -27,7 +28,7 @@ export class Recruiter {
 
 	syncWithPorts() {
 		for (const port of this.deck.ports) {
-			this.#players.guarantee(port, () => {
+			guarantee(this.#players, port, () => {
 				const id = makeId()
 				this.#ports.set(id, port)
 				for (const map of this.intentBuckets)

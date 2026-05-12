@@ -1,5 +1,7 @@
 
+import {need} from "@e280/stz"
 import {Circular, degrees} from "@benev/math"
+
 import {Pod} from "../parts/pod.js"
 import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {Gridspace} from "../../gridworld/utils/gridspace.js"
@@ -7,7 +9,8 @@ import {Gridspace} from "../../gridworld/utils/gridspace.js"
 export const control_movements_and_rotations = asSystem<Pod>(pod => () => {
 	for (const [id, components] of pod.entities.select("controlledBy")) {
 		if (!components.controlledBy) continue
-		const actor = pod.actors.need(components.controlledBy)
+		
+		const actor = need(pod.actors, components.controlledBy)
 		const a = actor.actions.robot
 
 		if ("desire" in components) {
