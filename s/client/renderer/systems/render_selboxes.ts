@@ -24,7 +24,7 @@ export const render_selboxes = (realm: Realm) => lifecycle(
 					.from(components.position)
 					.add(offset)
 
-				selbox.setPosition(target, 1)
+				selbox.setGridspace(target, 1)
 			},
 
 			exit() {

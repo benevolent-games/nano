@@ -1,17 +1,18 @@
 
 import {lifecycle} from "@benev/archimedes"
-import {Circular, Scalar, Vec2} from "@benev/math"
+import {Circular, Scalar, Vec2, Vec3} from "@benev/math"
 import {Realm} from "../parts/realm.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
 export const render_robots = (realm: Realm) => lifecycle(
 	realm.entities,
-	["position", "graphic", "rotation", "lerp"],
+	["position", "graphic", "rotation", "lerp", "radius"],
 
 	(_id, components) => {
 		let rotation = components.rotation
 		const gridspace = new Gridspace(...components.position)
 		const [chassis, releaseChassis] = realm.pools.chassis.lease()
+		chassis.setScale(Vec3.all(0.8))
 
 		return {
 			tick(components) {
@@ -25,7 +26,7 @@ export const render_robots = (realm: Realm) => lifecycle(
 						.sub(gridspace)
 						.mulBy(factor)
 				)
-				chassis.setPosition(gridspace, 1)
+				chassis.setGridspace(gridspace, 0)
 				rotation = Circular.lerp(rotation, components.rotation, components.lerp ?? 1)
 				chassis.setRotation(rotation)
 			},

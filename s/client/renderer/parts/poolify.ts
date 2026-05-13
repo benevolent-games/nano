@@ -5,7 +5,7 @@ import {Quaternion} from "@babylonjs/core/Maths/math.js"
 import {Graphic} from "./graphic.js"
 import {PoolMember} from "./pool.js"
 import {instantiate, Prop} from "./buddy.js"
-import {resolveGridspace} from "../utils/resolve-gridspace.js"
+import {resolveGridspace, resolvePosition, resolveScale} from "../utils/resolve-gridspace.js"
 
 export function poolify(prop: Prop): () => PoolMember<Graphic> {
 	prop.setEnabled(false)
@@ -18,7 +18,13 @@ export function poolify(prop: Prop): () => PoolMember<Graphic> {
 			enable: () => { instance.setEnabled(true) },
 			disable: () => { instance.setEnabled(false) },
 			item: {
-				setPosition: (gridspace, height) => {
+				setScale: vector => {
+					instance.scaling = resolveScale(vector)
+				},
+				setPosition: vector => {
+					instance.position = resolvePosition(vector)
+				},
+				setGridspace: (gridspace, height) => {
 					instance.position = resolveGridspace(gridspace, height)
 				},
 				setRotation: (radians) => {

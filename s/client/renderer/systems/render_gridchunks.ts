@@ -7,6 +7,7 @@ import {Proximal} from "../utils/proximal.js"
 import {TileKind} from "../../../lib/gridworld/types.js"
 import {Gridchunk} from "../../../lib/gridworld/chunk/gridchunk.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
+import { Rand, seed, Vec3 } from "@benev/math"
 
 export const render_gridchunks = (realm: Realm) => lifecycle(
 	realm.entities,
@@ -16,6 +17,7 @@ export const render_gridchunks = (realm: Realm) => lifecycle(
 		const chunk = new Gridchunk(new Gridspace().from(components.position))
 		const proximal = new Proximal(realm.focal, 40)
 		const wipe = disposer()
+		const rand = new Rand(seed(1))
 
 		function renderFloorsAndWalls(gridchunk: string) {
 			wipe()
@@ -26,13 +28,14 @@ export const render_gridchunks = (realm: Realm) => lifecycle(
 				if (tile !== TileKind.Pit) {
 					const [graphic, disposer] = realm.pools.floors.lease()
 					wipe.schedule(disposer)
-					graphic.setPosition(center)
+					graphic.setGridspace(center)
 				}
 
 				if (tile === TileKind.Wall) {
 					const [graphic, disposer] = realm.pools.walls.lease()
 					wipe.schedule(disposer)
-					graphic.setPosition(center, 1)
+					graphic.setGridspace(center)
+					graphic.setScale(new Vec3(1, 1, rand.range(0.3, 1)))
 				}
 			}
 		}

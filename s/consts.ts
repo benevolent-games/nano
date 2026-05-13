@@ -10,7 +10,7 @@ export const consts = deep.freeze({
 		extent: Vec2.all(128),
 	},
 	assets: {
-		art: "/assets/art-001.glb",
+		art: "/assets/art-002.glb",
 	},
 })
 
