@@ -14,7 +14,7 @@ import {ingest_player_intents} from "./systems/ingest_player_intents.js"
 import {control_movements_and_rotations} from "./systems/control_movements_and_rotations.js"
 
 export const systems = (pod: Pod) => consolidate(pod, {
-	timing: {
+	clock: {
 		timing_update,
 	},
 
