@@ -6,9 +6,9 @@ import {Phys} from "../utils/phys.js"
 import {consts} from "../../../consts.js"
 import {ActorMap} from "../utils/actor.js"
 import {Timing} from "../../tools/timing.js"
-import {Physics} from "../../physics/physics.js"
-import {Gridworld} from "../../gridworld/types.js"
+import {Hologrid} from "../utils/hologrid.js"
 import {GameComponents} from "./components.js"
+import {Physics} from "../../physics/physics.js"
 import {IntentBucketMap} from "../../../client/views/play/parts/recruiter.js"
 
 export class Pod {
@@ -16,7 +16,7 @@ export class Pod {
 	physics = new Physics()
 	physLattice = new Lattice<Phys>(new Vec2(8, 8))
 	actors = new ActorMap()
-	gridworld?: Gridworld
+	hologrid?: Hologrid
 
 	constructor(
 		public entities: EntitiesReadonly<GameComponents>,

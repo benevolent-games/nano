@@ -17,8 +17,8 @@ export const robot_spawning = (pod: Pod) => () => {
 		if (playersThatAreAlive.includes(controlledBy)) continue
 		const actor = need(pod.actors, controlledBy)
 		if (actor.actions.spectator.spawn.changedDown) {
-			const gridworld = got(pod.gridworld)
-			const position = chooseSpawnpoint(gridworld, new Rand(seed(pod.timing.tick)))
+			const hologrid = got(pod.hologrid)
+			const position = chooseSpawnpoint(hologrid.gridworld, new Rand(seed(pod.timing.tick)))
 				.add_(0.5, 0.5)
 				.array()
 			pod.change.create({...makeRobot(), controlledBy, position})

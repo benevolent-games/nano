@@ -46,6 +46,10 @@ export class Hologrid {
 		this.#gridworld = initGridworld(extent)
 	}
 
+	get gridworld() {
+		return this.#gridworld
+	}
+
 	updateChunk(id: Id, components: {position: XyArray, gridchunk: string}) {
 		const position = new Gridspace().from(components.position)
 		const chunk = guarantee(this.#chunkById, id, () => {
