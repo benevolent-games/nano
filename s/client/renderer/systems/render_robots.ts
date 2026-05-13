@@ -1,12 +1,10 @@
 
-import {Realm} from "../parts/realm.js"
 import {lifecycle} from "@benev/archimedes"
 import {Circular, Scalar, Vec2} from "@benev/math"
-
-import {asSystem} from "../../../lib/tools/ecs-plus/as-system.js"
+import {Realm} from "../parts/realm.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
-export const render_robots = asSystem<Realm>(realm => lifecycle(
+export const render_robots = (realm: Realm) => lifecycle(
 	realm.entities,
 	["position", "graphic", "rotation", "lerp"],
 
@@ -37,5 +35,5 @@ export const render_robots = asSystem<Realm>(realm => lifecycle(
 			},
 		}
 	},
-))
+)
 

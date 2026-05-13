@@ -1,13 +1,12 @@
 
-import {Randy} from "@benev/math"
+import {Rand, seed} from "@benev/math"
 import {got, need} from "@e280/stz"
 
 import {Pod} from "../parts/pod.js"
 import {makeRobot} from "../archetypes/robot.js"
-import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {chooseSpawnpoint} from "../../gridworld/utils/choose-spawnpoint.js"
 
-export const robot_spawning = asSystem<Pod>(pod => () => {
+export const robot_spawning = (pod: Pod) => () => {
 
 	// players that are alive
 	const playersThatAreAlive = [...pod.entities.select("controlledBy")]
@@ -19,11 +18,11 @@ export const robot_spawning = asSystem<Pod>(pod => () => {
 		const actor = need(pod.actors, controlledBy)
 		if (actor.actions.spectator.spawn.changedDown) {
 			const gridworld = got(pod.gridworld)
-			const position = chooseSpawnpoint(gridworld, new Randy(pod.timing.tick))
+			const position = chooseSpawnpoint(gridworld, new Rand(seed(pod.timing.tick)))
 				.add_(0.5, 0.5)
 				.array()
 			pod.change.create({...makeRobot(), controlledBy, position})
 		}
 	}
-})
+}
 

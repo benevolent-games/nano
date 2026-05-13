@@ -1,8 +1,7 @@
 
 import {Realm} from "../parts/realm.js"
-import {asSystem} from "../../../lib/tools/ecs-plus/as-system.js"
 
-export const update_timing = asSystem<Realm>(realm => () => {
+export const update_timing = (realm: Realm) => () => {
 	realm.timing.update()
-})
+}
 

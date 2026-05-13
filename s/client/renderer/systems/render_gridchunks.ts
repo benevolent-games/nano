@@ -5,11 +5,10 @@ import {lifecycle} from "@benev/archimedes"
 import {Realm} from "../parts/realm.js"
 import {Proximal} from "../utils/proximal.js"
 import {TileKind} from "../../../lib/gridworld/types.js"
-import {asSystem} from "../../../lib/tools/ecs-plus/as-system.js"
 import {Gridchunk} from "../../../lib/gridworld/chunk/gridchunk.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
-export const render_gridchunks = asSystem<Realm>(realm => lifecycle(
+export const render_gridchunks = (realm: Realm) => lifecycle(
 	realm.entities,
 	["gridchunk", "position"],
 
@@ -53,5 +52,5 @@ export const render_gridchunks = asSystem<Realm>(realm => lifecycle(
 			},
 		}
 	},
-))
+)
 

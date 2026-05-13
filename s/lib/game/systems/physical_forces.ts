@@ -1,11 +1,12 @@
 
 import {Vec2} from "@benev/math"
+import {asSystem} from "@benev/archimedes"
+
 import {Pod} from "../parts/pod.js"
 import {Phys} from "../utils/phys.js"
-import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {getShape} from "../utils/get-shape.js"
 
-export const physical_forces = asSystem<Pod>(pod => () => {
+export const physical_forces = (pod: Pod) => () => {
 	for (const [id, components] of pod.entities.select(
 			"velocity", "position",
 		)) {
@@ -49,5 +50,5 @@ export const physical_forces = asSystem<Pod>(pod => () => {
 		if (!position.equals(original))
 			pod.change.merge(id, {position: position.array()})
 	}
-})
+}
 

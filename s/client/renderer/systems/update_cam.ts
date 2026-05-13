@@ -1,8 +1,7 @@
 
 import {Realm} from "../parts/realm.js"
-import {asSystem} from "../../../lib/tools/ecs-plus/as-system.js"
 
-export const update_cam = asSystem<Realm>(realm => () => {
+export const update_cam = (realm: Realm) => () => {
 	const {cam} = realm.venue
 
 	for (const [_id, components] of realm.entities.select("controlledBy", "position", "cam")) {
@@ -18,5 +17,5 @@ export const update_cam = asSystem<Realm>(realm => () => {
 			})
 		}
 	}
-})
+}
 

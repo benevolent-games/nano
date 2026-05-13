@@ -4,10 +4,9 @@ import {lifecycle} from "@benev/archimedes"
 
 import {Realm} from "../parts/realm.js"
 import {consts} from "../../../consts.js"
-import {asSystem} from "../../../lib/tools/ecs-plus/as-system.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
-export const render_selboxes = asSystem<Realm>(realm => lifecycle(
+export const render_selboxes = (realm: Realm) => lifecycle(
 	realm.entities,
 	["position", "graphic", "rotation", "lerp"],
 
@@ -33,5 +32,5 @@ export const render_selboxes = asSystem<Realm>(realm => lifecycle(
 			},
 		}
 	},
-))
+)
 

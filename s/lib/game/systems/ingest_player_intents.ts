@@ -1,8 +1,7 @@
 
 import {Pod} from "../parts/pod.js"
-import {asSystem} from "../../tools/ecs-plus/as-system.js"
 
-export const ingest_player_intents = asSystem<Pod>(pod => () => {
+export const ingest_player_intents = (pod: Pod) => () => {
 	const {players, entities, change, actors} = pod
 
 	// lifecycling for player entities based on players map
@@ -34,5 +33,5 @@ export const ingest_player_intents = asSystem<Pod>(pod => () => {
 	// resolving actions
 	for (const [id, {intents}] of entities.select("intents"))
 		actors.getActor(id).resolveActions(intents)
-})
+}
 

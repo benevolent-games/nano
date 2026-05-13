@@ -3,10 +3,9 @@ import {need} from "@e280/stz"
 import {Circular, degrees} from "@benev/math"
 
 import {Pod} from "../parts/pod.js"
-import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {Gridspace} from "../../gridworld/utils/gridspace.js"
 
-export const control_movements_and_rotations = asSystem<Pod>(pod => () => {
+export const control_movements_and_rotations = (pod: Pod) => () => {
 	for (const [id, components] of pod.entities.select("controlledBy")) {
 		if (!components.controlledBy) continue
 		
@@ -44,5 +43,5 @@ export const control_movements_and_rotations = asSystem<Pod>(pod => () => {
 			pod.change.merge(id, {sprint: !!a.sprint.value})
 		}
 	}
-})
+}
 

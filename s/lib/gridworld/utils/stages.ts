@@ -1,11 +1,13 @@
+
 import {count} from "@e280/stz"
-import {makeNoiseSampler, Randy, Vec2} from "@benev/math"
+import {makeNoiseSampler, Rand, Vec2} from "@benev/math"
+
 import {Gridworld, TileKind} from "../types.js"
 import {clampPointToGrid, forEachCell, paintSquareBrush, setTile} from "./grid.js"
 
 export const getRandomPointNearMiddle = (
 	grid: Gridworld,
-	randy: Randy,
+	rand: Rand,
 	fraction: number,
 ) => {
 	const center = grid.extent.dup().subBy(1).half()
@@ -14,15 +16,15 @@ export const getRandomPointNearMiddle = (
 	return clampPointToGrid(
 		grid,
 		center.dup().add_(
-			randy.range(-halfSpan.x, halfSpan.x),
-			randy.range(-halfSpan.y, halfSpan.y),
+			rand.range(-halfSpan.x, halfSpan.x),
+			rand.range(-halfSpan.y, halfSpan.y),
 		).round(),
 	)
 }
 
 export const getPointsAroundBorder = (
 	grid: Gridworld,
-	randy: Randy,
+	rand: Rand,
 	sectorSize: number,
 ) => {
 	const {x: width, y: height} = grid.extent
@@ -33,7 +35,7 @@ export const getPointsAroundBorder = (
 	const pick = (start: number, end: number) => {
 		if (end <= start)
 			return start
-		return randy.integerRange(start, end)
+		return rand.integerRange(start, end)
 	}
 
 	const sectorRanges = (length: number) => [...count(Math.ceil(length / sectorSize))]
@@ -60,12 +62,12 @@ export const getPointsAroundBorder = (
 
 export const splotchySubstrate = ({
 	grid,
-	randy,
+	rand,
 	walls,
 	pits,
 }: {
 	grid: Gridworld
-	randy: Randy
+	rand: Rand
 	walls: {
 		probability: number
 		scales: [number, number]
@@ -75,7 +77,7 @@ export const splotchySubstrate = ({
 		scales: [number, number]
 	}
 }) => {
-	const noise = makeNoiseSampler(randy.random)
+	const noise = makeNoiseSampler(rand.random)
 	const wallOffset = 1_337
 	const pitOffset = 9_113
 
@@ -106,13 +108,13 @@ export const splotchySubstrate = ({
 
 const walkDrunkenSegment = ({
 	grid,
-	randy,
+	rand,
 	from,
 	to,
 	thickness,
 }: {
 	grid: Gridworld
-	randy: Randy
+	rand: Rand
 	from: Vec2
 	to: Vec2
 	thickness: number
@@ -132,23 +134,23 @@ const walkDrunkenSegment = ({
 			? 0
 			: (dy > 0 ? 1 : -1)
 
-		if (randy.roll(0.72)) {
+		if (rand.roll(0.72)) {
 			if (Math.abs(dx) > Math.abs(dy))
-				current.add_(stepX, stepY !== 0 && randy.roll(0.35) ? stepY : 0)
+				current.add_(stepX, stepY !== 0 && rand.roll(0.35) ? stepY : 0)
 			else if (Math.abs(dy) > Math.abs(dx))
-				current.add_(stepX !== 0 && randy.roll(0.35) ? stepX : 0, stepY)
+				current.add_(stepX !== 0 && rand.roll(0.35) ? stepX : 0, stepY)
 			else
 				current.add_(stepX, stepY)
 		}
 		else {
 			const wobbleX = stepX === 0
-				? (randy.roll(0.5) ? 1 : -1)
+				? (rand.roll(0.5) ? 1 : -1)
 				: stepX
 			const wobbleY = stepY === 0
-				? (randy.roll(0.5) ? 1 : -1)
+				? (rand.roll(0.5) ? 1 : -1)
 				: stepY
 
-			if (randy.roll(0.5))
+			if (rand.roll(0.5))
 				current.add_(wobbleX, 0)
 			else
 				current.add_(0, wobbleY)
@@ -163,14 +165,14 @@ const walkDrunkenSegment = ({
 
 export const carveDrunkenPathsBetweenWaypoints = ({
 	grid,
-	randy,
+	rand,
 	paths,
 	thickness,
 	subdivisionDistance,
 	deviation,
 }: {
 	grid: Gridworld
-	randy: Randy
+	rand: Rand
 	paths: {
 		from: Vec2
 		to: Vec2
@@ -188,8 +190,8 @@ export const carveDrunkenPathsBetweenWaypoints = ({
 			const fraction = i / (subdivisions + 1)
 			const goalpost = from.dup().lerp(to, fraction).round()
 			goalpost.add_(
-				Math.round(randy.range(-deviation, deviation)),
-				Math.round(randy.range(-deviation, deviation)),
+				Math.round(rand.range(-deviation, deviation)),
+				Math.round(rand.range(-deviation, deviation)),
 			)
 			goalposts.push(clampPointToGrid(grid, goalpost))
 		}
@@ -199,7 +201,7 @@ export const carveDrunkenPathsBetweenWaypoints = ({
 		for (let i = 1; i < goalposts.length; i++) {
 			walkDrunkenSegment({
 				grid,
-				randy,
+				rand,
 				from: goalposts[i - 1]!,
 				to: goalposts[i]!,
 				thickness,
@@ -210,11 +212,11 @@ export const carveDrunkenPathsBetweenWaypoints = ({
 
 export const southernFlooringGradient = (
 	grid: Gridworld,
-	randy: Randy,
+	rand: Rand,
 	fraction: number,
 	noiseScale: number,
 ) => {
-	const noise = makeNoiseSampler(randy.random)
+	const noise = makeNoiseSampler(rand.random)
 	const fadeStartY = Math.ceil(grid.extent.y * (1 - fraction))
 
 	forEachCell(grid, point => {
@@ -231,3 +233,4 @@ export const southernFlooringGradient = (
 			setTile(grid, TileKind.Floor, point)
 	})
 }
+

@@ -1,9 +1,8 @@
 
 import {Vec2} from "@benev/math"
 import {Pod} from "../parts/pod.js"
-import {asSystem} from "../../tools/ecs-plus/as-system.js"
 
-export const resolve_velocity = asSystem<Pod>(pod => () => {
+export const resolve_velocity = (pod: Pod) => () => {
 	for (const [id, components] of pod.entities.select(
 			"controlledBy", "velocity", "desire", "speed", "mass",
 		)) {
@@ -16,5 +15,5 @@ export const resolve_velocity = asSystem<Pod>(pod => () => {
 
 		pod.change.merge(id, {velocity})
 	}
-})
+}
 

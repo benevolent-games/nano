@@ -1,8 +1,7 @@
 
 import {Pod} from "../parts/pod.js"
-import {asSystem} from "../../tools/ecs-plus/as-system.js"
 
-export const update_timing = asSystem<Pod>(pod => () => {
+export const update_timing = (pod: Pod) => () => {
 	pod.timing.update()
-})
+}
 

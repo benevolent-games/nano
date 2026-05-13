@@ -2,10 +2,9 @@
 import {lifecycle} from "@benev/archimedes"
 import {Pod} from "../parts/pod.js"
 import {PhysBox} from "../utils/phys.js"
-import {asSystem} from "../../tools/ecs-plus/as-system.js"
 import {getShape} from "../utils/get-shape.js"
 
-export const physics_bodies = asSystem<Pod>(pod => lifecycle(
+export const physics_bodies = (pod: Pod) => lifecycle(
 	pod.entities,
 	["physical", "position"],
 	(id, components) => {
@@ -31,5 +30,5 @@ export const physics_bodies = asSystem<Pod>(pod => lifecycle(
 			},
 		}
 	},
-))
+)
 
