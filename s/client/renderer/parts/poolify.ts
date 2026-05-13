@@ -1,7 +1,7 @@
 
 import {Graphic} from "./graphic.js"
 import {PoolMember} from "./pool.js"
-import {instantiate, Prop} from "./babtools.js"
+import {instantiate, Prop} from "./buddy.js"
 import {resolveGridspace} from "../utils/resolve-gridspace.js"
 
 export function poolify(prop: Prop): () => PoolMember<Graphic> {

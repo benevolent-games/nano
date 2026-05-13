@@ -2,6 +2,7 @@
 import {makeId} from "@benev/archimedes"
 import {Mesh} from "@babylonjs/core/Meshes/mesh.js"
 import {Engine} from "@babylonjs/core/Engines/engine.js"
+import {AssetContainer} from "@babylonjs/core/assetContainer.js"
 import {WebGPUEngine} from "@babylonjs/core/Engines/webgpuEngine.js"
 import {InstancedMesh} from "@babylonjs/core/Meshes/instancedMesh.js"
 import {TransformNode} from "@babylonjs/core/Meshes/transformNode.js"
@@ -22,5 +23,12 @@ export function instantiate(prop: Prop) {
 			clone.name = id
 		},
 	) as TransformNode
+}
+
+export function getProps(container: AssetContainer) {
+	const props = new Map<string, Prop>()
+	container.transformNodes.map(node => props.set(node.name, node))
+	container.meshes.map(mesh => props.set(mesh.name, mesh))
+	return props
 }
 
