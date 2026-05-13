@@ -11,7 +11,7 @@ export const render_robots = (realm: Realm) => lifecycle(
 	(_id, components) => {
 		let rotation = components.rotation
 		const gridspace = new Gridspace(...components.position)
-		const [robot, releaseRobot] = realm.pools.robots.lease()
+		const [chassis, releaseChassis] = realm.pools.chassis.lease()
 
 		return {
 			tick(components) {
@@ -25,13 +25,13 @@ export const render_robots = (realm: Realm) => lifecycle(
 						.sub(gridspace)
 						.mulBy(factor)
 				)
-				robot.setPosition(gridspace, 1)
+				chassis.setPosition(gridspace, 1)
 				rotation = Circular.lerp(rotation, components.rotation, components.lerp ?? 1)
-				robot.setRotation(rotation)
+				chassis.setRotation(rotation)
 			},
 
 			exit() {
-				releaseRobot()
+				releaseChassis()
 			},
 		}
 	},

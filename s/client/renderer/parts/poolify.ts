@@ -1,4 +1,7 @@
 
+import {Quat} from "@benev/math"
+import {Quaternion} from "@babylonjs/core/Maths/math.js"
+
 import {Graphic} from "./graphic.js"
 import {PoolMember} from "./pool.js"
 import {instantiate, Prop} from "./buddy.js"
@@ -19,7 +22,8 @@ export function poolify(prop: Prop): () => PoolMember<Graphic> {
 					instance.position = resolveGridspace(gridspace, height)
 				},
 				setRotation: (radians) => {
-					instance.rotation.y = radians
+					instance.rotationQuaternion ??= Quaternion.Identity()
+					instance.rotationQuaternion.set(...Quat.rotate_(0, radians, 0).array())
 				},
 			},
 		}
