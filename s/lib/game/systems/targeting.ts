@@ -24,7 +24,8 @@ export const targeting = (pod: Pod) => () => {
 			}
 		}
 
-		pod.change.merge(id, {target})
+		if (target !== components.target)
+			pod.change.merge(id, {target})
 	}
 }
 

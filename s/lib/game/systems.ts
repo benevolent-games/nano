@@ -2,6 +2,7 @@
 import {consolidate} from "@benev/archimedes"
 
 import {Pod} from "./parts/pod.js"
+import {drops} from "./systems/drops.js"
 import {pickups} from "./systems/pickups.js"
 import {targeting} from "./systems/targeting.js"
 import {timing_update} from "./systems/timing_update.js"
@@ -39,6 +40,7 @@ export const systems = (pod: Pod) => consolidate(pod, {
 		target_lattice,
 		targeting,
 		pickups,
+		drops,
 	},
 
 	physics: {

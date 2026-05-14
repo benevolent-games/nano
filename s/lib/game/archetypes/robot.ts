@@ -19,7 +19,7 @@ export const makeRobot = () => archetype({
 	target: null,
 	reach: 0.5,
 	inventory: {
-		capacity: 10,
+		capacity: 25,
 		items: [],
 	},
 })
