@@ -6,6 +6,7 @@ import {update_timing} from "./systems/update_timing.js"
 import {render_robots} from "./systems/render_robots.js"
 import {render_selboxes} from "./systems/render_selboxes.js"
 import {render_gridchunks} from "./systems/render_gridchunks.js"
+import {render_pickupables} from "./systems/render_pickupables.js"
 
 export const render = (realm: Realm) => consolidate(realm, {
 	timing: {
@@ -20,6 +21,7 @@ export const render = (realm: Realm) => consolidate(realm, {
 		render_gridchunks,
 		render_robots,
 		render_selboxes,
+		render_pickupables,
 	},
 })
 

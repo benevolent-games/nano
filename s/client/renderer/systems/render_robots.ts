@@ -3,6 +3,7 @@ import {lifecycle} from "@benev/archimedes"
 import {Circular, Scalar, Vec2, Vec3} from "@benev/math"
 import {Realm} from "../parts/realm.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
+import { consts } from "../../../consts.js"
 
 export const render_robots = (realm: Realm) => lifecycle(
 	realm.entities,
@@ -12,7 +13,7 @@ export const render_robots = (realm: Realm) => lifecycle(
 		let rotation = components.rotation
 		const gridspace = new Gridspace(...components.position)
 		const [chassis, releaseChassis] = realm.pools.chassis.lease()
-		chassis.setScale(Vec3.all(0.8))
+		chassis.setScale(Vec3.all(consts.robotScale))
 
 		return {
 			tick(components) {

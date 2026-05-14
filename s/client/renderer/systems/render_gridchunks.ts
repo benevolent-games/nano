@@ -1,13 +1,14 @@
 
 import {disposer} from "@e280/stz"
 import {lifecycle} from "@benev/archimedes"
+import {Rand, seed, Vec3} from "@benev/math"
 
 import {Realm} from "../parts/realm.js"
+import {consts} from "../../../consts.js"
 import {Proximal} from "../utils/proximal.js"
 import {TileKind} from "../../../lib/gridworld/types.js"
 import {Gridchunk} from "../../../lib/gridworld/chunk/gridchunk.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
-import { Rand, seed, Vec3 } from "@benev/math"
 
 export const render_gridchunks = (realm: Realm) => lifecycle(
 	realm.entities,
@@ -15,7 +16,7 @@ export const render_gridchunks = (realm: Realm) => lifecycle(
 
 	(_id, components) => {
 		const chunk = new Gridchunk(new Gridspace().from(components.position))
-		const proximal = new Proximal(realm.focal, 40)
+		const proximal = new Proximal(realm.focal, consts.renderProximity)
 		const wipe = disposer()
 		const rand = new Rand(seed(1))
 

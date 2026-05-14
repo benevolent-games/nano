@@ -6,7 +6,6 @@ import {Pool} from "./pool.js"
 import {Venue} from "./venue.js"
 import {getProps} from "./buddy.js"
 import {poolify} from "./poolify.js"
-import {robot} from "../props/robot.js"
 import {selbox} from "../props/selbox.js"
 import {Timing} from "../../../lib/tools/timing.js"
 import {PlayerId} from "../../../lib/game/utils/players.js"
@@ -30,11 +29,12 @@ export class Realm {
 		this.pools = {
 			floors: new Pool(poolify(need(props, "base-floor1"))).prepopulate(2000),
 			walls: new Pool(poolify(need(props, "rock-pillarcluster1"))).prepopulate(2000),
-			robots: new Pool(poolify(robot(scene))).prepopulate(10),
+
 			chassis: new Pool(poolify(need(props, "robot-chassis"))).prepopulate(32),
+			selboxes: new Pool(poolify(selbox(scene))).prepopulate(10),
+
 			toolDrill: new Pool(poolify(need(props, "tool-drill"))).prepopulate(32),
 			toolCannon: new Pool(poolify(need(props, "tool-cannon"))).prepopulate(32),
-			selboxes: new Pool(poolify(selbox(scene))).prepopulate(10),
 		}
 	}
 

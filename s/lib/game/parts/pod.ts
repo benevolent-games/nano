@@ -1,5 +1,5 @@
 
-import {Lattice, Vec2} from "@benev/math"
+import {Lattice, Rand, seed, Vec2} from "@benev/math"
 import {Change, EntitiesReadonly} from "@benev/archimedes"
 
 import {Phys} from "../utils/phys.js"
@@ -17,6 +17,7 @@ export class Pod {
 	physLattice = new Lattice<Phys>(new Vec2(8, 8))
 	actors = new ActorMap()
 	hologrid?: Hologrid
+	rand = new Rand(seed(1))
 
 	constructor(
 		public entities: EntitiesReadonly<GameComponents>,

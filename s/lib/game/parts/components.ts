@@ -2,6 +2,7 @@
 import {Intent} from "@benev/tact"
 import {XyArray} from "@benev/math"
 import {AsComponents, Id} from "@benev/archimedes"
+import {ItemKind, ToolKind, Tools} from "./ctypes.js"
 
 export type GameComponents = AsComponents<{
 
@@ -65,6 +66,21 @@ export type GameComponents = AsComponents<{
 
 	/** circular size */
 	radius: number
+
+	/** can equip tools */
+	tools: Tools
+
+	/** can store stuff */
+	inventory: {
+		capacity: number
+		items: ItemKind[]
+	}
+
+	/** can be picked up */
+	pickupable: ItemKind
+
+	/** can be equipped as tool */
+	equippable: ToolKind
 
 	/** lerp factor for smoothing movements */
 	lerp: number
