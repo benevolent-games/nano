@@ -18,5 +18,9 @@ export const makeRobot = () => archetype({
 	sprintFactor: 2,
 	target: null,
 	reach: 0.5,
+	inventory: {
+		capacity: 10,
+		items: [],
+	},
 })
 
