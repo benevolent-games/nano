@@ -7,7 +7,7 @@ import {selrect} from "../../../lib/game/utils/selrect.js"
 
 export const render_selboxes = (realm: Realm) => lifecycle(
 	realm.entities,
-	["position", "graphic", "rotation", "reach", "lerp"],
+	["position", "graphic", "rotation", "reach", "lerp", "debug"],
 
 	(_id, _components) => {
 		const [selbox, release] = realm.pools.selboxes.lease()

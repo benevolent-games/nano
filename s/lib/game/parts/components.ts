@@ -90,5 +90,8 @@ export type GameComponents = AsComponents<{
 
 	/** lerp factor for smoothing movements */
 	lerp: number
+
+	/** render debug visualizers */
+	debug: boolean
 }>
 
