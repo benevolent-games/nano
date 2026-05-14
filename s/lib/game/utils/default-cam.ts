@@ -8,7 +8,7 @@ export const defaultCamSettings = (): GameComponents["cam"] => ({
 	zoom: 8,
 	tilt: degrees(10),
 	swivel: degrees(0),
-	fov: degrees(80),
+	fov: degrees(60),
 	lerp: 5 / 100,
 })
 

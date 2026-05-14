@@ -1,13 +1,12 @@
 
-import {Vec2} from "@benev/math"
+import {Rect, Vec2} from "@benev/math"
 
 import {Pod} from "../parts/pod.js"
 import {Phys} from "../utils/phys.js"
-import {getShape} from "../utils/get-shape.js"
 
 export const physical_forces = (pod: Pod) => () => {
 	for (const [id, components] of pod.entities.select(
-			"velocity", "position",
+			"velocity", "position", "size",
 		)) {
 
 		const velocity = Vec2
@@ -24,9 +23,8 @@ export const physical_forces = (pod: Pod) => () => {
 
 		const canMoveTo = (position: Vec2) => {
 			if (!components.physical) return true
-			const shape = getShape({position: position.array(), size: components.size})
-			if (shape) return !hit(pod.physLattice.query(shape.boundingBox()))
-			return true
+			const rect = Rect.fromCenter(position, Vec2.from(components.size))
+			return !hit(pod.physLattice.query(rect))
 		}
 
 		const original = Vec2.from(components.position)

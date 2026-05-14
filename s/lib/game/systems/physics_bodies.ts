@@ -2,24 +2,19 @@
 import {lifecycle} from "@benev/archimedes"
 import {Pod} from "../parts/pod.js"
 import {PhysBox} from "../utils/phys.js"
-import {getShape} from "../utils/get-shape.js"
+import {getRect} from "../utils/get-rect.js"
 
 export const physics_bodies = (pod: Pod) => lifecycle(
 	pod.entities,
-	["physical", "position"],
+	["physical", "position", "size"],
 	(id, components) => {
-		const shape = getShape(components)
-		if (!shape) throw new Error(`physical with position lacks required size or radius`)
-
-		const rect = shape.boundingBox()
+		const rect = getRect(components)
 		const phys = new PhysBox(id, rect, components.mass)
 		pod.physLattice.upsert(phys, rect)
 
 		return {
 			tick(components) {
-				const freshShape = getShape(components)
-				if (!freshShape) throw new Error(`physical with position lacks required size or radius`)
-				const freshRect = freshShape.boundingBox()
+				const freshRect = getRect(components)
 				if (!phys.rect.equals(freshRect)) {
 					phys.rect = freshRect
 					pod.physLattice.upsert(phys, phys.rect)

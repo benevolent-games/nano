@@ -37,8 +37,8 @@ export class Realm {
 
 			toolDrill: new Pool(poolify(need(props, "tool-drill"))).prepopulate(32),
 			toolCannon: new Pool(poolify(need(props, "tool-cannon"))).prepopulate(32),
-			carbon: new Pool(poolify(box(scene, new Vec3(0.2, 0.2, 0.2)))).prepopulate(32),
-			battery: new Pool(poolify(box(scene, new Vec3(0.1, 0.4, 0.8)))).prepopulate(32),
+			carbon: new Pool(poolify(box(scene, {color: new Vec3(0.2, 0.2, 0.2), scale: Vec3.all(0.5)}))).prepopulate(32),
+			battery: new Pool(poolify(box(scene, {color: new Vec3(0.1, 0.4, 0.8), scale: Vec3.all(0.5)}))).prepopulate(32),
 		}
 	}
 
