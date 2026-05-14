@@ -16,7 +16,7 @@ export const makeRobot = () => archetype({
 	speed: 2,
 	sprint: false,
 	sprintFactor: 2,
-	targets: [],
+	target: null,
 	reach: 0.5,
 })
 

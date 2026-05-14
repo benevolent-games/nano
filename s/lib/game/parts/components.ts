@@ -74,7 +74,7 @@ export type GameComponents = AsComponents<{
 	}
 
 	/** our selection box is targeting these entities */
-	targets: Id[]
+	target: Id | null
 
 	/** this entity can be targeted */
 	targetable: boolean
