@@ -1,5 +1,5 @@
 
-import {seed} from "@benev/math"
+import {seed} from "@e280/stz"
 import {Pod} from "../parts/pod.js"
 
 export const timing_update = (pod: Pod) => () => {

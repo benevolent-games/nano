@@ -1,5 +1,5 @@
 
-import {Rand} from "@benev/math"
+import {Rand} from "@e280/stz"
 import {Gridworld} from "../types.js"
 import {Gridspace} from "./gridspace.js"
 

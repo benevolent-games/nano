@@ -1,6 +1,6 @@
 
-import {count} from "@e280/stz"
-import {makeNoiseSampler, Rand, Vec2} from "@benev/math"
+import {count, Rand} from "@e280/stz"
+import {makeNoiseSampler, Vec2} from "@benev/math"
 
 import {Gridworld, TileKind} from "../types.js"
 import {clampPointToGrid, forEachCell, paintSquareBrush, setTile} from "./grid.js"

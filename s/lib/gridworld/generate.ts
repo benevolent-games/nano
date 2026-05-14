@@ -1,5 +1,7 @@
 
-import {Rand, seed, Vec2, Xy} from "@benev/math"
+import {Rand, seed} from "@e280/stz"
+import {Vec2, Xy} from "@benev/math"
+
 import {Gridworld} from "./types.js"
 import {initGridworld} from "./utils/grid.js"
 import {carveDrunkenPathsBetweenWaypoints, getPointsAroundBorder, getRandomPointNearMiddle, southernFlooringGradient, splotchySubstrate} from "./utils/stages.js"

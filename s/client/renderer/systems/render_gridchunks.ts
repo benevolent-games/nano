@@ -1,7 +1,7 @@
 
-import {disposer} from "@e280/stz"
+import {Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
-import {Rand, seed, Vec3} from "@benev/math"
+import {disposer, Rand, seed} from "@e280/stz"
 
 import {Realm} from "../parts/realm.js"
 import {consts} from "../../../consts.js"

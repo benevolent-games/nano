@@ -1,6 +1,5 @@
 
-import {Rand, seed} from "@benev/math"
-import {got, need} from "@e280/stz"
+import {got, need, Rand, seed} from "@e280/stz"
 
 import {Pod} from "../parts/pod.js"
 import {makeRobot} from "../archetypes/robot.js"

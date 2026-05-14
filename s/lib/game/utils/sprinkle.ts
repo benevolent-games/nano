@@ -1,6 +1,5 @@
 
-import {count} from "@e280/stz"
-import {Rand, seed} from "@benev/math"
+import {count, Rand, seed} from "@e280/stz"
 import {unindex2d} from "../../tools/index2d.js"
 import {Gridworld, TileKind} from "../../gridworld/types.js"
 
