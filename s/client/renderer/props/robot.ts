@@ -10,8 +10,8 @@ import {makeRobot} from "../../../lib/game/archetypes/robot.js"
 
 export function robot(scene: Scene) {
 	const components = makeRobot()
-	const radius = components.radius * 1.2
-	const diameter = radius * 2
+	const diameter = components.size[0]
+	const radius = diameter / 2
 	const height = 1.1
 
 	const chassis = MeshBuilder.CreateCylinder(makeId(), {diameter, height}, scene)

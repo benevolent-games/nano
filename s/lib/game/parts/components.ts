@@ -64,9 +64,6 @@ export type GameComponents = AsComponents<{
 	/** how heavy is this entity */
 	mass: number
 
-	/** circular size */
-	radius: number
-
 	/** can equip tools */
 	tools: Tools
 
@@ -75,6 +72,15 @@ export type GameComponents = AsComponents<{
 		capacity: number
 		items: ItemKind[]
 	}
+
+	/** our selection box is targeting these entities */
+	targets: Id[]
+
+	/** this entity can be targeted */
+	targetable: boolean
+
+	/** how far this entity can reach for targeting */
+	reach: number
 
 	/** can be picked up */
 	pickupable: ItemKind

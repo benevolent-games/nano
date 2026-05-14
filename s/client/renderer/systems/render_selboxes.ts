@@ -1,30 +1,23 @@
 
-import {degrees} from "@benev/math"
+import {Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
 
 import {Realm} from "../parts/realm.js"
-import {consts} from "../../../consts.js"
-import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
+import {selrect} from "../../../lib/game/utils/selrect.js"
 
 export const render_selboxes = (realm: Realm) => lifecycle(
 	realm.entities,
-	["position", "graphic", "rotation", "lerp"],
+	["position", "graphic", "rotation", "reach", "lerp"],
 
 	(_id, _components) => {
 		const [selbox, release] = realm.pools.selboxes.lease()
 
 		return {
 			tick(components) {
-				const offset = new Gridspace(1, 0)
-					.rotate(degrees(270) - components.rotation)
-					.normalize()
-					.mulBy(consts.interactorReach)
-
-				const target = new Gridspace()
-					.from(components.position)
-					.add(offset)
-
-				selbox.setGridspace(target, 1)
+				const rect = selrect(components)
+				const size = rect.size()
+				selbox.setGridspace(rect.center())
+				selbox.setScale(new Vec3(size.x, size.y, 0.5))
 			},
 
 			exit() {

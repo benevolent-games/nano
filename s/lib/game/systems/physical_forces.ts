@@ -1,6 +1,5 @@
 
 import {Vec2} from "@benev/math"
-import {asSystem} from "@benev/archimedes"
 
 import {Pod} from "../parts/pod.js"
 import {Phys} from "../utils/phys.js"
@@ -25,7 +24,7 @@ export const physical_forces = (pod: Pod) => () => {
 
 		const canMoveTo = (position: Vec2) => {
 			if (!components.physical) return true
-			const shape = getShape({position: position.array(), size: components.size, radius: components.radius})
+			const shape = getShape({position: position.array(), size: components.size})
 			if (shape) return !hit(pod.physLattice.query(shape.boundingBox()))
 			return true
 		}

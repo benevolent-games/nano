@@ -7,7 +7,7 @@ import { consts } from "../../../consts.js"
 
 export const render_robots = (realm: Realm) => lifecycle(
 	realm.entities,
-	["position", "graphic", "rotation", "lerp", "radius"],
+	["position", "graphic", "rotation", "lerp", "size"],
 
 	(_id, components) => {
 		let rotation = components.rotation
