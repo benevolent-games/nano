@@ -44,10 +44,10 @@ export class Game {
 
 		for (const position of sprinkle(gridworld, 1, 1_000)) {
 			this.change.create({
-				size: [0.8, 0.8],
+				size: [consts.robotScale, consts.robotScale],
 				position: position.add_(0.5, 0.5).array(),
 				pickupable: rand.pick(items),
-				rotation: rand.integerRange(0, 3) * degrees(90),
+				rotation: rand.range(degrees(0), degrees(360)),
 				targetable: true,
 			})
 		}

@@ -7,5 +7,6 @@ export type Graphic = {
 	setPosition(vec: Vec3): void
 	setRotation(radians: number): void
 	setGridspace(gridspace: Gridspace, height?: number): void
+	setVisibility(visible: boolean): void
 }
 

@@ -33,7 +33,8 @@ export class Realm {
 			walls: new Pool(poolify(need(props, "rock-pillarcluster1"))).prepopulate(2000),
 
 			chassis: new Pool(poolify(need(props, "robot-chassis"))).prepopulate(32),
-			selboxes: new Pool(poolify(selbox(scene))).prepopulate(10),
+			inventoryFull: new Pool(poolify(need(props, "robot-inventory-full"))).prepopulate(32),
+			selboxes: new Pool(poolify(selbox(scene))).prepopulate(32),
 
 			toolDrill: new Pool(poolify(need(props, "tool-drill"))).prepopulate(32),
 			toolCannon: new Pool(poolify(need(props, "tool-cannon"))).prepopulate(32),

@@ -21,15 +21,22 @@ export function poolify(prop: Prop): () => PoolMember<Graphic> {
 				setScale: vector => {
 					instance.scaling = resolveScale(vector)
 				},
+
 				setPosition: vector => {
 					instance.position = resolvePosition(vector)
 				},
+
 				setGridspace: (gridspace, height) => {
 					instance.position = resolveGridspace(gridspace, height)
 				},
-				setRotation: (radians) => {
+
+				setRotation: radians => {
 					instance.rotationQuaternion ??= Quaternion.Identity()
 					instance.rotationQuaternion.set(...Quat.rotate_(0, radians, 0).array())
+				},
+
+				setVisibility: visible => {
+					instance.setEnabled(visible)
 				},
 			},
 		}

@@ -5,20 +5,23 @@ import {Realm} from "../parts/realm.js"
 import {consts} from "../../../consts.js"
 import {Robolocation} from "../utils/robolocation.js"
 
-export const render_robots = (realm: Realm) => lifecycle(
+export const render_inventory_full = (realm: Realm) => lifecycle(
 	realm.entities,
-	["position", "graphic", "rotation", "lerp"],
+	["inventory", "graphic", "position", "rotation", "lerp"],
 
 	(_id, components) => {
 		const robolocation = new Robolocation(components)
-		const [graphic, release] = realm.pools.chassis.lease()
+		const [graphic, release] = realm.pools.inventoryFull.lease()
 		graphic.setScale(Vec3.all(consts.robotScale))
 
 		return {
 			tick(components) {
 				robolocation.update(realm.timing.delta, components)
-				graphic.setGridspace(robolocation.position, 0)
+				graphic.setGridspace(robolocation.position)
 				graphic.setRotation(robolocation.rotation.x)
+
+				const isFull = components.inventory.items.length >= components.inventory.capacity
+				graphic.setVisibility(isFull)
 			},
 
 			exit() {
