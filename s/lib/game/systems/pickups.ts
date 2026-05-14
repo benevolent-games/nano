@@ -8,7 +8,7 @@ export const pickups = (pod: Pod) => () => {
 		const a = need(pod.actors, components.controlledBy).actions.robot
 		const underCapacity = components.inventory.items.length < components.inventory.capacity
 
-		if (targetId && a.use.down && underCapacity) {
+		if (targetId && a.use.changedDown && underCapacity) {
 			const targetComponents = pod.entities.getWith(targetId, "pickupable")
 			if (targetComponents) {
 				pod.change.merge(id, {
