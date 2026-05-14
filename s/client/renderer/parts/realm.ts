@@ -1,9 +1,11 @@
 
 import {need} from "@e280/stz"
+import {Vec3} from "@benev/math"
 import {EntitiesReadonly} from "@benev/archimedes"
 
 import {Pool} from "./pool.js"
 import {Venue} from "./venue.js"
+import {box} from "../props/box.js"
 import {getProps} from "./buddy.js"
 import {poolify} from "./poolify.js"
 import {selbox} from "../props/selbox.js"
@@ -35,6 +37,8 @@ export class Realm {
 
 			toolDrill: new Pool(poolify(need(props, "tool-drill"))).prepopulate(32),
 			toolCannon: new Pool(poolify(need(props, "tool-cannon"))).prepopulate(32),
+			carbon: new Pool(poolify(box(scene, new Vec3(0.2, 0.2, 0.2)))).prepopulate(32),
+			battery: new Pool(poolify(box(scene, new Vec3(0.1, 0.4, 0.8)))).prepopulate(32),
 		}
 	}
 

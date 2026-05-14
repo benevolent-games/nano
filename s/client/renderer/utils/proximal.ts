@@ -1,23 +1,36 @@
 
-import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
+import {Vec2} from "@benev/math"
 
 export class Proximal {
+	dispose = () => {}
 	#was = false
-	#focal
-	#threshold
+	#nearby = false
 
-	nearby = false
-
-	constructor(focal: Gridspace, distance: number) {
-		this.#focal = focal
-		this.#threshold = distance ** 2
+	get nearby() {
+		return this.#nearby
 	}
 
-	check(target: Gridspace) {
-		this.nearby = target.distanceSquared(this.#focal) < this.#threshold
-		const changed = this.nearby !== this.#was
-		this.#was = this.nearby
-		return changed
+	on(distance: number, alpha: Vec2, bravo: Vec2, fn: () => () => void) {
+		const threshold = distance ** 2
+		const near = alpha.distanceSquared(bravo) < threshold
+		const changed = near !== this.#was
+
+		this.#was = near
+		this.#nearby = near
+
+		if (changed && near) {
+			this.dispose()
+			this.dispose = fn()
+		}
+
+		else if (changed && !near) {
+			this.dispose()
+			this.dispose = () => {}
+		}
+	}
+
+	invalidate() {
+		this.#was = false
 	}
 }
 

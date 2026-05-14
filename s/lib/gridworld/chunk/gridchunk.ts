@@ -23,7 +23,7 @@ export class Gridchunk {
 		return this.position.dup().add(gridChunkSize().half())
 	}
 
-	*[Symbol.iterator]() {
+	*tiles() {
 		let index = 0
 		for (const [x, y] of count2d(gridChunkSize().array())) {
 			const i = index++

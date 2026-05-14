@@ -25,7 +25,7 @@ export class Gridphys {
 	}
 
 	populate() {
-		for (const {tile, position} of this.#chunk) {
+		for (const {tile, position} of this.#chunk.tiles()) {
 			if (tile !== TileKind.Floor) {
 				const obstacle = new PhysBox(
 					this.#id,

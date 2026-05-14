@@ -46,7 +46,7 @@ export class Game {
 			this.change.create({
 				position: position.add_(0.5, 0.5).array(),
 				pickupable: rand.pick(items),
-				rotation: rand.range(degrees(0), degrees(360)),
+				rotation: rand.integerRange(0, 3) * degrees(90),
 			})
 		}
 
