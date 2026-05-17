@@ -28,12 +28,12 @@ export class Realm {
 			indicator: new Pool(poolify(need(props, "indicator"))).prepopulate(1),
 
 			floor1: new Pool(poolify(need(props, "floor1"))).prepopulate(128),
-			rock1: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
-			rock2: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
-			rock3: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
-			rock4: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
-			rock5: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
-			rock6: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
+			wall1: new Pool(poolify(need(props, "wall1"))).prepopulate(128),
+			wall2: new Pool(poolify(need(props, "wall2"))).prepopulate(128),
+			wall3: new Pool(poolify(need(props, "wall3"))).prepopulate(128),
+			wall4: new Pool(poolify(need(props, "wall4"))).prepopulate(128),
+			wall5: new Pool(poolify(need(props, "wall5"))).prepopulate(128),
+			wall6: new Pool(poolify(need(props, "wall6"))).prepopulate(128),
 
 			lowerQuadcar: new Pool(poolify(need(props, "lower-quadcar"))).prepopulate(8),
 			lowerTreads: new Pool(poolify(need(props, "lower-treads"))).prepopulate(8),

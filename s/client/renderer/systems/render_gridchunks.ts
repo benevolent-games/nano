@@ -22,12 +22,12 @@ export const render_gridchunks = (realm: Realm) => lifecycle(
 
 		function leaseRandomWall() {
 			return rand.pick([
-				realm.pools.rock1,
-				realm.pools.rock2,
-				realm.pools.rock3,
-				realm.pools.rock4,
-				realm.pools.rock5,
-				realm.pools.rock6,
+				realm.pools.wall1,
+				realm.pools.wall2,
+				realm.pools.wall3,
+				realm.pools.wall4,
+				realm.pools.wall5,
+				realm.pools.wall6,
 			]).lease()
 		}
 
