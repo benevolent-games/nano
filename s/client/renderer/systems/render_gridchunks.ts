@@ -1,5 +1,5 @@
 
-import {Vec3} from "@benev/math"
+import {degrees, Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
 import {disposer, Rand, seed} from "@e280/stz"
 
@@ -20,6 +20,17 @@ export const render_gridchunks = (realm: Realm) => lifecycle(
 		const proximal = new Proximal()
 		const rand = new Rand(seed(1))
 
+		function leaseRandomWall() {
+			return rand.pick([
+				realm.pools.rock1,
+				realm.pools.rock2,
+				realm.pools.rock3,
+				realm.pools.rock4,
+				realm.pools.rock5,
+				realm.pools.rock6,
+			]).lease()
+		}
+
 		return {
 			tick(components) {
 				const chunkcenter = new Gridspace().from(components.position).add(gridChunkSize().divBy(2))
@@ -35,16 +46,17 @@ export const render_gridchunks = (realm: Realm) => lifecycle(
 						const center = position.dup().addBy(0.5)
 
 						if (tile !== TileKind.Pit) {
-							const [graphic, disposer] = realm.pools.floors.lease()
+							const [graphic, disposer] = realm.pools.floor1.lease()
 							dispose.schedule(disposer)
 							graphic.setGridspace(center)
 						}
 
 						if (tile === TileKind.Wall) {
-							const [graphic, disposer] = realm.pools.walls.lease()
+							const [graphic, disposer] = leaseRandomWall()
 							dispose.schedule(disposer)
 							graphic.setGridspace(center)
 							graphic.setScale(new Vec3(1, 1, rand.range(0.3, 1)))
+							graphic.setRotation(rand.integerRange(0, 3) * degrees(90))
 						}
 					}
 

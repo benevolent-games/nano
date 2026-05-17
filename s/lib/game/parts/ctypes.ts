@@ -1,13 +1,26 @@
 
-export type ToolKind = "cannon" | "drill"
+export type EquipmentKind =
+	| "e-cannon"
+	| "e-drill"
+	| "e-dome"
 
 export type ItemKind =
-	| ToolKind
-	| "carbon"
-	| "battery"
+	| EquipmentKind
+	| "ore-carbon"
+	| "ore-coltan"
+	| "ore-gold"
+	| "ingot-tantalum"
+	| "ingot-gold"
+	| "lower-quadcar"
+	| "lower-treads"
+	| "lower-trike"
+	| "upper-scout"
+	| "upper-pragmatist"
+	| "upper-utilitarian"
+	| "upper-chonky"
 
-export type Tools = {
-	primary: null | ToolKind
-	secondary: null | ToolKind
+export type Equipment = {
+	a: null | EquipmentKind
+	b: null | EquipmentKind
 }
 

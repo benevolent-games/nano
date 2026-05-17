@@ -1,14 +1,11 @@
 
 import {need} from "@e280/stz"
-import {Vec3} from "@benev/math"
 import {EntitiesReadonly} from "@benev/archimedes"
 
 import {Pool} from "./pool.js"
 import {Venue} from "./venue.js"
-import {box} from "../props/box.js"
 import {getProps} from "./buddy.js"
 import {poolify} from "./poolify.js"
-import {selbox} from "../props/selbox.js"
 import {Timing} from "../../../lib/tools/timing.js"
 import {PlayerId} from "../../../lib/game/utils/players.js"
 import {AssetContainer} from "@babylonjs/core/assetContainer.js"
@@ -26,20 +23,42 @@ export class Realm {
 			public venue: Venue,
 			public art: AssetContainer,
 		) {
-		const {scene} = venue
 		const props = getProps(art)
 		this.pools = {
-			floors: new Pool(poolify(need(props, "base-floor1"))).prepopulate(2000),
-			walls: new Pool(poolify(need(props, "rock-pillarcluster1"))).prepopulate(2000),
+			indicator: new Pool(poolify(need(props, "indicator"))).prepopulate(1),
 
-			chassis: new Pool(poolify(need(props, "robot-chassis"))).prepopulate(32),
-			inventoryFull: new Pool(poolify(need(props, "robot-inventory-full"))).prepopulate(32),
-			selboxes: new Pool(poolify(selbox(scene))).prepopulate(32),
+			floor1: new Pool(poolify(need(props, "floor1"))).prepopulate(128),
+			rock1: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
+			rock2: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
+			rock3: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
+			rock4: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
+			rock5: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
+			rock6: new Pool(poolify(need(props, "rock1"))).prepopulate(128),
 
-			toolDrill: new Pool(poolify(need(props, "tool-drill"))).prepopulate(32),
-			toolCannon: new Pool(poolify(need(props, "tool-cannon"))).prepopulate(32),
-			carbon: new Pool(poolify(box(scene, {color: new Vec3(0.2, 0.2, 0.2), scale: Vec3.all(0.5)}))).prepopulate(32),
-			battery: new Pool(poolify(box(scene, {color: new Vec3(0.1, 0.4, 0.8), scale: Vec3.all(0.5)}))).prepopulate(32),
+			lowerQuadcar: new Pool(poolify(need(props, "lower-quadcar"))).prepopulate(8),
+			lowerTreads: new Pool(poolify(need(props, "lower-treads"))).prepopulate(8),
+			lowerTrike: new Pool(poolify(need(props, "lower-trike"))).prepopulate(8),
+
+			upperScout: new Pool(poolify(need(props, "upper-scout"))).prepopulate(8),
+			upperPragmatist: new Pool(poolify(need(props, "upper-pragmatist"))).prepopulate(8),
+			upperUtilitarian: new Pool(poolify(need(props, "upper-utilitarian"))).prepopulate(8),
+			upperChonky: new Pool(poolify(need(props, "upper-chonky"))).prepopulate(8),
+			upperDapper: new Pool(poolify(need(props, "upper-dapper"))).prepopulate(8),
+
+			aCannon: new Pool(poolify(need(props, "a-cannon"))).prepopulate(16),
+			aDrill: new Pool(poolify(need(props, "a-drill"))).prepopulate(16),
+			bDome: new Pool(poolify(need(props, "b-dome"))).prepopulate(16),
+
+			oreCarbon: new Pool(poolify(need(props, "ore-carbon"))).prepopulate(16),
+			oreColtan: new Pool(poolify(need(props, "ore-coltan"))).prepopulate(16),
+			oreGold: new Pool(poolify(need(props, "ore-gold"))).prepopulate(16),
+
+			ingotTantalum: new Pool(poolify(need(props, "ingot-tantalum"))).prepopulate(16),
+			ingotGold: new Pool(poolify(need(props, "ingot-gold"))).prepopulate(16),
+
+			structHub: new Pool(poolify(need(props, "struct-hub"))).prepopulate(16),
+			structRefinery: new Pool(poolify(need(props, "struct-refinery"))).prepopulate(16),
+			structConstructor: new Pool(poolify(need(props, "struct-constructor"))).prepopulate(16),
 		}
 	}
 
