@@ -20,9 +20,9 @@ export const render_pickupables = (realm: Realm) => lifecycle(
 				proximal.on(consts.renderProximity, realm.focal, gridspace, () => {
 					const pool = (() => {
 						switch (components.pickupable) {
-							case "e-cannon": return realm.pools.aCannon
-							case "e-drill": return realm.pools.aDrill
-							case "e-dome": return realm.pools.bDome
+							case "a-cannon": return realm.pools.aCannon
+							case "a-drill": return realm.pools.aDrill
+							case "b-dome": return realm.pools.bDome
 							case "ore-carbon": return realm.pools.oreCarbon
 							case "ore-coltan": return realm.pools.oreColtan
 							case "ore-gold": return realm.pools.oreGold

@@ -6,7 +6,7 @@ import {applyDelta, Change, Entities, Id} from "@benev/archimedes"
 import {Pod} from "./parts/pod.js"
 import {systems} from "./systems.js"
 import {consts} from "../../consts.js"
-import {ItemKind} from "./parts/ctypes.js"
+import {Item} from "./parts/ctypes.js"
 import {sprinkle} from "./utils/sprinkle.js"
 import {GameComponents} from "./parts/components.js"
 import {chunkify} from "../gridworld/chunk/chunkify.js"
@@ -35,10 +35,10 @@ export class Game {
 		for (const chunk of chunkify(gridworld))
 			this.change.create(chunk)
 
-		const items: ItemKind[] = [
-			"e-cannon",
-			"e-drill",
-			"e-dome",
+		const items: Item[] = [
+			"a-cannon",
+			"a-drill",
+			"b-dome",
 			"ore-carbon",
 			"ore-coltan",
 			"ore-gold",

@@ -2,7 +2,7 @@
 import {Intent} from "@benev/tact"
 import {XyArray} from "@benev/math"
 import {AsComponents, Id} from "@benev/archimedes"
-import {ItemKind, EquipmentKind, Equipment} from "./ctypes.js"
+import {Item, EquipmentA, Equipment, Mech} from "./ctypes.js"
 
 export type GameComponents = AsComponents<{
 
@@ -64,13 +64,16 @@ export type GameComponents = AsComponents<{
 	/** how heavy is this entity */
 	mass: number
 
-	/** can equip tools */
-	tools: Equipment
+	/** description of this robot's build */
+	mech: Mech
+
+	/** can have equipment */
+	equipped: Equipment
 
 	/** can store stuff */
 	inventory: {
 		capacity: number
-		items: ItemKind[]
+		items: Item[]
 	}
 
 	/** our selection box is targeting these entities */
@@ -83,10 +86,10 @@ export type GameComponents = AsComponents<{
 	reach: number
 
 	/** can be picked up */
-	pickupable: ItemKind
+	pickupable: Item
 
 	/** can be equipped as tool */
-	equippable: EquipmentKind
+	equippable: EquipmentA
 
 	/** lerp factor for smoothing movements */
 	lerp: number
