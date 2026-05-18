@@ -10,8 +10,8 @@ import {Graphics} from "../../lib/graphics/graphics.js"
 import {makePropMap} from "../../lib/buddy/buddy.js"
 import {PlayerId} from "../../lib/game/utils/players.js"
 import {Gridspace} from "../../lib/gridworld/utils/gridspace.js"
-import {validateProps} from "../../lib/graphics/validate-props.js"
 import {GameComponents} from "../../lib/game/parts/components.js"
+import {validateProps} from "../../lib/graphics/validate-props.js"
 
 export class Realm {
 	artist

@@ -1,5 +1,5 @@
 
-import {degrees, Quat, Vec3} from "@benev/math"
+import {degrees, Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
 import {disposer, Rand, seed} from "@e280/stz"
 
@@ -8,10 +8,10 @@ import {art} from "../art.js"
 import {consts} from "../../../consts.js"
 import {Proximal} from "../utils/proximal.js"
 import {TileKind} from "../../../lib/gridworld/types.js"
-import {resolvePosition, resolveRotation, resolveScale} from "../utils/resolve.js"
 import {Gridchunk} from "../../../lib/gridworld/chunk/gridchunk.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 import {gridChunkSize} from "../../../lib/gridworld/utils/grid-chunk-size.js"
+import {resolvePosition, resolveRotation, resolveScale} from "../utils/resolve.js"
 
 export const render_gridchunks = (realm: Realm) => lifecycle(
 	realm.entities,
