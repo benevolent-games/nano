@@ -28,7 +28,7 @@ export const art = {
 
 	aCannon: new Art("a-cannon", 16),
 	aDrill: new Art("a-drill", 16),
-	bDome: new Art("a-dome", 16),
+	bDome: new Art("b-dome", 16),
 
 	oreCarbon: new Art("ore-carbon", 16),
 	oreColtan: new Art("ore-coltan", 16),
