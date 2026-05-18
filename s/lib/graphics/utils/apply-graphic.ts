@@ -5,14 +5,14 @@ import {Quaternion} from "@babylonjs/core/Maths/math.js"
 import {Graphic} from "../graphic.js"
 import {Prop} from "../../buddy/buddy.js"
 
-export function applyFigure(figure: Graphic, prop: Prop) {
-	if (prop.isEnabled() !== figure.visible)
-		prop.setEnabled(figure.visible)
+export function applyGraphic(graphic: Graphic, prop: Prop) {
+	if (prop.isEnabled() !== graphic.visible)
+		prop.setEnabled(graphic.visible)
 
-	if (figure.visible) {
-		applyVec(figure.scale, prop.scaling)
-		applyVec(figure.position, prop.position)
-		applyQuat(figure.rotation, prop.rotationQuaternion ??= Quaternion.Identity())
+	if (graphic.visible) {
+		applyVec(graphic.scale, prop.scaling)
+		applyVec(graphic.position, prop.position)
+		applyQuat(graphic.rotation, prop.rotationQuaternion ??= Quaternion.Identity())
 	}
 }
 

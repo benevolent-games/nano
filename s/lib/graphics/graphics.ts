@@ -2,6 +2,7 @@
 import {Art} from "./art.js"
 import {Graphic} from "./graphic.js"
 
+/** describes what graphics we want in our scene. */
 export class Graphics {
 	#figures = new Set<Graphic>()
 

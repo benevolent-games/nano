@@ -5,15 +5,16 @@ import {Graphic} from "./graphic.js"
 import {Pool} from "./utils/pool.js"
 import {Graphics} from "./graphics.js"
 import {instantiate, Prop} from "../buddy/buddy.js"
-import {applyFigure} from "./utils/apply-figure.js"
+import {applyGraphic} from "./utils/apply-graphic.js"
 
+/** responsible for rendering graphics with efficient instance pooling. */
 export class Artist {
 	#props: Prop[] = []
 	#binds = new Map<Graphic, [Prop, () => void]>()
 	#pools = new Map<Art, Pool<Prop>>()
 
 	constructor(
-		public figures: Graphics,
+		public graphics: Graphics,
 		private source: Map<string, Prop>,
 	) {}
 
@@ -30,17 +31,17 @@ export class Artist {
 	}
 
 	render() {
-		// create and/or update figure props
-		for (const figure of this.figures.all()) {
-			const [prop] = guarantee(this.#binds, figure, () => this.#getPool(figure.art).lease())
-			applyFigure(figure, prop)
+		// create and/or update props for graphics
+		for (const graphic of this.graphics.all()) {
+			const [prop] = guarantee(this.#binds, graphic, () => this.#getPool(graphic.art).lease())
+			applyGraphic(graphic, prop)
 		}
 
-		// release all figures not in use
-		for (const [figure, [,release]] of this.#binds) {
-			if (!this.figures.has(figure)) {
+		// release all graphics not in use
+		for (const [graphic, [,release]] of this.#binds) {
+			if (!this.graphics.has(graphic)) {
 				release()
-				this.#binds.delete(figure)
+				this.#binds.delete(graphic)
 			}
 		}
 	}
