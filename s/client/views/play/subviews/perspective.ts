@@ -6,7 +6,7 @@ import {Viewframe} from "../../../utils/viewframe.js"
 import {rafloop} from "../../../renderer/utils/rafloop.js"
 import {useResizeObserver} from "../../../utils/use-resize-observer.js"
 
-export const Perspective = light(({realm, renderer, canvas}: Viewframe) => {
+export const Perspective = light(({canvas, realm, render}: Viewframe) => {
 	const $resolution = useSignal(0.5)
 	const $ren = useSignal(0)
 	const $bab = useSignal(0)
@@ -23,7 +23,7 @@ export const Perspective = light(({realm, renderer, canvas}: Viewframe) => {
 		const start = performance.now()
 
 		const renStart = performance.now()
-		renderer.render()
+		render()
 		$ren(performance.now() - renStart)
 
 		const babStart = performance.now()

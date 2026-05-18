@@ -7,7 +7,7 @@ import {HemisphericLight} from "@babylonjs/core/Lights/hemisphericLight.js"
 import {setOpenGLOrientationForUV} from "@babylonjs/core/Compat/compatibilityOptions.js"
 
 import {Cam} from "./cam.js"
-import {AnyCanvas} from "./buddy.js"
+import {AnyCanvas} from "../../../lib/buddy/buddy.js"
 import {makeEngine} from "./make-engine.js"
 
 export type Venue = Awaited<ReturnType<typeof makeVenue>>

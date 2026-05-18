@@ -25,10 +25,10 @@ export function instantiate(prop: Prop) {
 	) as TransformNode
 }
 
-export function getProps(container: AssetContainer) {
+export function makePropMap(assets: AssetContainer) {
 	const props = new Map<string, Prop>()
-	container.transformNodes.map(node => props.set(node.name, node))
-	container.meshes.map(mesh => props.set(mesh.name, mesh))
+	assets.transformNodes.map(node => props.set(node.name, node))
+	assets.meshes.map(mesh => props.set(mesh.name, mesh))
 	return props
 }
 

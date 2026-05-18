@@ -1,9 +1,10 @@
 
 import {degrees, Scalar} from "@benev/math"
 import {Scene} from "@babylonjs/core/scene.js"
+import {Vector3} from "@babylonjs/core/Maths/math.js"
 import {ArcRotateCamera} from "@babylonjs/core/Cameras/arcRotateCamera.js"
 
-import {resolveGridspace} from "../utils/resolve-gridspace.js"
+import {resolveGridspace} from "../utils/resolve.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 import {GameComponents} from "../../../lib/game/parts/components.js"
 import {defaultCamSettings} from "../../../lib/game/utils/default-cam.js"
@@ -13,6 +14,7 @@ type Settings = GameComponents["cam"]
 export class Cam {
 	#camera
 	#swivelOffset = degrees(-90)
+	#anchorHeight = 0.5
 
 	#state = {
 		focal: new Gridspace(),
@@ -28,7 +30,7 @@ export class Cam {
 			this.#swivelOffset + settings.swivel, // swivel
 			settings.tilt, // verticality
 			settings.zoom,
-			resolveGridspace(new Gridspace().from(settings.focal)),
+			new Vector3(...resolveGridspace(new Gridspace().from(settings.focal)), this.#anchorHeight),
 			scene,
 		)
 		this.#camera.fov = settings.fov
@@ -49,7 +51,7 @@ export class Cam {
 		state.swivel.lerp(settings.swivel, lerp)
 		state.fov.lerp(settings.fov, lerp)
 
-		c.target.copyFrom(resolveGridspace(state.focal))
+		c.target.copyFrom(new Vector3(...resolveGridspace(state.focal, this.#anchorHeight)))
 		c.alpha = this.#swivelOffset + state.swivel.x
 		c.beta = state.tilt.x
 		c.radius = state.zoom.x

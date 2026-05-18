@@ -1,13 +1,13 @@
 
 import {consolidate} from "@benev/archimedes"
-import {Realm} from "./parts/realm.js"
+import {Realm} from "./realm.js"
 import {update_cam} from "./systems/update_cam.js"
 import {update_timing} from "./systems/update_timing.js"
 import {render_robots} from "./systems/render_robots.js"
 import {render_gridchunks} from "./systems/render_gridchunks.js"
 import {render_pickupables} from "./systems/render_pickupables.js"
 
-export const render = (realm: Realm) => consolidate(realm, {
+export const setupRender = (realm: Realm) => consolidate(realm, {
 	timing: {
 		update_timing,
 	},
@@ -22,6 +22,8 @@ export const render = (realm: Realm) => consolidate(realm, {
 		// render_inventory_full,
 		// render_selboxes,
 		render_pickupables,
+		render_artist: realm => () => realm.artist.render(),
 	},
+
 })
 

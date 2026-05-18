@@ -1,10 +1,12 @@
 
 import {Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
-import {Realm} from "../parts/realm.js"
+import {art} from "../art.js"
+import {Realm} from "../realm.js"
 import {consts} from "../../../consts.js"
 import {Proximal} from "../utils/proximal.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
+import {resolvePosition, resolveRotation, resolveScale} from "../utils/resolve.js"
 
 export const render_pickupables = (realm: Realm) => lifecycle(
 	realm.entities,
@@ -18,30 +20,30 @@ export const render_pickupables = (realm: Realm) => lifecycle(
 			tick(components) {
 				gridspace.from(components.position)
 				proximal.on(consts.renderProximity, realm.focal, gridspace, () => {
-					const pool = (() => {
+					const chosenArt = (() => {
 						switch (components.pickupable) {
-							case "a-cannon": return realm.pools.aCannon
-							case "a-drill": return realm.pools.aDrill
-							case "b-dome": return realm.pools.bDome
-							case "ore-carbon": return realm.pools.oreCarbon
-							case "ore-coltan": return realm.pools.oreColtan
-							case "ore-gold": return realm.pools.oreGold
-							case "ingot-gold": return realm.pools.ingotGold
-							case "ingot-tantalum": return realm.pools.ingotTantalum
-							case "lower-quadcar": return realm.pools.lowerQuadcar
-							case "lower-treads": return realm.pools.lowerTreads
-							case "lower-trike": return realm.pools.lowerTrike
-							case "upper-scout": return realm.pools.upperScout
-							case "upper-pragmatist": return realm.pools.upperPragmatist
-							case "upper-utilitarian": return realm.pools.upperUtilitarian
-							case "upper-chonky": return realm.pools.upperChonky
+							case "a-cannon": return art.aCannon
+							case "a-drill": return art.aDrill
+							case "b-dome": return art.bDome
+							case "ore-carbon": return art.oreCarbon
+							case "ore-coltan": return art.oreColtan
+							case "ore-gold": return art.oreGold
+							case "ingot-gold": return art.ingotGold
+							case "ingot-tantalum": return art.ingotTantalum
+							case "lower-quadcar": return art.lowerQuadcar
+							case "lower-treads": return art.lowerTreads
+							case "lower-trike": return art.lowerTrike
+							case "upper-scout": return art.upperScout
+							case "upper-pragmatist": return art.upperPragmatist
+							case "upper-utilitarian": return art.upperUtilitarian
+							case "upper-chonky": return art.upperChonky
 							default: throw new Error(`unknown pickupable "${components.pickupable}"`)
 						}
 					})()
-					const [graphic, release] = pool.lease()
-					graphic.setScale(Vec3.all(consts.robotScale))
-					graphic.setGridspace(gridspace)
-					graphic.setRotation(components.rotation)
+					const [graphic, release] = realm.graphics.instance(chosenArt)
+					graphic.scale.set(resolveScale(Vec3.all(consts.robotScale)))
+					graphic.position.set(resolvePosition(gridspace))
+					graphic.rotation.set(resolveRotation(components.rotation))
 					return release
 				})
 			},

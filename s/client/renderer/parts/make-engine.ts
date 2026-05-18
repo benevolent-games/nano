@@ -1,5 +1,5 @@
 
-import {AnyCanvas} from "./buddy.js"
+import {AnyCanvas} from "../../../lib/buddy/buddy.js"
 import {Engine} from "@babylonjs/core/Engines/engine.js"
 import {EngineOptions} from "@babylonjs/core/Engines/thinEngine.js"
 import {WebGPUEngine, WebGPUEngineOptions} from "@babylonjs/core/Engines/webgpuEngine.js"

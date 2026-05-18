@@ -1,12 +1,14 @@
 
-import {degrees, Vec3} from "@benev/math"
+import {degrees, Quat, Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
 import {disposer, Rand, seed} from "@e280/stz"
 
-import {Realm} from "../parts/realm.js"
+import {Realm} from "../realm.js"
+import {art} from "../art.js"
 import {consts} from "../../../consts.js"
 import {Proximal} from "../utils/proximal.js"
 import {TileKind} from "../../../lib/gridworld/types.js"
+import {resolvePosition, resolveRotation, resolveScale} from "../utils/resolve.js"
 import {Gridchunk} from "../../../lib/gridworld/chunk/gridchunk.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 import {gridChunkSize} from "../../../lib/gridworld/utils/grid-chunk-size.js"
@@ -21,14 +23,14 @@ export const render_gridchunks = (realm: Realm) => lifecycle(
 		const rand = new Rand(seed(1))
 
 		function leaseRandomWall() {
-			return rand.pick([
-				realm.pools.wall1,
-				realm.pools.wall2,
-				realm.pools.wall3,
-				realm.pools.wall4,
-				realm.pools.wall5,
-				realm.pools.wall6,
-			]).lease()
+			return realm.graphics.instance(rand.pick([
+				art.wall1,
+				art.wall2,
+				art.wall3,
+				art.wall4,
+				art.wall5,
+				art.wall6,
+			]))
 		}
 
 		return {
@@ -46,17 +48,17 @@ export const render_gridchunks = (realm: Realm) => lifecycle(
 						const center = position.dup().addBy(0.5)
 
 						if (tile !== TileKind.Pit) {
-							const [graphic, disposer] = realm.pools.floor1.lease()
+							const [graphic, disposer] = realm.graphics.instance(art.floor1)
 							dispose.schedule(disposer)
-							graphic.setGridspace(center)
+							graphic.position.set(resolvePosition(center))
 						}
 
 						if (tile === TileKind.Wall) {
 							const [graphic, disposer] = leaseRandomWall()
 							dispose.schedule(disposer)
-							graphic.setGridspace(center)
-							graphic.setScale(new Vec3(1, 1, rand.range(0.3, 1)))
-							graphic.setRotation(rand.integerRange(0, 3) * degrees(90))
+							graphic.position.set(resolvePosition(center))
+							graphic.scale.set(resolveScale(new Vec3(1, 1, rand.range(0.3, 1))))
+							graphic.rotation.set(resolveRotation(rand.integerRange(0, 3) * degrees(90)))
 						}
 					}
 
