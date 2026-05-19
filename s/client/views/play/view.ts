@@ -21,9 +21,9 @@ export const Play = shadow((deck: Deck) => {
 	// teeing off the game intent buckets vs meta intent buckets which are sampled at differing rates
 	const gamePlayers = useOnce(() => new IntentBucketMap())
 	const metaPlayers = useOnce(() => new IntentBucketMap())
-	const players = useOnce(() => new Recruiter(deck, [gamePlayers, metaPlayers]))
-	useMount(() => effect(() => players.syncWithPorts()))
-	useMount(() => players.samplingLoop())
+	const recruiter = useOnce(() => new Recruiter(deck, [gamePlayers, metaPlayers]))
+	useMount(() => effect(() => recruiter.syncWithPorts()))
+	useMount(() => recruiter.samplingLoop())
 
 	// special separate 'meta' handling of things like menu buttons
 	const metaActors = useOnce(() => new ActorMap())
@@ -46,7 +46,7 @@ export const Play = shadow((deck: Deck) => {
 	}))
 
 	const multiframe = useOnce(() => new Multiframe(game.entities.readonly))
-	useMount(() => effect(() => multiframe.sync(players)))
+	useMount(() => effect(() => multiframe.sync(recruiter)))
 
 	return html`
 		<div class=shell>

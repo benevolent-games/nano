@@ -1,11 +1,11 @@
 
 import {html} from "lit"
 import {light, loot, useMount, useOnce, useSignal} from "@e280/sly"
+import {LoadAssetContainerAsync} from "@babylonjs/core/Loading/sceneLoader.js"
 
 import {Viewframe} from "../../../utils/viewframe.js"
 import {rafloop} from "../../../renderer/utils/rafloop.js"
 import {useResizeObserver} from "../../../utils/use-resize-observer.js"
-import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader.js"
 
 export const Perspective = light(({canvas, realm, render}: Viewframe) => {
 	const $resolution = useSignal(0.5)
