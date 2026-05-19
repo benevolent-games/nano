@@ -11,6 +11,17 @@ export default css`
 .perspective {
 	position: relative;
 	flex: 1 1 0;
+
+	&[data-drop]::before {
+		pointer-events: none;
+		content: "";
+		display: block;
+		z-index: 1;
+		position: absolute;
+		inset: 0;
+		background: #0ff4;
+		border: 0.5em dashed #fff;
+	}
 }
 
 canvas {
