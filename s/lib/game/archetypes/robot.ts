@@ -23,8 +23,8 @@ export const makeRobot = () => archetype({
 		items: [],
 	},
 	mech: {
-		lower: "lower-trike",
-		upper: "upper-scout",
+		lower: "lowerTrike",
+		upper: "upperScout",
 	},
 	equipped: {
 		a: null,

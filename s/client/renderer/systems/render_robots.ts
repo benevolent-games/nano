@@ -1,4 +1,5 @@
 
+import {got} from "@e280/stz"
 import {Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
 import {art} from "../art.js"
@@ -14,15 +15,8 @@ export const render_robots = (realm: Realm) => lifecycle(
 	(_id, components) => {
 		const robolocation = new Robolocation(components)
 
-		const [lowerGraphic, releaseLowerGraphic] = (() => {switch(components.mech.lower) {
-			case "lower-trike": return realm.graphics.instance(art.lowerTrike)
-			default: throw new Error("TODO lowers")
-		}})()
-
-		const [upperGraphic, releaseUpperGraphic] = (() => {switch(components.mech.upper) {
-			case "upper-scout": return realm.graphics.instance(art.upperScout)
-			default: throw new Error("TODO lowers")
-		}})()
+		const [lowerGraphic, releaseLowerGraphic] = realm.graphics.instance(got(art[components.mech.lower]))
+		const [upperGraphic, releaseUpperGraphic] = realm.graphics.instance(got(art[components.mech.upper]))
 
 		lowerGraphic.scale.set(resolveScale(Vec3.all(consts.robotScale)))
 		upperGraphic.scale.set(resolveScale(Vec3.all(consts.robotScale)))

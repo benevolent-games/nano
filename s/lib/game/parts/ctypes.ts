@@ -4,18 +4,18 @@ export type Item =
 	| MechUpper
 	| EquipmentA
 	| EquipmentB
-	| "ore-carbon"
-	| "ore-coltan"
-	| "ore-gold"
-	| "ingot-tantalum"
-	| "ingot-gold"
+	| "oreCarbon"
+	| "oreColtan"
+	| "oreGold"
+	| "ingotTantalum"
+	| "ingotGold"
 
 export type EquipmentA =
-	| "a-cannon"
-	| "a-drill"
+	| "aCannon"
+	| "aDrill"
 
 export type EquipmentB =
-	| "b-dome"
+	| "bDome"
 
 export type Equipment = {
 	a: null | EquipmentA
@@ -23,15 +23,15 @@ export type Equipment = {
 }
 
 export type MechLower =
-	| "lower-quadcar"
-	| "lower-treads"
-	| "lower-trike"
+	| "lowerQuadcar"
+	| "lowerTreads"
+	| "lowerTrike"
 
 export type MechUpper =
-	| "upper-scout"
-	| "upper-pragmatist"
-	| "upper-utilitarian"
-	| "upper-chonky"
+	| "upperScout"
+	| "upperPragmatist"
+	| "upperUtilitarian"
+	| "upperChonky"
 
 export type Mech = {
 	lower: MechLower

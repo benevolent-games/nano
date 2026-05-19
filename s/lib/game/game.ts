@@ -36,21 +36,21 @@ export class Game {
 			this.change.create(chunk)
 
 		const items: Item[] = [
-			"a-cannon",
-			"a-drill",
-			"b-dome",
-			"ore-carbon",
-			"ore-coltan",
-			"ore-gold",
-			"ingot-gold",
-			"ingot-tantalum",
-			"lower-quadcar",
-			"lower-treads",
-			"lower-trike",
-			"upper-scout",
-			"upper-pragmatist",
-			"upper-utilitarian",
-			"upper-chonky",
+			"aCannon",
+			"aDrill",
+			"bDome",
+			"oreCarbon",
+			"oreColtan",
+			"oreGold",
+			"ingotGold",
+			"ingotTantalum",
+			"lowerQuadcar",
+			"lowerTreads",
+			"lowerTrike",
+			"upperScout",
+			"upperPragmatist",
+			"upperUtilitarian",
+			"upperChonky",
 		]
 
 		for (const position of sprinkle(gridworld, 1, 1_000)) {
