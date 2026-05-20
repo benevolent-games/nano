@@ -10,16 +10,16 @@ export const render_selboxes = (realm: Realm) => lifecycle(
 	["debug", "position", "rotation", "reach"],
 
 	(_id, components) => {
-		const [selbox, release] = realm.graphics.instance(art.phasebox)
+		const [graphic, release] = realm.graphics.instance(art.phasebox)
 
 		const rect = selrect(components)
 		const size = rect.size()
-		selbox.scale = resolveScale({x: size.x, y: size.y, z: 1})
+		graphic.scale = resolveScale({x: size.x, y: size.y, z: 1})
 
 		return {
 			tick(components) {
 				const rect = selrect(components)
-				selbox.position = resolveGridspace(rect.center(), 0.5)
+				graphic.position = resolveGridspace(rect.center(), 0.5)
 			},
 
 			exit() {

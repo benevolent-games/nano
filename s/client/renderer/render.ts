@@ -7,6 +7,7 @@ import {render_robots} from "./systems/render_robots.js"
 import {render_selboxes} from "./systems/render_selboxes.js"
 import {render_gridchunks} from "./systems/render_gridchunks.js"
 import {render_pickupables} from "./systems/render_pickupables.js"
+import {render_target_indicators} from "./systems/render_target_indicators.js"
 
 export const setupRender = (realm: Realm) => consolidate(realm, {
 	timing: {
@@ -21,6 +22,7 @@ export const setupRender = (realm: Realm) => consolidate(realm, {
 		render_gridchunks,
 		render_robots,
 		render_pickupables,
+		render_target_indicators,
 		render_artist: realm => () => realm.artist.render(),
 	},
 
