@@ -1,7 +1,7 @@
 
 
 import {got} from "@e280/stz"
-import {abs, circularApproach, circularDelta, circularNormalize, degrees, halflife, lerp, Vec2} from "@benev/math"
+import {abs, circularApproach, circularDelta, degrees, halflife, lerp, Vec2} from "@benev/math"
 import {Pod} from "../parts/pod.js"
 import {mechStats} from "../parts/mech.js"
 
@@ -20,8 +20,9 @@ export const mech = {
 			const desirable = desire.magnitude() > 0.02
 			const going = components.engineSpeed > 0.5
 			const forward = Vec2.rotation(components.rotation)
+			const isPointingInReverse = abs(circularDelta(desiredRotation, components.rotation)) > degrees(100)
 
-			const isBraking = desirable && going && circularNormalize(circularDelta(desiredRotation, components.rotation) + degrees(180)) < degrees(80)
+			const isBraking = desirable && going && isPointingInReverse
 
 			// steering
 			if (desirable && !isBraking) {
