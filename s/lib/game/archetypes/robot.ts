@@ -1,11 +1,14 @@
 
+import {upperScout} from "./mech-upper.js"
+import {lowerTrike} from "./mech-lowers.js"
 import {archetype} from "../utils/archetype.js"
 import {defaultCamSettings} from "../utils/default-cam.js"
 
 export const makeRobot = () => archetype({
 	graphic: "robot",
 	cam: defaultCamSettings(),
-	desire: [0, 0],
+	wishMove: [0, 0],
+	wishAim: 0,
 	position: [0, 0],
 	rotation: 0,
 	physical: true,
@@ -21,8 +24,8 @@ export const makeRobot = () => archetype({
 		items: [],
 	},
 	mech: {
-		lower: "lowerTrike",
-		upper: "upperScout",
+		lower: lowerTrike(),
+		upper: upperScout(),
 	},
 	engineSpeed: 0,
 	equipped: {

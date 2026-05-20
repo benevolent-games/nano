@@ -15,8 +15,8 @@ export const render_robots = (realm: Realm) => lifecycle(
 	(_id, components) => {
 		const robolocation = new Robolocation(components)
 
-		const [lowerGraphic, releaseLowerGraphic] = realm.graphics.instance(got(art[components.mech.lower]))
-		const [upperGraphic, releaseUpperGraphic] = realm.graphics.instance(got(art[components.mech.upper]))
+		const [lowerGraphic, releaseLowerGraphic] = realm.graphics.instance(got(art[components.mech.lower.name]))
+		const [upperGraphic, releaseUpperGraphic] = realm.graphics.instance(got(art[components.mech.upper.name]))
 
 		lowerGraphic.scale.set(resolveScale(Vec3.all(consts.robotScale)))
 		upperGraphic.scale.set(resolveScale(Vec3.all(consts.robotScale)))

@@ -2,9 +2,9 @@
 import {consolidate} from "@benev/archimedes"
 
 import {Pod} from "./parts/pod.js"
-import {mech} from "./systems/mech.js"
 import {drops} from "./systems/drops.js"
 import {pickups} from "./systems/pickups.js"
+import {mech_mobility} from "./systems/mech.js"
 import {targeting} from "./systems/targeting.js"
 import {timing_update} from "./systems/timing_update.js"
 import {target_lattice} from "./systems/target_lattice.js"
@@ -36,7 +36,9 @@ export const systems = (pod: Pod) => consolidate(pod, {
 		control_movements_and_rotations,
 	},
 
-	mech,
+	mech: {
+		mech_mobility,
+	},
 
 	gameplay: {
 		target_lattice,

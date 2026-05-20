@@ -31,11 +31,14 @@ export type GameComponents = AsComponents<{
 	/** centerpoint position in gridspace coordinates */
 	position: XyArray
 
-	/** angular rotation in radians, counter clockwise */
+	/** rotation in radians where this entity is aiming/pointing */
 	rotation: number
 
 	/** direction where the user wants to move */
-	desire: XyArray
+	wishMove: XyArray
+
+	/** angle of rotation the user desires to aim */
+	wishAim: number
 
 	/** can interact with interactables */
 	interactor: boolean
@@ -63,6 +66,9 @@ export type GameComponents = AsComponents<{
 
 	/** engine */
 	engineSpeed: number
+
+	/** angle of rotation for the lower chassis (independent of aim direction) */
+	lowerRotation: number
 
 	/** can have equipment */
 	equipped: Equipment
