@@ -43,9 +43,6 @@ export type GameComponents = AsComponents<{
 	/** user wants to move faster */
 	sprint: boolean
 
-	/** multiplier on speed when sprint is used */
-	sprintFactor: number
-
 	/** where this entity wants to move in units per second */
 	velocity: XyArray
 

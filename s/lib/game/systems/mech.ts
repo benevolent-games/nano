@@ -9,7 +9,7 @@ export const mech = {
 	mobility: (pod: Pod) => () => {
 		const {delta, deltaSeconds} = pod.timing
 
-		for (const [id, components] of pod.entities.select("mech", "desire", "rotation", "velocity", "engineSpeed")) {
+		for (const [id, components] of pod.entities.select("mech", "desire", "rotation", "sprint", "velocity", "engineSpeed")) {
 			const lowerStats = got(mechStats.lower[components.mech.lower])
 			const upperStats = got(mechStats.upper[components.mech.upper])
 			const mass = lowerStats.mass + upperStats.mass
@@ -32,13 +32,17 @@ export const mech = {
 
 			// gas/brake
 			{
-				const topSpeed = lowerStats.power / mass
+				const sprintFactor = components.sprint ? lowerStats.sprintFactor : 1
+				const power = (sprintFactor * lowerStats.power)
+				const gas = components.sprint ? (lowerStats.gasHalftime / lowerStats.sprintFactor) : lowerStats.gasHalftime
+
+				const topSpeed = power / mass
 				const engineTarget = desire.magnitude() * topSpeed
 				const aligned = abs(circularDelta(desiredRotation, components.rotation)) < degrees(90)
 
 				const engineSpeed = (isBraking || !aligned)
 					? lerp(components.engineSpeed, 0, halflife(lowerStats.brakeHalftime, delta))
-					: lerp(components.engineSpeed, engineTarget, halflife(lowerStats.gasHalftime, delta))
+					: lerp(components.engineSpeed, engineTarget, halflife(gas, delta))
 
 				pod.change.merge(id, {
 					velocity: forward.mulBy(engineSpeed).array(),

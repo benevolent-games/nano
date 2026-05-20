@@ -14,9 +14,8 @@ export const makeRobot = () => archetype({
 	lerp: 0.4,
 	velocity: [0, 0],
 	sprint: false,
-	sprintFactor: 2,
 	target: null,
-	reach: 0.5,
+	reach: 1,
 	inventory: {
 		capacity: 25,
 		items: [],

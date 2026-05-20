@@ -10,6 +10,9 @@ export type LowerStats = {
 	/** engine 'oomph' in kilowatts */
 	power: number
 
+	/** power multiplier */
+	sprintFactor: number
+
 	/** halflife factor for achieving max power */
 	gasHalftime: number
 
@@ -36,7 +39,8 @@ export const mechStats = {
 	lower: {
 		lowerTrike: {
 			mass: 20,
-			power: 500,
+			power: 200,
+			sprintFactor: 2,
 			gasHalftime: 1000,
 			brakeHalftime: 200,
 			turnSpeed: degrees(200),
@@ -44,7 +48,8 @@ export const mechStats = {
 
 		lowerQuadcar: {
 			mass: 100,
-			power: 1200,
+			power: 600,
+			sprintFactor: 2,
 			gasHalftime: 400,
 			brakeHalftime: 200,
 			turnSpeed: degrees(600),
@@ -52,7 +57,8 @@ export const mechStats = {
 
 		lowerTreads: {
 			mass: 400,
-			power: 2000,
+			power: 1000,
+			sprintFactor: 1.5,
 			gasHalftime: 1200,
 			brakeHalftime: 800,
 			turnSpeed: degrees(100),
