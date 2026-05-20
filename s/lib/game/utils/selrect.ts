@@ -1,7 +1,6 @@
 
-import {degrees, Rect, Vec2, XyArray} from "@benev/math"
+import {Rect, Vec2, XyArray} from "@benev/math"
 import {Gridspace} from "../../gridworld/utils/gridspace.js"
-
 
 export function selrect(components: {
 		position: XyArray,
@@ -9,13 +8,13 @@ export function selrect(components: {
 		rotation: number,
 	}) {
 
-	const extent = Vec2.all(components.reach * 2)
+	const extent = Vec2.all(components.reach)
 
 	const center = new Gridspace()
 		.from(components.position)
 		.add(
-			new Gridspace(components.reach, 0)
-				.rotate(degrees(270) - components.rotation)
+			new Gridspace(components.reach / 2, 0)
+				.rotate(components.rotation)
 		)
 
 	return Rect.fromCenter(center, extent)

@@ -64,7 +64,7 @@ export type GameComponents = AsComponents<{
 	/** description of this robot's build */
 	mech: Mech
 
-	/** engine */
+	/** engine speed */
 	engineSpeed: number
 
 	/** angle of rotation for the lower chassis (independent of aim direction) */

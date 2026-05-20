@@ -4,6 +4,7 @@ import {Realm} from "./realm.js"
 import {update_cam} from "./systems/update_cam.js"
 import {update_timing} from "./systems/update_timing.js"
 import {render_robots} from "./systems/render_robots.js"
+import {render_selboxes} from "./systems/render_selboxes.js"
 import {render_gridchunks} from "./systems/render_gridchunks.js"
 import {render_pickupables} from "./systems/render_pickupables.js"
 
@@ -19,11 +20,12 @@ export const setupRender = (realm: Realm) => consolidate(realm, {
 	graphics: {
 		render_gridchunks,
 		render_robots,
-		// render_inventory_full,
-		// render_selboxes,
 		render_pickupables,
 		render_artist: realm => () => realm.artist.render(),
 	},
 
+	debug: {
+		render_selboxes,
+	},
 })
 
