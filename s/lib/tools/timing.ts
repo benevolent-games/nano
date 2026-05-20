@@ -32,5 +32,9 @@ export class Timing {
 	get delta() {
 		return this.#delta
 	}
+
+	get deltaSeconds() {
+		return this.#delta / 1000
+	}
 }
 

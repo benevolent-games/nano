@@ -10,14 +10,11 @@ export type LowerStats = {
 	/** engine 'oomph' in kilowatts */
 	power: number
 
-	/** lerp factor for achieving max power */
-	accel: number
+	/** halflife factor for achieving max power */
+	gasHalftime: number
 
-	/** lerp factor for how powerful the brakes are */
-	brake: number
-
-	/** continue to roll without input */
-	coaster: boolean
+	/** halflife factor for how powerful the brakes are */
+	brakeHalftime: number
 
 	/** radians-per-second, max turn speed capacity */
 	turnSpeed: number
@@ -39,29 +36,26 @@ export const mechStats = {
 	lower: {
 		lowerTrike: {
 			mass: 20,
-			power: 10,
-			accel: 0.1,
-			brake: 6,
-			coaster: true,
+			power: 500,
+			gasHalftime: 1000,
+			brakeHalftime: 200,
 			turnSpeed: degrees(200),
 		},
 
 		lowerQuadcar: {
 			mass: 100,
-			power: 20,
-			accel: 0.2,
-			brake: 8,
-			coaster: true,
+			power: 1200,
+			gasHalftime: 400,
+			brakeHalftime: 200,
 			turnSpeed: degrees(600),
 		},
 
 		lowerTreads: {
-			mass: 200,
-			power: 40,
-			accel: 0.1,
-			brake: 14,
-			coaster: false,
-			turnSpeed: degrees(300),
+			mass: 400,
+			power: 2000,
+			gasHalftime: 1200,
+			brakeHalftime: 800,
+			turnSpeed: degrees(100),
 		},
 	} satisfies Record<MechLower, LowerStats>,
 

@@ -13,7 +13,6 @@ export const makeRobot = () => archetype({
 	mass: 1,
 	lerp: 0.4,
 	velocity: [0, 0],
-	speed: 2,
 	sprint: false,
 	sprintFactor: 2,
 	target: null,
@@ -26,6 +25,7 @@ export const makeRobot = () => archetype({
 		lower: "lowerTrike",
 		upper: "upperScout",
 	},
+	engineSpeed: 0,
 	equipped: {
 		a: null,
 		b: null,

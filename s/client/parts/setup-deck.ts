@@ -28,7 +28,8 @@ export function setupDeck() {
 		const controller = deck.createController(handle, "xinput", new GamepadDevice(pad))
 		labels.set(controller, `🎮${handle}`)
 
-		const port = deck.createPort()
+		// // TODO decide if gamepads should autospawn their own ports
+		// const port = deck.createPort()
 		port.plug(controller)
 
 		return () => {

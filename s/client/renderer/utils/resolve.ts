@@ -1,5 +1,5 @@
 
-import {Quat, Vec3, Xy, Xyz} from "@benev/math"
+import {degrees, Quat, Vec3, Xy, Xyz} from "@benev/math"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
 export function resolveGridspace({x, y}: Gridspace, z = 0) {
@@ -15,6 +15,6 @@ export function resolveScale({x, y, z}: Xyz) {
 }
 
 export function resolveRotation(radians: number) {
-	return Quat.rotate_(0, radians, 0)
+	return Quat.rotate_(0, (-radians) - degrees(90), 0)
 }
 

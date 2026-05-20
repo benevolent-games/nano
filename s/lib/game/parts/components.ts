@@ -34,9 +34,6 @@ export type GameComponents = AsComponents<{
 	/** angular rotation in radians, counter clockwise */
 	rotation: number
 
-	/** how much oomph this entity has when it tries to move */
-	speed: number
-
 	/** direction where the user wants to move */
 	desire: XyArray
 
@@ -66,6 +63,9 @@ export type GameComponents = AsComponents<{
 
 	/** description of this robot's build */
 	mech: Mech
+
+	/** engine */
+	engineSpeed: number
 
 	/** can have equipment */
 	equipped: Equipment
