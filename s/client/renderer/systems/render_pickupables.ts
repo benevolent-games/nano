@@ -1,4 +1,5 @@
 
+import {got} from "@e280/stz"
 import {Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
 import {art} from "../art.js"
@@ -7,7 +8,6 @@ import {consts} from "../../../consts.js"
 import {Proximal} from "../utils/proximal.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 import {resolvePosition, resolveRotation, resolveScale} from "../utils/resolve.js"
-import { got } from "@e280/stz"
 
 export const render_pickupables = (realm: Realm) => lifecycle(
 	realm.entities,

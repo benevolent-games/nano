@@ -51,6 +51,7 @@ export class Game {
 			"upperPragmatist",
 			"upperUtilitarian",
 			"upperChonky",
+			"upperDapper",
 		]
 
 		for (const position of sprinkle(gridworld, 1, 1_000)) {

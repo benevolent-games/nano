@@ -10,7 +10,7 @@ import {resolveGridspace, resolveRotation, resolveScale} from "../utils/resolve.
 
 export const render_robots = (realm: Realm) => lifecycle(
 	realm.entities,
-	["position", "mech", "rotation", "lerp"],
+	["position", "mech", "lowerRotation", "rotation", "lerp"],
 
 	(_id, components) => {
 		const robolocation = new Robolocation(components)
@@ -28,8 +28,8 @@ export const render_robots = (realm: Realm) => lifecycle(
 				lowerGraphic.position.set(resolveGridspace(robolocation.position, 0))
 				upperGraphic.position.set(resolveGridspace(robolocation.position, 0.5))
 
-				lowerGraphic.rotation.set(resolveRotation(robolocation.rotation.x))
-				upperGraphic.rotation.set(resolveRotation(robolocation.rotation.x))
+				lowerGraphic.rotation.set(resolveRotation(robolocation.lowerRotation.x))
+				upperGraphic.rotation.set(resolveRotation(robolocation.upperRotation.x))
 			},
 
 			exit() {

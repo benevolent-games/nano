@@ -17,6 +17,7 @@ export const art = {
 	projectileBeam: new Art("projectile-beam", 32),
 	projectilePulse: new Art("projectile-pulse", 32),
 
+	lowerHover: new Art("lower-hover", 16),
 	lowerTrike: new Art("lower-trike", 16),
 	lowerQuadcar: new Art("lower-quadcar", 16),
 	lowerTreads: new Art("lower-treads", 16),
@@ -25,6 +26,7 @@ export const art = {
 	upperPragmatist: new Art("upper-pragmatist", 16),
 	upperUtilitarian: new Art("upper-utilitarian", 16),
 	upperChonky: new Art("upper-chonky", 16),
+	upperDapper: new Art("upper-dapper", 16),
 
 	aCannon: new Art("a-cannon", 16),
 	aDrill: new Art("a-drill", 16),

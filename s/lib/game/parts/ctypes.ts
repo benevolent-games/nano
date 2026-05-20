@@ -23,6 +23,7 @@ export type Equipment = {
 }
 
 export type MechLowerName =
+	| "lowerHover"
 	| "lowerQuadcar"
 	| "lowerTreads"
 	| "lowerTrike"
@@ -32,6 +33,7 @@ export type MechUpperName =
 	| "upperPragmatist"
 	| "upperUtilitarian"
 	| "upperChonky"
+	| "upperDapper"
 
 export type Mech = {
 	lower: MechLower

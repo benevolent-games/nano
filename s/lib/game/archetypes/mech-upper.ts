@@ -30,3 +30,10 @@ export const upperChonky = (): MechUpper => ({
 	aimSpeed: degrees(200),
 })
 
+export const upperDapper = (): MechUpper => ({
+	name: "upperDapper",
+	mass: 200,
+	capacity: 16,
+	aimSpeed: degrees(100),
+})
+

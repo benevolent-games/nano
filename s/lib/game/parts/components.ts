@@ -34,11 +34,11 @@ export type GameComponents = AsComponents<{
 	/** rotation in radians where this entity is aiming/pointing */
 	rotation: number
 
-	/** direction where the user wants to move */
+	/** vector for where the user wants to move */
 	wishMove: XyArray
 
-	/** angle of rotation the user desires to aim */
-	wishAim: number
+	/** vector for where the user wants to aim */
+	wishAim: XyArray
 
 	/** can interact with interactables */
 	interactor: boolean
