@@ -1,6 +1,6 @@
 
 import {lifecycle} from "@benev/archimedes"
-import {art} from "../art.js"
+import {art} from "../../../lib/game/art.js"
 import {Realm} from "../realm.js"
 import {selrect} from "../../../lib/game/utils/selrect.js"
 import {resolveGridspace, resolveScale} from "../utils/resolve.js"

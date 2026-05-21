@@ -10,7 +10,7 @@ export const control_movements_and_rotations = (pod: Pod) => () => {
 		if (!components.controlledBy) continue
 		
 		const actor = need(pod.actors, components.controlledBy)
-		const a = actor.actions.robot
+		const a = actor.actions.mech
 
 		if ("wishMove" in components) {
 			const x = a.move_right.value - a.move_left.value

@@ -2,7 +2,7 @@
 import {got} from "@e280/stz"
 import {Vec3} from "@benev/math"
 import {lifecycle} from "@benev/archimedes"
-import {art} from "../art.js"
+import {art} from "../../../lib/game/art.js"
 import {Realm} from "../realm.js"
 import {consts} from "../../../consts.js"
 import {Proximal} from "../utils/proximal.js"
@@ -21,7 +21,7 @@ export const render_pickupables = (realm: Realm) => lifecycle(
 			tick(components) {
 				gridspace.from(components.position)
 				proximal.on(consts.renderProximity, realm.focal, gridspace, () => {
-					const chosenArt = got(art[components.pickupable])
+					const chosenArt = got(art[components.inventoryItem])
 					const [graphic, release] = realm.graphics.instance(chosenArt)
 					graphic.scale.set(resolveScale(Vec3.all(consts.robotScale)))
 					graphic.position.set(resolvePosition(gridspace))

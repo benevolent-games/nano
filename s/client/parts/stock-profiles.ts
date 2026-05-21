@@ -12,15 +12,15 @@ export const stockProfiles = {
 		spectator: {
 			spawn: "gamepad.button.any",
 		},
-		robot: {
+		mech: {
 			action1: "gamepad.axis.7.neg",
 			action2: "gamepad.axis.8.neg",
 			action3: "gamepad.button.6",
 			action4: "gamepad.button.5",
 			sprint: ["or", "gamepad.button.11", "gamepad.button.4"],
-			use: ["or", "gamepad.button.1", "gamepad.button.12"],
-			equip: "gamepad.button.3",
+			pickup: ["or", "gamepad.button.1", "gamepad.button.12"],
 			drop: "gamepad.button.2",
+			use: "gamepad.button.3",
 			move_up: "gamepad.axis.2.pos",
 			move_down: "gamepad.axis.2.neg",
 			move_left: "gamepad.axis.1.pos",
@@ -39,14 +39,14 @@ export const stockProfiles = {
 		spectator: {
 			spawn: "gamepad.button.any",
 		},
-		robot: {
+		mech: {
 			action1: "gamepad.button.20",
 			action2: "gamepad.button.3",
 			action3: "gamepad.button.6",
 			action4: "gamepad.button.5",
 			sprint: "gamepad.button.19",
-			use: "gamepad.button.1",
-			equip: "gamepad.button.4",
+			pickup: "gamepad.button.1",
+			use: "gamepad.button.4",
 			drop: "gamepad.button.2",
 			move_up: "gamepad.axis.2.pos",
 			move_down: "gamepad.axis.2.neg",

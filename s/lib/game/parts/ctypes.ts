@@ -1,47 +1,45 @@
 
-export type Item =
-	| MechLowerName
-	| MechUpperName
-	| EquipmentAlpha
-	| EquipmentBravo
+export type ItemName =
+	| MechLowerArt
+	| MechUpperArt
+	| EquipmentAlphaName
+	| EquipmentBravoName
 	| "oreCarbon"
 	| "oreColtan"
 	| "oreGold"
 	| "ingotTantalum"
 	| "ingotGold"
 
-export type EquipmentAlpha =
+export type EquipmentAlphaName =
 	| "aCannon"
 	| "aDrill"
 
-export type EquipmentBravo =
+export type EquipmentBravoName =
 	| "bDome"
 
-export type Equipment = {
-	alpha: null | EquipmentAlpha
-	bravo: null | EquipmentBravo
-}
-
-export type MechLowerName =
+export type MechLowerArt =
 	| "lowerHover"
 	| "lowerQuadcar"
 	| "lowerTreads"
 	| "lowerTrike"
 
-export type MechUpperName =
+export type MechUpperArt =
 	| "upperScout"
 	| "upperPragmatist"
 	| "upperUtilitarian"
 	| "upperChonky"
 	| "upperDapper"
 
-export type Mech = {
-	lower: MechLower
-	upper: MechUpper
+export type EquipmentAlpha = {
+	name: EquipmentAlphaName
+}
+
+export type EquipmentBravo = {
+	art: EquipmentBravoName
 }
 
 export type MechLower = {
-	name: MechLowerName
+	art: MechLowerArt
 
 	/** heaviness in kilograms */
 	mass: number
@@ -63,7 +61,7 @@ export type MechLower = {
 }
 
 export type MechUpper = {
-	name: MechUpperName
+	name: MechUpperArt
 
 	/** heaviness in kg */
 	mass: number

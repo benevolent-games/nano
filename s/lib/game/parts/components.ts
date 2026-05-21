@@ -2,12 +2,12 @@
 import {Intent} from "@benev/tact"
 import {XyArray} from "@benev/math"
 import {AsComponents, Id} from "@benev/archimedes"
-import {Item, EquipmentAlpha, Equipment, Mech, EquipmentBravo, MechUpper, MechLower} from "./ctypes.js"
+import {MechUpper, MechLower, EquipmentAlpha, EquipmentBravo} from "./ctypes.js"
 
 export type GameComponents = AsComponents<{
 
-	/** player user inputs */
-	intents: Intent[]
+	/** render debug visualizers */
+	debug: true
 
 	/** specifies the total gridworld at play */
 	gridworld: {extent: XyArray}
@@ -15,8 +15,36 @@ export type GameComponents = AsComponents<{
 	/** section of grid tiles, compactly encoded as a hex string */
 	gridchunk: string
 
+	/** parent that owns this entity */
+	ownerId: Id
+
 	/** which player entity we're controlled by */
 	controlledBy: Id
+
+	/** player user inputs */
+	intents: Intent[]
+
+	/** how a player wants to move in the world */
+	wishMover: {
+		move: XyArray
+		aim: XyArray
+	}
+
+	/** how a user wants to interact with things */
+	wishInteractor: {
+		use: boolean
+		sprint: boolean
+		pickup: boolean
+		drop: boolean
+	}
+
+	/** how a user wants to fire their weapons */
+	wishActions: {
+		a1: boolean
+		a2: boolean
+		a3: boolean
+		a4: boolean
+	}
 
 	/** camera settings */
 	cam: {
@@ -34,75 +62,70 @@ export type GameComponents = AsComponents<{
 	/** rotation in radians where this entity is aiming/pointing */
 	rotation: number
 
-	/** vector for where the user wants to move */
-	wishMove: XyArray
+	/** rectangular extent */
+	size: XyArray
 
-	/** vector for where the user wants to aim */
-	wishAim: XyArray
-
-	/** can interact with interactables */
-	interactor: boolean
-
-	/** user wants to move faster */
-	sprint: boolean
-
-	/** where this entity wants to move in units per second */
+	/** actual movement right now */
 	velocity: XyArray
 
 	/** which 3d model to display */
-	graphic: "robot"
+	art: string
 
 	/** enabled if this entity can bump into things */
 	physical: boolean
 
-	/** rectangular extent */
-	size: XyArray
-
 	/** how heavy is this entity */
 	mass: number
 
-	/** description of this robot's build */
-	mech: Mech
+	/** lerp factor for smoothing movements (for high-framerate rendering) */
+	lerp: number
 
-	/** engine speed */
-	engineSpeed: number
+	/** how many items this entity can store */
+	inventoryCapacity: number
 
-	/** angle of rotation for the lower chassis (independent of aim direction) */
-	lowerRotation: number
+	/** we're currently carrying these entities */
+	inventory: Id[]
 
-	/** has equipment */
-	equipment: Equipment
+	/** can be picked up and dropped as an inventory item */
+	inventoryItem: true
 
-	/** can store stuff */
-	inventory: {
-		capacity: number
-		items: Item[]
-	}
-
-	/** our selection box is targeting these entities */
+	/** we can target another entity for various reasons */
 	target: Id | null
 
-	/** this entity can be targeted */
+	/** this entity can be targeted by other entities */
 	targetable: boolean
 
 	/** how far this entity can reach for targeting */
 	reach: number
 
-	/** can be picked up */
-	pickupable: Item
+	/** this is an equippable mech lower */
+	mechLower: MechLower
 
-	/** can be equipped as tool */
-	equippable: {
-		alpha?: EquipmentAlpha
-		bravo?: EquipmentBravo
-		mechLower?: MechLower
-		mechUpper?: MechUpper
+	/** this is an equippable mech upper */
+	mechUpper: MechUpper
+
+	/** this is an equippable weapon */
+	equipmentAlpha: EquipmentAlpha
+
+	/** this is an equippable utility */
+	equipmentBravo: EquipmentBravo
+
+	/** we're a mech */
+	mech: {
+
+		/** current engine speed */
+		rpm: number
+
+		/** angle of rotation for the lower chassis (independent of aim direction) */
+		chassisRotation: number
 	}
 
-	/** lerp factor for smoothing movements */
-	lerp: number
-
-	/** render debug visualizers */
-	debug: boolean
+	/** details of the entities that compose this mech */
+	mechBuild: {
+		lower: Id
+		upper: Id
+		alphas: Id[]
+		bravos: Id[]
+	}
 }>
 

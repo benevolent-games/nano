@@ -30,6 +30,11 @@ export class Artist {
 		}).prepopulate(art.prepopulation))
 	}
 
+	preload(arts: Art[]) {
+		for (const art of arts)
+			this.#getPool(art)
+	}
+
 	render() {
 		// create and/or update props for graphics
 		for (const graphic of this.graphics.all()) {

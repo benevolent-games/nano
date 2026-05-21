@@ -10,7 +10,7 @@ import {mech_aiming} from "./systems/mech_aiming.js"
 import {mech_mobility} from "./systems/mech_mobility.js"
 import {timing_update} from "./systems/timing_update.js"
 import {target_lattice} from "./systems/target_lattice.js"
-import {robot_spawning} from "./systems/robot_spawning.js"
+import {player_spawning} from "./systems/player_spawning.js"
 import {physics_bodies} from "./systems/physics_bodies.js"
 import {mech_inventory} from "./systems/mech_inventory.js"
 import {physical_forces} from "./systems/physical_forces.js"
@@ -35,7 +35,7 @@ export const systems = (pod: Pod) => consolidate(pod, {
 	},
 
 	controls: {
-		robot_spawning,
+		player_spawning,
 		control_movements_and_rotations,
 	},
 

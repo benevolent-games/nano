@@ -4,7 +4,7 @@ import {lifecycle} from "@benev/archimedes"
 import {disposer, Rand, seed} from "@e280/stz"
 
 import {Realm} from "../realm.js"
-import {art} from "../art.js"
+import {art} from "../../../lib/game/art.js"
 import {consts} from "../../../consts.js"
 import {Proximal} from "../utils/proximal.js"
 import {TileKind} from "../../../lib/gridworld/types.js"

@@ -10,7 +10,7 @@ export const bindings = asBindings({
 		spawn: "keyboard.any",
 	},
 
-	robot: {
+	mech: {
 		action1: ["or", "Space", "pointer.button.left"],
 		action2: ["or", "Semicolon", "pointer.button.right"],
 		action3: ["or", "KeyU", "pointer.button.4", "pointer.button.middle"],
@@ -20,13 +20,13 @@ export const bindings = asBindings({
 		sprint: "ShiftLeft",
 
 		/** pickup an item */
-		use: "KeyE",
-
-		/** equip an item */
-		equip: "KeyR",
+		pickup: "KeyE",
 
 		/** drop a cargo item */
 		drop: "KeyQ",
+
+		/** use or equip an item */
+		use: "KeyR",
 
 		move_up: "KeyW",
 		move_down: "KeyS",

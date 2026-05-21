@@ -8,7 +8,7 @@ import {selrect} from "../utils/selrect.js"
 
 export const drops = (pod: Pod) => () => {
 	for (const [id, components] of pod.entities.select("inventory", "position", "rotation", "reach", "controlledBy")) {
-		const a = need(pod.actors, components.controlledBy).actions.robot
+		const a = need(pod.actors, components.controlledBy).actions.mech
 		const hasItems = components.inventory.items.length > 0
 
 		const jitter = components.reach / 2
@@ -41,7 +41,7 @@ export const drops = (pod: Pod) => () => {
 				pod.change.create({
 					size: [consts.robotScale, consts.robotScale],
 					position: destination.array(),
-					pickupable: topItem,
+					inventoryItem: topItem,
 					rotation: pod.rand.range(degrees(0), degrees(360)),
 					targetable: true,
 				})

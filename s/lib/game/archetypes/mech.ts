@@ -4,9 +4,8 @@ import {lowerHover} from "./mech-lowers.js"
 import {archetype} from "../utils/archetype.js"
 import {defaultCamSettings} from "../utils/default-cam.js"
 
-export const makeRobot = () => archetype({
+export const makeMech = () => archetype({
 	// debug: true,
-	graphic: "robot",
 	cam: defaultCamSettings(),
 	wishMove: [0, 0],
 	wishAim: [1, 0],

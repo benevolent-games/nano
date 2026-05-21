@@ -5,15 +5,14 @@ import {applyDelta, Change, Entities, Id} from "@benev/archimedes"
 import {Pod} from "./parts/pod.js"
 import {systems} from "./systems.js"
 import {consts} from "../../consts.js"
-import {Item} from "./parts/ctypes.js"
 import {sprinkle} from "./utils/sprinkle.js"
 import {GameComponents} from "./parts/components.js"
 import {chunkify} from "../gridworld/chunk/chunkify.js"
 import {equipmentize, itemize} from "./utils/itemize.js"
 import {generateGridworld} from "../gridworld/generate.js"
 import {IntentBucketMap} from "../../client/views/play/parts/recruiter.js"
-import {upperChonky, upperDapper, upperPragmatist, upperScout, upperUtilitarian} from "./archetypes/mech-upper.js"
 import {lowerHover, lowerQuadcar, lowerTreads, lowerTrike} from "./archetypes/mech-lowers.js"
+import {upperChonky, upperDapper, upperPragmatist, upperScout, upperUtilitarian} from "./archetypes/mech-upper.js"
 
 export class Game {
 	pod

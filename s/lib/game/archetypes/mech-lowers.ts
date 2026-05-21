@@ -3,7 +3,7 @@ import {degrees} from "@benev/math"
 import {MechLower} from "../parts/ctypes.js"
 
 export const lowerHover = (): MechLower => ({
-	name: "lowerHover",
+	art: "lowerHover",
 	mass: 40,
 	power: 200,
 	sprintFactor: 1.5,
@@ -13,7 +13,7 @@ export const lowerHover = (): MechLower => ({
 })
 
 export const lowerTrike = (): MechLower => ({
-	name: "lowerTrike",
+	art: "lowerTrike",
 	mass: 50,
 	power: 300,
 	sprintFactor: 3,
@@ -23,7 +23,7 @@ export const lowerTrike = (): MechLower => ({
 })
 
 export const lowerQuadcar = (): MechLower => ({
-	name: "lowerQuadcar",
+	art: "lowerQuadcar",
 	mass: 100,
 	power: 600,
 	sprintFactor: 2,
@@ -33,7 +33,7 @@ export const lowerQuadcar = (): MechLower => ({
 })
 
 export const lowerTreads = (): MechLower => ({
-	name: "lowerTreads",
+	art: "lowerTreads",
 	mass: 400,
 	power: 1000,
 	sprintFactor: 1.5,

@@ -7,9 +7,9 @@ import { Vec2 } from "@benev/math"
 export const equips = (pod: Pod) => () => {
 	for (const [id, components] of pod.entities.select("controlledBy", "target")) {
 		const targetId = components.target
-		const a = need(pod.actors, components.controlledBy).actions.robot
+		const a = need(pod.actors, components.controlledBy).actions.mech
 
-		if (targetId && a.equip.changedDown) {
+		if (targetId && a.use.changedDown) {
 			console.log("EQUIP", targetId)
 			const target = pod.entities.getWith(targetId, "equippable", "position")
 

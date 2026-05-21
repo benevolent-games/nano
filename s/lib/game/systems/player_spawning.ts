@@ -2,10 +2,10 @@
 import {got, need, Rand, seed} from "@e280/stz"
 
 import {Pod} from "../parts/pod.js"
-import {makeRobot} from "../archetypes/robot.js"
+import {makeMech} from "../archetypes/mech.js"
 import {chooseSpawnpoint} from "../../gridworld/utils/choose-spawnpoint.js"
 
-export const robot_spawning = (pod: Pod) => () => {
+export const player_spawning = (pod: Pod) => () => {
 
 	// players that are alive
 	const playersThatAreAlive = [...pod.entities.select("controlledBy")]
@@ -20,7 +20,7 @@ export const robot_spawning = (pod: Pod) => () => {
 			const position = chooseSpawnpoint(hologrid.gridworld, new Rand(seed(pod.timing.tick)))
 				.add_(0.5, 0.5)
 				.array()
-			pod.change.create({...makeRobot(), controlledBy, position})
+			pod.change.create({...makeMech(), controlledBy, position})
 		}
 	}
 }
