@@ -2,24 +2,24 @@
 export type Item =
 	| MechLowerName
 	| MechUpperName
-	| EquipmentA
-	| EquipmentB
+	| EquipmentAlpha
+	| EquipmentBravo
 	| "oreCarbon"
 	| "oreColtan"
 	| "oreGold"
 	| "ingotTantalum"
 	| "ingotGold"
 
-export type EquipmentA =
+export type EquipmentAlpha =
 	| "aCannon"
 	| "aDrill"
 
-export type EquipmentB =
+export type EquipmentBravo =
 	| "bDome"
 
 export type Equipment = {
-	a: null | EquipmentA
-	b: null | EquipmentB
+	alpha: null | EquipmentAlpha
+	bravo: null | EquipmentBravo
 }
 
 export type MechLowerName =
@@ -73,5 +73,11 @@ export type MechUpper = {
 
 	/** radians-per-second, max aiming speed capacity */
 	aimSpeed: number
+
+	/** how many alphas can be equipped */
+	alphas: number
+
+	/** how many bravos can be equipped */
+	bravos: number
 }
 

@@ -18,14 +18,7 @@ export const render_target_indicators = (realm: Realm) => lifecycle(
 					? realm.entities.get(components.target)
 					: undefined
 
-				const show = (
-					(target && target.position) &&
-					(components.inventory
-						? components.inventory.items.length < components.inventory.capacity
-						: true)
-				)
-
-				if (show) {
+				if ((target && target.position)) {
 					graphic.visible = true
 					const position = new Gridspace().from(target.position)
 					graphic.position.set(resolveGridspace(position))

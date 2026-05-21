@@ -2,7 +2,7 @@
 import {Intent} from "@benev/tact"
 import {XyArray} from "@benev/math"
 import {AsComponents, Id} from "@benev/archimedes"
-import {Item, EquipmentA, Equipment, Mech} from "./ctypes.js"
+import {Item, EquipmentAlpha, Equipment, Mech, EquipmentBravo, MechUpper, MechLower} from "./ctypes.js"
 
 export type GameComponents = AsComponents<{
 
@@ -70,8 +70,8 @@ export type GameComponents = AsComponents<{
 	/** angle of rotation for the lower chassis (independent of aim direction) */
 	lowerRotation: number
 
-	/** can have equipment */
-	equipped: Equipment
+	/** has equipment */
+	equipment: Equipment
 
 	/** can store stuff */
 	inventory: {
@@ -92,7 +92,12 @@ export type GameComponents = AsComponents<{
 	pickupable: Item
 
 	/** can be equipped as tool */
-	equippable: EquipmentA
+	equippable: {
+		alpha?: EquipmentAlpha
+		bravo?: EquipmentBravo
+		mechLower?: MechLower
+		mechUpper?: MechUpper
+	}
 
 	/** lerp factor for smoothing movements */
 	lerp: number

@@ -11,18 +11,19 @@ export const bindings = asBindings({
 	},
 
 	robot: {
-
-		/** activate primary equipment, eg shoot weapon */
-		primary: "Space",
-
-		/** activate secondary equipment, eg mining drill */
-		secondary: "Semicolon",
+		action1: ["or", "Space", "pointer.button.left"],
+		action2: ["or", "Semicolon", "pointer.button.right"],
+		action3: ["or", "KeyU", "pointer.button.4", "pointer.button.middle"],
+		action4: ["or", "KeyO", "pointer.button.5"],
 
 		/** boost to move faster */
 		sprint: "ShiftLeft",
 
-		/** interact with an item in the world, eg pull a lever or pickup an item */
+		/** pickup an item */
 		use: "KeyE",
+
+		/** equip an item */
+		equip: "KeyR",
 
 		/** drop a cargo item */
 		drop: "KeyQ",

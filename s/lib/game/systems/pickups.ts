@@ -9,6 +9,7 @@ export const pickups = (pod: Pod) => () => {
 		const underCapacity = components.inventory.items.length < components.inventory.capacity
 
 		if (targetId && a.use.changedDown && underCapacity) {
+			console.log("PICKUP", targetId)
 			const targetComponents = pod.entities.getWith(targetId, "pickupable")
 			if (targetComponents) {
 				pod.change.merge(id, {

@@ -30,9 +30,9 @@ export const makeRobot = () => archetype({
 	},
 	lowerRotation: 0,
 	engineSpeed: 0,
-	equipped: {
-		a: null,
-		b: null,
+	equipment: {
+		alpha: null,
+		bravo: null,
 	},
 })
 

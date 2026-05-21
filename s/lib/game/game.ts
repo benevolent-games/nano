@@ -1,6 +1,5 @@
 
 import {Intent} from "@benev/tact"
-import {degrees} from "@benev/math"
 import {applyDelta, Change, Entities, Id} from "@benev/archimedes"
 
 import {Pod} from "./parts/pod.js"
@@ -10,8 +9,11 @@ import {Item} from "./parts/ctypes.js"
 import {sprinkle} from "./utils/sprinkle.js"
 import {GameComponents} from "./parts/components.js"
 import {chunkify} from "../gridworld/chunk/chunkify.js"
+import {equipmentize, itemize} from "./utils/itemize.js"
 import {generateGridworld} from "../gridworld/generate.js"
 import {IntentBucketMap} from "../../client/views/play/parts/recruiter.js"
+import {upperChonky, upperDapper, upperPragmatist, upperScout, upperUtilitarian} from "./archetypes/mech-upper.js"
+import {lowerHover, lowerQuadcar, lowerTreads, lowerTrike} from "./archetypes/mech-lowers.js"
 
 export class Game {
 	pod
@@ -35,33 +37,30 @@ export class Game {
 		for (const chunk of chunkify(gridworld))
 			this.change.create(chunk)
 
-		const items: Item[] = [
-			"aCannon",
-			"aDrill",
-			"bDome",
-			"oreCarbon",
-			"oreColtan",
-			"oreGold",
-			"ingotGold",
-			"ingotTantalum",
-			"lowerQuadcar",
-			"lowerTreads",
-			"lowerTrike",
-			"upperScout",
-			"upperPragmatist",
-			"upperUtilitarian",
-			"upperChonky",
-			"upperDapper",
+		const possibilities = [
+			itemize(rand, "oreCarbon"),
+			itemize(rand, "oreColtan"),
+			itemize(rand, "oreGold"),
+			itemize(rand, "ingotGold"),
+			itemize(rand, "ingotTantalum"),
+			equipmentize(rand, "aCannon", {alpha: "aCannon"}),
+			equipmentize(rand, "aDrill", {alpha: "aDrill"}),
+			equipmentize(rand, "bDome", {bravo: "bDome"}),
+			equipmentize(rand, "lowerHover", {mechLower: lowerHover()}),
+			equipmentize(rand, "lowerTrike", {mechLower: lowerTrike()}),
+			equipmentize(rand, "lowerQuadcar", {mechLower: lowerQuadcar()}),
+			equipmentize(rand, "lowerTreads", {mechLower: lowerTreads()}),
+			equipmentize(rand, "upperScout", {mechUpper: upperScout()}),
+			equipmentize(rand, "upperPragmatist", {mechUpper: upperPragmatist()}),
+			equipmentize(rand, "upperUtilitarian", {mechUpper: upperUtilitarian()}),
+			equipmentize(rand, "upperChonky", {mechUpper: upperChonky()}),
+			equipmentize(rand, "upperDapper", {mechUpper: upperDapper()}),
 		]
 
 		for (const position of sprinkle(gridworld, 1, 1_000)) {
-			this.change.create({
-				size: [consts.robotScale, consts.robotScale],
-				position: position.add_(0.5, 0.5).array(),
-				pickupable: rand.pick(items),
-				rotation: rand.range(degrees(0), degrees(360)),
-				targetable: true,
-			})
+			this.change.create(
+				rand.pick(possibilities)(position.add_(0.5, 0.5))
+			)
 		}
 
 		return this
