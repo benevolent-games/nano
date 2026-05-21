@@ -48,7 +48,7 @@ export const physical_forces = (pod: Pod) => () => {
 			pod.change.merge(id, {position: position.array()})
 
 		// slow down engine speed when we hit walls and stuff
-		if ("engineSpeed" in components) {
+		if (components.mech) {
 			const intendedVelocity = Vec2.from(components.velocity)
 
 			const actualVelocity = position
@@ -63,11 +63,10 @@ export const physical_forces = (pod: Pod) => () => {
 				? actualSpeed / intendedSpeed
 				: 0
 
-			const engineSpeed = components.engineSpeed! * Math.min(1, survival)
-
+			const rpm = components.mech.rpm * Math.min(1, survival)
 			pod.change.merge(id, {
 				velocity: actualVelocity.array(),
-				engineSpeed,
+				mech: {...components.mech, rpm}
 			})
 		}
 	}

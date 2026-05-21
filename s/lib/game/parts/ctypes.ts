@@ -67,15 +67,15 @@ export type MechUpper = {
 	mass: number
 
 	/** number of inventory slots available */
-	capacity: number
+	inventoryCapacity: number
 
 	/** radians-per-second, max aiming speed capacity */
 	aimSpeed: number
 
 	/** how many alphas can be equipped */
-	alphas: number
+	alphaCapacity: number
 
 	/** how many bravos can be equipped */
-	bravos: number
+	bravoCapacity: number
 }
 

@@ -13,8 +13,11 @@ export const player_spawning = (pod: Pod) => () => {
 
 	// spawn robots
 	for (const [controlledBy] of pod.entities.select("intents")) {
-		if (playersThatAreAlive.includes(controlledBy)) continue
+		if (playersThatAreAlive.includes(controlledBy))
+			continue
+
 		const actor = need(pod.actors, controlledBy)
+
 		if (actor.actions.spectator.spawn.changedDown) {
 			const hologrid = got(pod.hologrid)
 			const position = chooseSpawnpoint(hologrid.gridworld, new Rand(seed(pod.timing.tick)))

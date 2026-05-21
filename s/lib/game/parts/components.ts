@@ -28,12 +28,12 @@ export type GameComponents = AsComponents<{
 	wishMover: {
 		move: XyArray
 		aim: XyArray
+		sprint: boolean
 	}
 
 	/** how a user wants to interact with things */
 	wishInteractor: {
 		use: boolean
-		sprint: boolean
 		pickup: boolean
 		drop: boolean
 	}

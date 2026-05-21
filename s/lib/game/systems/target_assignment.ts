@@ -6,7 +6,7 @@ import {Id} from "@benev/archimedes"
 import {Pod} from "../parts/pod.js"
 import {selrect} from "../utils/selrect.js"
 
-export const targeting = (pod: Pod) => () => {
+export const target_assignment = (pod: Pod) => () => {
 	for (const [id, components] of pod.entities.select("target", "position", "reach", "rotation")) {
 		const targets = [...pod.targetLattice.query(selrect(components))]
 		const reticuleCenter = selrect(components).center()
