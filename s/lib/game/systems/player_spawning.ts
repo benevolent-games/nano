@@ -2,8 +2,8 @@
 import {got, need, Rand, seed} from "@e280/stz"
 
 import {Pod} from "../parts/pod.js"
-import {makeMech} from "../archetypes/mech.js"
 import {chooseSpawnpoint} from "../../gridworld/utils/choose-spawnpoint.js"
+import { spawnMech } from "../routines/spawn-mech.js"
 
 export const player_spawning = (pod: Pod) => () => {
 
@@ -23,7 +23,7 @@ export const player_spawning = (pod: Pod) => () => {
 			const position = chooseSpawnpoint(hologrid.gridworld, new Rand(seed(pod.timing.tick)))
 				.add_(0.5, 0.5)
 				.array()
-			pod.change.create({...makeMech(), controlledBy, position})
+			spawnMech(pod.change, {controlledBy, position})
 		}
 	}
 }

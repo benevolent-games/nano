@@ -10,8 +10,8 @@ export const mech_mobility = (pod: Pod) => () => {
 		const mech = structuredClone(components.mech)
 		const velocity = Vec2.zero()
 
-		const {mechLower} = got(pod.entities.getWith(components.mechBuild.lower, "mechLower"))
-		const {mechUpper} = got(pod.entities.getWith(components.mechBuild.upper, "mechUpper"))
+		const {mechLower} = got(pod.entities.getWith(components.mechBuild.lowerId, "mechLower"))
+		const {mechUpper} = got(pod.entities.getWith(components.mechBuild.upperId, "mechUpper"))
 		const {wishMover} = components
 
 		const mass = mechLower.mass + mechUpper.mass

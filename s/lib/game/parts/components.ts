@@ -122,10 +122,10 @@ export type GameComponents = AsComponents<{
 
 	/** details of the entities that compose this mech */
 	mechBuild: {
-		lower: Id
-		upper: Id
-		alphas: Id[]
-		bravos: Id[]
+		lowerId: Id
+		upperId: Id
+		alphaIds: Id[]
+		bravoIds: Id[]
 	}
 }>
 

@@ -10,12 +10,15 @@ import {resolveGridspace, resolveRotation, resolveScale} from "../utils/resolve.
 
 export const render_robots = (realm: Realm) => lifecycle(
 	realm.entities,
-	["position", "mech", "lowerRotation", "rotation", "lerp"],
+	["position", "mech", "mechBuild", "rotation", "lerp"],
 
 	(_id, components) => {
 		const robolocation = new Robolocation(components)
-		let lowerArt = components.mech.lower.name
-		let upperArt = components.mech.upper.name
+		const {mechLower} = got(realm.entities.getWith(components.mechBuild.lowerId, "mechLower"))
+		const {mechUpper} = got(realm.entities.getWith(components.mechBuild.upperId, "mechUpper"))
+
+		let lowerArt = mechLower.art
+		let upperArt = mechUpper.art
 
 		let [lowerGraphic, releaseLowerGraphic] = realm.graphics.instance(got(art[lowerArt]))
 		let [upperGraphic, releaseUpperGraphic] = realm.graphics.instance(got(art[upperArt]))
@@ -25,8 +28,11 @@ export const render_robots = (realm: Realm) => lifecycle(
 
 		return {
 			tick(components) {
-				if (components.mech.lower.name !== lowerArt) {
-					lowerArt = components.mech.lower.name
+				const {mechLower} = got(realm.entities.getWith(components.mechBuild.lowerId, "mechLower"))
+				const {mechUpper} = got(realm.entities.getWith(components.mechBuild.upperId, "mechUpper"))
+
+				if (mechLower.art !== lowerArt) {
+					lowerArt = mechLower.art
 					releaseLowerGraphic()
 					const [graphic, release] = realm.graphics.instance(got(art[lowerArt]))
 					lowerGraphic = graphic
@@ -34,8 +40,8 @@ export const render_robots = (realm: Realm) => lifecycle(
 					releaseLowerGraphic = release
 				}
 
-				if (components.mech.upper.name !== upperArt) {
-					upperArt = components.mech.upper.name
+				if (mechUpper.art !== upperArt) {
+					upperArt = mechUpper.art
 					releaseUpperGraphic()
 					const [graphic, release] = realm.graphics.instance(got(art[upperArt]))
 					upperGraphic = graphic

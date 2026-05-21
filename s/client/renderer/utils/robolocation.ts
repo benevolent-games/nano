@@ -4,7 +4,7 @@ import {Circular, Scalar, Vec2} from "@benev/math"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 import {GameComponents} from "../../../lib/game/parts/components.js"
 
-type Comps = Select<GameComponents, "position" | "rotation" | "lowerRotation" | "lerp">
+type Comps = Select<GameComponents, "position" | "rotation" | "mech" | "lerp">
 
 export class Robolocation {
 	position
@@ -13,7 +13,7 @@ export class Robolocation {
 
 	constructor(components: Comps) {
 		this.position = new Gridspace(...components.position)
-		this.lowerRotation = new Circular(components.lowerRotation)
+		this.lowerRotation = new Circular(components.mech.chassisRotation)
 		this.upperRotation = new Circular(components.rotation)
 	}
 
@@ -28,7 +28,7 @@ export class Robolocation {
 				.sub(this.position)
 				.mulBy(factor)
 		)
-		this.lowerRotation.lerp(components.lowerRotation, components.lerp ?? 1)
+		this.lowerRotation.lerp(components.mech.chassisRotation, components.lerp ?? 1)
 		this.upperRotation.lerp(components.rotation, components.lerp ?? 1)
 	}
 }

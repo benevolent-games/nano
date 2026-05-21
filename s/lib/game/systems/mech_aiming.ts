@@ -8,7 +8,7 @@ export const mech_aiming = (pod: Pod) => () => {
 
 	for (const [id, components] of pod.entities.select("mechBuild", "wishMover", "rotation")) {
 		const {wishMover} = components
-		const {mechUpper} = got(pod.entities.getWith(components.mechBuild.upper, "mechUpper"))
+		const {mechUpper} = got(pod.entities.getWith(components.mechBuild.upperId, "mechUpper"))
 
 		const wishAim = Vec2.from(wishMover.aim)
 		const wishMove = Vec2.from(wishMover.move)

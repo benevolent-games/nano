@@ -61,7 +61,7 @@ export type MechLower = {
 }
 
 export type MechUpper = {
-	name: MechUpperArt
+	art: MechUpperArt
 
 	/** heaviness in kg */
 	mass: number

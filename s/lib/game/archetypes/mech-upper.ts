@@ -3,7 +3,7 @@ import {degrees} from "@benev/math"
 import {MechUpper} from "../parts/ctypes.js"
 
 export const upperScout = (): MechUpper => ({
-	name: "upperScout",
+	art: "upperScout",
 	mass: 50,
 	inventoryCapacity: 4,
 	aimSpeed: degrees(1000),
@@ -12,7 +12,7 @@ export const upperScout = (): MechUpper => ({
 })
 
 export const upperPragmatist = (): MechUpper => ({
-	name: "upperPragmatist",
+	art: "upperPragmatist",
 	mass: 200,
 	inventoryCapacity: 8,
 	aimSpeed: degrees(700),
@@ -21,7 +21,7 @@ export const upperPragmatist = (): MechUpper => ({
 })
 
 export const upperUtilitarian = (): MechUpper => ({
-	name: "upperUtilitarian",
+	art: "upperUtilitarian",
 	mass: 150,
 	inventoryCapacity: 16,
 	aimSpeed: degrees(300),
@@ -30,7 +30,7 @@ export const upperUtilitarian = (): MechUpper => ({
 })
 
 export const upperChonky = (): MechUpper => ({
-	name: "upperChonky",
+	art: "upperChonky",
 	mass: 400,
 	inventoryCapacity: 4,
 	aimSpeed: degrees(200),
@@ -39,7 +39,7 @@ export const upperChonky = (): MechUpper => ({
 })
 
 export const upperDapper = (): MechUpper => ({
-	name: "upperDapper",
+	art: "upperDapper",
 	mass: 200,
 	inventoryCapacity: 16,
 	aimSpeed: degrees(100),
