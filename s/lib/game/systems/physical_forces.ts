@@ -1,10 +1,14 @@
 
+import {got} from "@e280/stz"
 import {Rect, Vec2} from "@benev/math"
 
 import {Pod} from "../parts/pod.js"
 import {Phys} from "../utils/phys.js"
 
 export const physical_forces = (pod: Pod) => () => {
+	const gridworld = got(pod.entities.select("gridworld")[0][1]).gridworld
+	const extent = Vec2.from(gridworld.extent)
+
 	for (const [id, components] of pod.entities.select(
 			"velocity", "position", "size",
 		)) {
@@ -24,6 +28,12 @@ export const physical_forces = (pod: Pod) => () => {
 		const canMoveTo = (position: Vec2) => {
 			if (!components.physical) return true
 			const rect = Rect.fromCenter(position, Vec2.from(components.size))
+			if (
+				rect.min.x < 0 ||
+				rect.min.y < 0 ||
+				rect.max.x > extent.x ||
+				rect.max.y > extent.y
+			) return false
 			return !hit(pod.physLattice.query(rect))
 		}
 
