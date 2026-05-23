@@ -21,6 +21,7 @@ import {mech_sync_inventory_capacity} from "./systems/mech_sync_inventory_capaci
 import {item_pickups} from "./systems/item_pickups.js"
 import {item_drops} from "./systems/item_drops.js"
 import {item_contained} from "./systems/item_contained.js"
+import {item_equip_mech_chassis} from "./systems/item_equip_mech_chassis.js"
 
 export const systems = (pod: Pod) => consolidate(pod, {
 	clock: {
@@ -51,9 +52,8 @@ export const systems = (pod: Pod) => consolidate(pod, {
 		target_assignment,
 		item_pickups,
 		item_drops,
+		item_equip_mech_chassis,
 		item_contained,
-		// equips,
-		// drops,
 	},
 
 	physics: {

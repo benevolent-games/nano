@@ -9,7 +9,7 @@ export const consts = deep.freeze({
 	renderProximity: 30,
 	map: {
 		seed: 1,
-		extent: Vec2.all(128),
+		extent: Vec2.all(32),
 	},
 	assets: {
 		art: "/assets/art-013.glb",

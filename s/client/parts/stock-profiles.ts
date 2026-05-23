@@ -45,7 +45,7 @@ export const stockProfiles = {
 			action2: "gamepad.button.3",
 			action3: "gamepad.button.6",
 			action4: "gamepad.button.5",
-			sprint: "gamepad.button.19",
+			sprint: "gamepad.button.1",
 			pickup: "gamepad.button.1",
 			drop: "gamepad.button.2",
 			use: "gamepad.button.4",

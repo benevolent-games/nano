@@ -7,7 +7,7 @@ export function* sprinkle(gridworld: Gridworld, seedNumber: number, countNumber:
 	const rand = new Rand(seed(seedNumber))
 	const occupied = new Set<number>()
 
-	for (const i of count(countNumber * 2)) {
+	for (const i of count(countNumber * 10)) {
 		if (i > countNumber) break
 		const index = rand.index(gridworld.tiles.length)
 		if (occupied.has(index)) continue

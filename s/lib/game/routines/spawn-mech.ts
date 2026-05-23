@@ -1,20 +1,41 @@
 
-import {XyArray} from "@benev/math"
+import {Rand} from "@e280/stz"
+import {Vec2, XyArray} from "@benev/math"
 import {Change, Id} from "@benev/archimedes"
 
+import {itemize} from "../utils/itemize.js"
+import {archetype} from "../utils/archetype.js"
 import {GameComponents} from "../parts/components.js"
+import {upperScout} from "../archetypes/mech-upper.js"
+import {lowerHover} from "../archetypes/mech-lowers.js"
 import {defaultCamSettings} from "../utils/default-cam.js"
-import { archetype } from "../utils/archetype.js"
-import { lowerHover } from "../archetypes/mech-lowers.js"
-import { upperScout } from "../archetypes/mech-upper.js"
 
 export function spawnMech(
+		rand: Rand,
 		change: Change<GameComponents>,
 		{controlledBy, position}: {controlledBy: Id, position: XyArray},
 	) {
 
-	const lowerId = change.create({mechLower: lowerHover()})
-	const upperId = change.create({mechUpper: upperScout()})
+	const mechLower = lowerHover()
+	const mechUpper = upperScout()
+
+	const lowerId = change.create({
+		mechLower,
+		...itemize({
+			rand,
+			artkey: mechLower.art,
+			position: Vec2.from(position),
+		}),
+	})
+
+	const upperId = change.create({
+		mechUpper,
+		...itemize({
+			rand,
+			artkey: mechUpper.art,
+			position: Vec2.from(position),
+		}),
+	})
 
 	const mech = archetype({
 		// debug: true,
@@ -57,12 +78,15 @@ export function spawnMech(
 			upperId,
 			alphaIds: [],
 			bravoIds: [],
+			charlieIds: [],
 		},
 	})
 
 	const mechId = change.create(mech)
-	change.merge(lowerId, {containerId: mechId})
-	change.merge(upperId, {containerId: mechId})
+	change.merge(lowerId, {containerId: mechId, equipped: true})
+	change.merge(upperId, {containerId: mechId, equipped: true})
+	change.drop(lowerId, "targetable")
+	change.drop(upperId, "targetable")
 
 	return {mechId, lowerId, upperId}
 }

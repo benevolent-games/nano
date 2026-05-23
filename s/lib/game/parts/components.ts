@@ -103,6 +103,9 @@ export type GameComponents = AsComponents<{
 	/** how far this entity can reach for targeting */
 	reach: number
 
+	/** this item is currently equipped */
+	equipped: true
+
 	/** this is an equippable mech lower */
 	mechLower: MechLower
 
@@ -134,6 +137,7 @@ export type GameComponents = AsComponents<{
 		upperId: Id
 		alphaIds: Id[]
 		bravoIds: Id[]
+		charlieIds: Id[]
 	}
 }>
 
