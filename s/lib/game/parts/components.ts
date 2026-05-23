@@ -1,6 +1,7 @@
 
 import {Intent} from "@benev/tact"
 import {XyArray} from "@benev/math"
+import {art} from "../art.js"
 import {AsComponents, Id} from "@benev/archimedes"
 import {MechUpper, MechLower, EquipmentAlpha, EquipmentBravo} from "./ctypes.js"
 
@@ -9,14 +10,17 @@ export type GameComponents = AsComponents<{
 	/** render debug visualizers */
 	debug: true
 
+	/** which 3d model to display */
+	art: keyof typeof art
+
+	/** total scaling of the art */
+	scale: number
+
 	/** specifies the total gridworld at play */
 	gridworld: {extent: XyArray}
 
 	/** section of grid tiles, compactly encoded as a hex string */
 	gridchunk: string
-
-	/** parent that owns this entity */
-	ownerId: Id
 
 	/** which player entity we're controlled by */
 	controlledBy: Id
@@ -33,9 +37,10 @@ export type GameComponents = AsComponents<{
 
 	/** how a user wants to interact with things */
 	wishInteractor: {
-		use: boolean
 		pickup: boolean
 		drop: boolean
+		use: boolean
+		unequip: boolean
 	}
 
 	/** how a user wants to fire their weapons */
@@ -68,9 +73,6 @@ export type GameComponents = AsComponents<{
 	/** actual movement right now */
 	velocity: XyArray
 
-	/** which 3d model to display */
-	art: string
-
 	/** enabled if this entity can bump into things */
 	physical: boolean
 
@@ -87,13 +89,16 @@ export type GameComponents = AsComponents<{
 	inventory: Id[]
 
 	/** can be picked up and dropped as an inventory item */
-	inventoryItem: true
+	pickupable: true
+
+	/** this entity can be targeted by other entities */
+	targetable: true
 
 	/** we can target another entity for various reasons */
 	target: Id | null
 
-	/** this entity can be targeted by other entities */
-	targetable: boolean
+	/** currently inside an inventory */
+	containerId: Id
 
 	/** how far this entity can reach for targeting */
 	reach: number
@@ -109,6 +114,9 @@ export type GameComponents = AsComponents<{
 
 	/** this is an equippable utility */
 	equipmentBravo: EquipmentBravo
+
+	/** this is an passive attachment */
+	equipmentCharlie: EquipmentBravo
 
 	/** we're a mech */
 	mech: {

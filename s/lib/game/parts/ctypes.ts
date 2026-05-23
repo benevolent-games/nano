@@ -2,20 +2,23 @@
 export type ItemName =
 	| MechLowerArt
 	| MechUpperArt
-	| EquipmentAlphaName
-	| EquipmentBravoName
+	| EquipmentAlphaArt
+	| EquipmentBravoArt
 	| "oreCarbon"
 	| "oreColtan"
 	| "oreGold"
 	| "ingotTantalum"
 	| "ingotGold"
 
-export type EquipmentAlphaName =
+export type EquipmentAlphaArt =
 	| "aCannon"
 	| "aDrill"
 
-export type EquipmentBravoName =
+export type EquipmentBravoArt =
 	| "bDome"
+
+export type EquipmentCharlieArt =
+	| "cPassiveShield"
 
 export type MechLowerArt =
 	| "lowerHover"
@@ -31,11 +34,15 @@ export type MechUpperArt =
 	| "upperDapper"
 
 export type EquipmentAlpha = {
-	name: EquipmentAlphaName
+	art: EquipmentAlphaArt
 }
 
 export type EquipmentBravo = {
-	art: EquipmentBravoName
+	art: EquipmentBravoArt
+}
+
+export type EquipmentCharlie = {
+	art: EquipmentBravoArt
 }
 
 export type MechLower = {

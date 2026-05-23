@@ -1,5 +1,5 @@
 
-import {Rand, seed} from "@e280/stz"
+import {need, Rand, seed} from "@e280/stz"
 import {Lattice, Vec2} from "@benev/math"
 import {Change, EntitiesReadonly, Id} from "@benev/archimedes"
 
@@ -26,5 +26,9 @@ export class Pod {
 		public change: Change<GameComponents>,
 		public players: IntentBucketMap | null,
 	) {}
+
+	getActions(playerId: string) {
+		return need(this.actors, playerId).actions
+	}
 }
 

@@ -13,6 +13,9 @@ import {generateGridworld} from "../gridworld/generate.js"
 import {IntentBucketMap} from "../../client/views/play/parts/recruiter.js"
 import {lowerHover, lowerQuadcar, lowerTreads, lowerTrike} from "./archetypes/mech-lowers.js"
 import {upperChonky, upperDapper, upperPragmatist, upperScout, upperUtilitarian} from "./archetypes/mech-upper.js"
+import { degrees, Vec2 } from "@benev/math"
+import { archetype } from "./utils/archetype.js"
+import { art } from "./art.js"
 
 export class Game {
 	pod
@@ -55,12 +58,53 @@ export class Game {
 		// 	equipmentize(rand, "upperChonky", {mechUpper: upperChonky()}),
 		// 	equipmentize(rand, "upperDapper", {mechUpper: upperDapper()}),
 		// ]
-		//
-		// for (const position of sprinkle(gridworld, 1, 1_000)) {
-		// 	this.change.create(
-		// 		rand.pick(possibilities)(position.add_(0.5, 0.5))
-		// 	)
-		// }
+
+		const itemize = (artkey: keyof typeof art, components: Partial<GameComponents>) =>
+			(position: Vec2): Partial<GameComponents> => ({
+				art: artkey,
+				position: position.array(),
+				rotation: rand.range(degrees(0), degrees(360)),
+				scale: 1,
+				size: [0.5, 0.5],
+				targetable: true,
+				pickupable: true,
+				...components,
+			})
+
+		const resources = [
+			itemize("oreCarbon", {}),
+			itemize("oreColtan", {}),
+			itemize("oreGold", {}),
+			itemize("ingotGold", {}),
+			itemize("ingotTantalum", {}),
+		]
+
+		const equipment = [
+			itemize("aCannon", {equipmentAlpha: {art: "aCannon"}}),
+			itemize("aDrill", {equipmentAlpha: {art: "aDrill"}}),
+			itemize("bDome", {equipmentBravo: {art: "bDome"}}),
+		]
+
+		const mechparts = [
+			itemize("lowerTrike", {mechLower: lowerTrike(), scale: consts.robotScale}),
+			itemize("lowerHover", {mechLower: lowerHover(), scale: consts.robotScale}),
+			itemize("lowerQuadcar", {mechLower: lowerQuadcar(), scale: consts.robotScale}),
+			itemize("lowerTreads", {mechLower: lowerTreads(), scale: consts.robotScale}),
+			itemize("upperScout", {mechUpper: upperScout(), scale: consts.robotScale}),
+			itemize("upperPragmatist", {mechUpper: upperPragmatist(), scale: consts.robotScale}),
+			itemize("upperUtilitarian", {mechUpper: upperUtilitarian(), scale: consts.robotScale}),
+			itemize("upperChonky", {mechUpper: upperChonky(), scale: consts.robotScale}),
+			itemize("upperDapper", {mechUpper: upperDapper(), scale: consts.robotScale}),
+		]
+
+		const n = (gridworld.extent.x * gridworld.extent.y) / 25
+
+		for (const position of sprinkle(gridworld, 1, n)) {
+			const possibilities = rand.pick([resources, equipment, mechparts])
+			this.change.create(
+				rand.pick(possibilities)(position.add_(0.5, 0.5))
+			)
+		}
 
 		return this
 	}

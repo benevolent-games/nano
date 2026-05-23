@@ -18,6 +18,9 @@ import {wish_mover} from "./systems/wish_mover.js"
 import {wish_interactor} from "./systems/wish_interactor.js"
 import {wish_actions} from "./systems/wish_actions.js"
 import {mech_sync_inventory_capacity} from "./systems/mech_sync_inventory_capacity.js"
+import {item_pickups} from "./systems/item_pickups.js"
+import {item_drops} from "./systems/item_drops.js"
+import {item_contained} from "./systems/item_contained.js"
 
 export const systems = (pod: Pod) => consolidate(pod, {
 	clock: {
@@ -46,7 +49,9 @@ export const systems = (pod: Pod) => consolidate(pod, {
 	gameplay: {
 		target_lattice,
 		target_assignment,
-		// pickups,
+		item_pickups,
+		item_drops,
+		item_contained,
 		// equips,
 		// drops,
 	},

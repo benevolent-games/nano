@@ -26,7 +26,10 @@ export const bindings = asBindings({
 		drop: "KeyQ",
 
 		/** use or equip an item */
-		use: "KeyR",
+		use: "KeyF",
+
+		/** drop an equipment */
+		unequip: "KeyG",
 
 		move_up: "KeyW",
 		move_down: "KeyS",

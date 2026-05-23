@@ -9,9 +9,10 @@ export const wish_interactor = (pod: Pod) => () => {
 
 		pod.change.merge(id, {
 			wishInteractor: {
-				use: a.use.changedDown,
-				drop: a.drop.changedDown,
 				pickup: a.pickup.changedDown,
+				drop: a.drop.changedDown,
+				use: a.use.changedDown,
+				unequip: a.unequip.changedDown,
 			},
 		})
 	}

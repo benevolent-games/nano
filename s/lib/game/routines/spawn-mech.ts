@@ -33,9 +33,10 @@ export function spawnMech(
 			a4: false,
 		},
 		wishInteractor: {
-			use: false,
-			drop: false,
 			pickup: false,
+			drop: false,
+			use: false,
+			unequip: false,
 		},
 		rotation: 0,
 		physical: true,
@@ -45,6 +46,7 @@ export function spawnMech(
 		velocity: [0, 0],
 		target: null,
 		reach: 1,
+		inventory: [],
 		inventoryCapacity: 4,
 		mech: {
 			rpm: 0,
@@ -59,8 +61,8 @@ export function spawnMech(
 	})
 
 	const mechId = change.create(mech)
-	change.merge(lowerId, {ownerId: mechId})
-	change.merge(upperId, {ownerId: mechId})
+	change.merge(lowerId, {containerId: mechId})
+	change.merge(upperId, {containerId: mechId})
 
 	return {mechId, lowerId, upperId}
 }
