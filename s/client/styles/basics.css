@@ -12,10 +12,15 @@
 		color-scheme: dark;
 	}
 
+	:focus-visible {
+		outline: var(--focus);
+		outline-offset: 0.1em;
+	}
+
 	::selection {
-		color: var(--selection);
-		background: var(--selection-bg);
-		text-shadow: var(--shadow);
+		color: var(--select);
+		background: var(--select-bg);
+		text-shadow: var(--text-shadow);
 	}
 
 	::-webkit-scrollbar { width: 8px; }
@@ -40,4 +45,5 @@
 			color: color-mix(in srgb, white, var(--link) 50%);
 		}
 	}
+}
 

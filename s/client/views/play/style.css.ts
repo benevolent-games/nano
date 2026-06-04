@@ -49,7 +49,7 @@ canvas {
 
 	background: #0008;
 	text-shadow: none;
-	border-radius: 0 0 var(--radius) 0;
+	border-radius: 0 0 var(--round) 0;
 }
 
 `

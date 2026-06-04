@@ -1,12 +1,12 @@
 
-import {template, html, dataSvgEmoji, socialCard} from "@e280/scute"
+import {template, html, socialCard} from "@e280/scute"
 
 export default template(import.meta.url, async orb => html`
 	<!doctype html>
 	<html>
 		<head>
 			<title>nano</title>
-			<link rel="icon" href="${dataSvgEmoji("🔬")}"/>
+			<link rel="icon" href="${orb.hashurl('/assets/favicon.png')}"/>
 
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -28,8 +28,24 @@ export default template(import.meta.url, async orb => html`
 		<body>
 			<nano-app>
 				<section class=plate>
-					<h1>🔬 nano</h1>
-					<p>v${orb.packageVersion()}</p>
+					<header class=slice>
+						<a href="https://benev.gg/" title="benev.gg">
+							<img src="/assets/b.png" alt="b"/>
+						</a>
+
+						<a href="https://discord.gg/BnZx2utdev">
+							discord
+						</a>
+
+						<a href="https://github.com/benev-gg/nano">
+							github
+						</a>
+					</header>
+
+					<div class="lead slice">
+						<h1><img src="${orb.hashurl('/assets/nano.webp')}" alt="nano"/></h1>
+						<p>v${orb.packageVersion()}</p>
+					</div>
 				</section>
 			</nano-app>
 		</body>

@@ -1,26 +1,68 @@
 
 @layer page {
-	html, body {
-		font-size: 12px;
-		font-family: sans-serif;
-		height: 100%;
-	}
-
 	html {
+		font-size: var(--site-font-size);
+		font-family: sans-serif;
 		color: var(--text);
 		background: var(--bg);
 		text-shadow: var(--text-shadow);
 	}
 
 	.plate {
-		width: 42em;
-		max-width: 100%;
-		margin: auto;
-		padding: 2em;
+		display: flex;
+		flex-direction: column;
+
+		width: 100%;
+		min-height: 100dvh;
 		text-align: center;
 
-		> h1 {
-			font-size: 5em;
+		background: url("/assets/darkcity.webp") center center / cover;
+
+		.slice {
+			width: 100%;
+			max-width: var(--site-width);
+			margin: auto;
+		}
+
+		> header {
+			display: flex;
+			align-items: center;
+			justify-content: start;
+			gap: var(--space);
+			padding: var(--pad);
+			color: var(--prime);
+
+			a {
+				display: flex;
+				align-items: center;
+				gap: var(--pad);
+
+				color: inherit;
+				font-weight: normal;
+				opacity: 0.5;
+
+				&:hover, &:focus-visible { opacity: 1; }
+				&:active { opacity: 0.5; }
+			}
+
+			img {
+				width: 1.5em;
+				height: 1.5em;
+			}
+
+			a:nth-child(2) {
+				margin-left: auto;
+			}
+		}
+
+		> .lead {
+			flex: 1 1 auto;
+			background: #f002;
+
+			img {
+				width: 100%;
+				max-width: 10em;
+			}
 		}
 	}
 }
