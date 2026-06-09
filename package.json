@@ -10,7 +10,7 @@
 		"s"
 	],
 	"scripts": {
-		"link": "npm link ../../@e280/stz ../../@e280/strata ../../@e280/sly ../../@e280/scute ../../@e280/shiny ../tact ../math ../archimedes",
+		"link": "npm link ../../@e280/stz ../../@e280/strata ../../@e280/sly ../../@e280/scute ../../@e280/shiny ../tact ../math ../archimedes ../web",
 		"build": "bash fix-babylon && rm -rf x && mkdir x x/client && ln -s ../../temp x/client/assets && tsc && scute --in=s/client --out=x/client --splitting=no -v",
 		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute --in=s/client --out=x/client --splitting=no -vw' 'hottie x/client --debounce=700'",
 		"test": "node x/test.js",
