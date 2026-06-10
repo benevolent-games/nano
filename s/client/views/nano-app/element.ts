@@ -6,12 +6,12 @@ import {hashNav, hashSignal, router, shadowElement, useCss, useOnce} from "@e280
 
 import {Play} from "../play/view.js"
 import styleCss from "./style.css.js"
-import {theme} from "../../utils/theme.js"
 import {Gridgen} from "../gridgen/view.js"
+import {themeCss} from "../../utils/theme.js"
 import {setupDeck} from "../../parts/setup-deck.js"
 
 export const NanoApp = shadowElement(() => {
-	useCss(theme(), styleCss)
+	useCss(themeCss, styleCss)
 
 	const $hash = useOnce(() => hashSignal())
 	const {deck, getControllerLabel} = useOnce(() => setupDeck())

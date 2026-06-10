@@ -7,7 +7,7 @@ import {shadow, spinner, useCss, useMount, useName, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import {consts} from "../../../consts.js"
-import {theme} from "../../utils/theme.js"
+import {themeCss} from "../../utils/theme.js"
 import {Game} from "../../../lib/game/game.js"
 import {Multiframe} from "../../utils/multiframe.js"
 import {Perspective} from "./subviews/perspective.js"
@@ -16,7 +16,7 @@ import {IntentBucketMap, Recruiter} from "./parts/recruiter.js"
 
 export const Play = shadow((deck: Deck) => {
 	useName("play")
-	useCss(theme(), styleCss)
+	useCss(themeCss, styleCss)
 
 	// teeing off the game intent buckets vs meta intent buckets which are sampled at differing rates
 	const gamePlayers = useOnce(() => new IntentBucketMap())

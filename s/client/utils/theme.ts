@@ -1,20 +1,9 @@
 
-import {dom} from "@e280/sly"
+import {is} from "@e280/stz"
 
-let cached: CSSStyleSheet[] | null = null
-
-export function theme() {
-	if (cached) return cached
-
-	cached = []
-
-	for (const style of dom.all<HTMLStyleElement>("style[data-theme]", document.head)) {
-		if (!style.sheet) continue
-		const sheet = new CSSStyleSheet()
-		sheet.replaceSync(style.textContent ?? "")
-		cached.push(sheet)
-	}
-
-	return cached
-}
+export const themeCss = (
+	Array.from(document.querySelectorAll<HTMLStyleElement>("style[data-theme]"))
+		.map(element => element.sheet)
+		.filter(is.happy)
+)
 
