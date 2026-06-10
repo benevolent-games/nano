@@ -2,7 +2,7 @@
 import {html} from "lit"
 import {DeskView} from "@benev/tact/ui"
 import {ShinyButton} from "@e280/shiny"
-import {hashNav, hashSignal, router, shadowElement, useCss, useOnce} from "@e280/sly"
+import {dom, hashNav, hashSignal, router, shadowElement, useCss, useOnce} from "@e280/sly"
 
 import {Play} from "../play/view.js"
 import styleCss from "./style.css.js"
@@ -15,6 +15,9 @@ export const NanoApp = shadowElement(() => {
 
 	const $hash = useOnce(() => hashSignal())
 	const {deck, getControllerLabel} = useOnce(() => setupDeck())
+
+	const header = useOnce(() => dom("benev-header"))
+	header.toggleAttribute("hide-links", $hash() !== "")
 
 	const nav = useOnce(() => hashNav({
 		"home": () => ``,

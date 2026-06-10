@@ -1,11 +1,21 @@
 
-import "./renderer/babylon-side-effects.js"
-import {setupBenev} from "@benev/web"
-
+import {html} from "lit"
 import {dom} from "@e280/sly"
-import {NanoApp} from "./views/nano-app/element.js"
+import {Loader, setupBenev} from "@benev/web"
 
 const benev = await setupBenev()
+dom.register(benev.elements)
 
-dom.register({...benev.elements, NanoApp})
+const loader = new Loader(dom("benev-loader"))
+
+dom("#play-button").onclick = async() => {
+	await loader.load(
+		() => "loading...",
+		async() => {
+			const src = new URL("./game.bundle.min.js", import.meta.url)
+			await import(src.href)
+			return html`<nano-app></nano-app>`
+		},
+	)
+}
 

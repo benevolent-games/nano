@@ -49,6 +49,7 @@ export default template(import.meta.url, async orb => html`
 						<h1><img src="${orb.hashurl('/assets/nano.webp')}" alt="nano"/></h1>
 						<p>v${orb.packageVersion()}</p>
 					</header>
+					<button id=play-button benev-button=juicy>▶ play</button>
 				</main>
 			</benev-loader>
 		</body>
