@@ -10,6 +10,8 @@ import "@babylonjs/loaders/glTF/index.js"
 import "@babylonjs/core/Engines/engine.js"
 import "@babylonjs/core/Engines/Extensions/engine.query.js"
 
+import "@babylonjs/core/Meshes/instancedMesh.js"
+
 // import "@babylonjs/core/Materials/standardMaterial.js"
 // import "@babylonjs/core/Materials/Textures/Loaders/envTextureLoader.js"
 
