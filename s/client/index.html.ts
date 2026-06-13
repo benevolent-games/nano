@@ -45,11 +45,15 @@ export default template(import.meta.url, async orb => html`
 
 			<benev-loader>
 				<main x-spacious>
-					<header class=leader benev-slice>
-						<h1><img src="${orb.hashurl('/assets/nano.webp')}" alt="nano"/></h1>
-						<p>v${orb.packageVersion()}</p>
-					</header>
-					<button id=play-button benev-button=juicy>▶ play</button>
+					<section class=plate benev-slice>
+						<header>
+							<h1><img src="${orb.hashurl('/assets/nano.webp')}" alt="nano"/></h1>
+							<p class=subtitle>robot warfare online</p>
+							<p class=version>v${orb.packageVersion()}</p>
+						</header>
+						<button id=play benev-button=juicy>play game</button>
+						<button id=edit benev-button=chill>map editor</button>
+					</section>
 				</main>
 			</benev-loader>
 		</body>
