@@ -1,28 +1,50 @@
 
 import {html} from "lit"
-import {dom} from "@e280/sly"
+import {effect} from "@e280/strata"
+import {dom, hashSignal} from "@e280/sly"
 import {Loader, setupBenev} from "@benev/web"
+import {load} from "./utils/load.js"
 
 const benev = await setupBenev()
 dom.register(benev.elements)
 
-const loader = new Loader(dom("benev-loader"))
+const loaderElement = dom("benev-loader")
+const loader = new Loader(loaderElement)
 
-dom("button#play").onclick = async() => loader.load(
-	() => "loading...",
-	async() => {
-		const src = new URL("./game.bundle.min.js", import.meta.url)
-		await import(src.href)
-		return html`<nano-app></nano-app>`
-	},
-)
+const loading = () => "loading..."
+const $hash = hashSignal()
+let count = 0
 
-dom("button#edit").onclick = async() => loader.load(
-	() => "loading...",
-	async() => {
-		const src = new URL("./game.bundle.min.js", import.meta.url)
-		await import(src.href)
-		return html`<nano-app></nano-app>`
-	},
-)
+effect(() => {
+	count++
+
+	if (count === 1 && $hash() === "")
+		return
+
+	switch ($hash()) {
+		case "": {
+			loader.load(loading, async() => {
+				await load(new URL("./game.bundle.min.js", import.meta.url))
+				return Array.from(loader.original.content.cloneNode(true).childNodes)
+			})
+			break
+		}
+
+		case "play": {
+			loader.load(loading, async() => {
+				await load(new URL("./game.bundle.min.js", import.meta.url))
+				return html`<nano-app></nano-app>`
+			})
+			break
+		}
+
+		case "editor": {
+			loader.load(loading, async() => {
+				await load(new URL("./editor.bundle.min.js", import.meta.url))
+				return html`<p>editor</p>`
+			})
+			break
+		}
+	}
+})
 

@@ -51,8 +51,8 @@ export default template(import.meta.url, async orb => html`
 							<p class=subtitle>robot warfare online</p>
 							<p class=version>v${orb.packageVersion()}</p>
 						</header>
-						<button id=play benev-button=juicy>play game</button>
-						<button id=edit benev-button=chill>map editor</button>
+						<a benev-button=juicy href="/#/play">play game</a>
+						<a benev-button=chill href="/#/editor">map editor</a>
 					</section>
 				</main>
 			</benev-loader>

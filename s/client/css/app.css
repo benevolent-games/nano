@@ -59,7 +59,7 @@
 			}
 		}
 
-		button {
+		[benev-button] {
 			display: flex;
 			justify-content: center;
 			min-width: 10em;
