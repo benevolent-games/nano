@@ -10,32 +10,33 @@
 		"s"
 	],
 	"scripts": {
-		"link": "npm link ../../@e280/stz ../../@e280/strata ../../@e280/sly ../../@e280/scute ../../@e280/shiny ../tact ../math ../archimedes ../web",
+		"link": "npm link ../tact ../math ../archimedes ../web",
 		"build": "bash fix-babylon && rm -rf x && mkdir x x/client && ln -s ../../temp x/client/assets && tsc && scute --in=s/client --out=x/client --splitting=no -v",
 		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute --in=s/client --out=x/client --splitting=no -vw' 'hottie x/client --debounce=700'",
 		"test": "node x/test.js",
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
 	},
 	"allowScripts": {
-		"esbuild": true
+		"esbuild@0.28.1": true,
+		"classic-level@3.0.0": true
 	},
 	"dependencies": {
-		"@babylonjs/core": "^9.7.0",
-		"@babylonjs/loaders": "^9.7.0",
+		"@babylonjs/core": "^9.12.0",
+		"@babylonjs/loaders": "^9.12.0",
 		"@benev/archimedes": "^0.1.0-7",
 		"@benev/math": "^0.3.4",
 		"@benev/tact": "^0.2.0",
-		"@e280/shiny": "^0.1.0-21",
+		"@e280/shiny": "^0.1.0-22",
 		"@e280/sly": "^0.4.0-next.2",
 		"@e280/strata": "^0.4.0-next.4",
-		"@e280/stz": "^0.2.36",
+		"@e280/stz": "^0.3.0",
 		"lit": "^3.3.3"
 	},
 	"devDependencies": {
 		"@e280/hottie": "^0.1.1",
 		"@e280/octo": "^0.1.1",
 		"@e280/science": "^0.1.11",
-		"@e280/scute": "^0.3.3",
+		"@e280/scute": "^0.4.0",
 		"typescript": "^6.0.3"
 	},
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
