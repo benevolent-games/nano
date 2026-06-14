@@ -17,7 +17,7 @@ export default template(import.meta.url, async orb => html`
 			<style data-theme>
 				@layer benev, vars, x, app;
 				@layer app {
-					:root, :host {
+					:root {
 						color: #aaa;
 						background: #000;
 					}
@@ -35,7 +35,9 @@ export default template(import.meta.url, async orb => html`
 			})}
 		</head>
 		<body>
-			<benev-menu></benev-menu>
+			<benev-menu>
+				<p>this is the benev menu</p>
+			</benev-menu>
 
 			<benev-header>
 				<a href="https://discord.gg/BnZx2utdev">discord</a>

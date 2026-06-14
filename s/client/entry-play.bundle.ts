@@ -2,9 +2,10 @@
 import "./renderer/babylon-side-effects.js"
 import {dom} from "@e280/sly"
 import {Basis} from "./types.js"
-import {NanoApp} from "./views/nano-app/element.js"
+import {Play} from "./views/play/view.js"
 
 export default async(basis: Basis) => {
-	dom.register({NanoApp})
+	console.log("play fn")
+	dom.register({NanoPlay: Play(basis.deckSetup.deck)}, {soft: true})
 }
 

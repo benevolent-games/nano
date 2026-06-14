@@ -3,7 +3,7 @@ import {html} from "lit"
 import {Deck} from "@benev/tact"
 import {effect} from "@e280/strata"
 import {cycle, nap} from "@e280/stz"
-import {shadow, spinner, useCss, useMount, useName, useOnce} from "@e280/sly"
+import {shadowElement, spinner, useCss, useMount, useOnce} from "@e280/sly"
 
 import styleCss from "./style.css.js"
 import {consts} from "../../../consts.js"
@@ -14,8 +14,7 @@ import {Perspective} from "./subviews/perspective.js"
 import {ActorMap} from "../../../lib/game/utils/actor.js"
 import {IntentBucketMap, Recruiter} from "./parts/recruiter.js"
 
-export const Play = shadow((deck: Deck) => {
-	useName("play")
+export const Play = (deck: Deck) => shadowElement(() => {
 	useCss(themeCss, styleCss)
 
 	// teeing off the game intent buckets vs meta intent buckets which are sampled at differing rates

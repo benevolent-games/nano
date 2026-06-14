@@ -2,6 +2,12 @@
 import {css} from "lit"
 export default css`
 
+:host {
+	display: block;
+	position: absolute;
+	inset: 0;
+}
+
 .shell {
 	display: flex;
 	height: 100%;

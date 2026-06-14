@@ -1,5 +1,6 @@
 
 import {Content} from "@e280/sly"
+import {DeskView} from "@benev/tact/ui"
 import {LocalStore} from "@e280/strata"
 import {Controller, Deck, DeckState, Devices, GamepadDevice, KeyboardDevice, onPad, PointerDevice} from "@benev/tact"
 
@@ -38,6 +39,9 @@ export function setupDeck() {
 		}
 	})
 
-	return {deck, getControllerLabel: labels.get.bind(labels)}
+	const getControllerLabel = labels.get.bind(labels)
+	const renderDesk = () => DeskView(deck, {getControllerLabel})
+
+	return {deck, renderDesk}
 }
 
