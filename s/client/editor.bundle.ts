@@ -1,3 +1,0 @@
-
-console.log("EDITOR -- loaded")
-
