@@ -5,8 +5,8 @@ import {AssetContainer} from "@babylonjs/core/assetContainer.js"
 
 import {Venue} from "../../lib/buddy/venue.js"
 import {Timing} from "../../lib/tools/timing.js"
-import {PlayerId} from "../../lib/game2/types.js"
-import {GameComponents} from "../../lib/game2/parts/components.js"
+import {PlayerId} from "../../lib/game/types.js"
+import {GameComponents} from "../../lib/game/parts/components.js"
 import { Cam } from "./parts/cam.js"
 
 export class Realm {

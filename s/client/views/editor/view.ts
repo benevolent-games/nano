@@ -8,11 +8,11 @@ import {shadowElement, spinner, useCss, useMount, useOnce} from "@e280/sly"
 import styleCss from "./style.css.js"
 import {consts} from "../../../consts.js"
 import {themeCss} from "../../utils/theme.js"
-import {Game} from "../../../lib/game2/game.js"
+import {Game} from "../../../lib/game/game.js"
 import {Multiframe} from "../../utils/multiframe.js"
 import {Perspective} from "../perspective/perspective.js"
 import {Recruiter} from "../../utils/recruiter.js"
-import { IntentBucketMap } from "../../../lib/game2/utils/intent-bucket-map.js"
+import { IntentBucketMap } from "../../../lib/game/utils/intent-bucket-map.js"
 
 export const Editor = (deck: Deck) => shadowElement(() => {
 	useCss(themeCss, styleCss)

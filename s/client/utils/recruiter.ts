@@ -4,8 +4,8 @@ import {makeId} from "@benev/archimedes"
 import {Deck, IntentBucket, Port} from "@benev/tact"
 import {cycle, guarantee, nap, need} from "@e280/stz"
 
-import {PlayerId} from "../../lib/game2/types.js"
-import {IntentBucketMap} from "../../lib/game2/utils/intent-bucket-map.js"
+import {PlayerId} from "../../lib/game/types.js"
+import {IntentBucketMap} from "../../lib/game/utils/intent-bucket-map.js"
 
 export class Recruiter {
 	#players = new RMap<Port, PlayerId>()

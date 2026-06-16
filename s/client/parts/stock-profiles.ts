@@ -1,6 +1,6 @@
 
 import {asBindings, Profile} from "@benev/tact"
-import {bindings} from "../../lib/game2/parts/bindings.js"
+import {bindings} from "../../lib/game/parts/bindings.js"
 
 export const stockProfiles = {
 	standard: {label: "📜standard", bindings},
