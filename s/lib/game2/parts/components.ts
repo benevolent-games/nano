@@ -2,8 +2,9 @@
 import {Intent} from "@benev/tact"
 import {XyArray} from "@benev/math"
 import {AsComponents, Id} from "@benev/archimedes"
-import {art} from "../art.js"
+
 import {Equipment} from "./ctypes.js"
+import {artManifest} from "../art.js"
 
 export type GameComponents = AsComponents<{
 
@@ -11,7 +12,7 @@ export type GameComponents = AsComponents<{
 	debug: true
 
 	/** which 3d model to display */
-	art: keyof typeof art
+	art: keyof typeof artManifest
 
 	/** total scaling of the art */
 	scale: number

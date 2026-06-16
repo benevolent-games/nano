@@ -3,7 +3,6 @@ import {Intent} from "@benev/tact"
 import {Rand, seed} from "@e280/stz"
 import {applyDelta, Change, Entities, Id} from "@benev/archimedes"
 
-import {art} from "./art.js"
 import {systems} from "./systems.js"
 import {GamePod} from "./parts/pod.js"
 import {consts} from "../../consts.js"

@@ -1,46 +1,46 @@
 
-const a = (name: string, prepopulation: number) => ({name, prepopulation})
+import {Art} from "./types.js"
 
-export const art = {
-	indicator: a("indicator", 1),
-	phasebox: a("phasebox", 1),
-	phaseboxAngry: a("phasebox-angry", 1),
+export const artManifest = {
+	indicator: new Art("indicator", "neutral", 2),
 
-	floor1: a("floor1", 256),
-	wall1: a("wall1", 64),
-	wall2: a("wall2", 64),
-	wall3: a("wall3", 64),
-	wall4: a("wall4", 64),
-	wall5: a("wall5", 64),
-	wall6: a("wall6", 64),
+	gSquare: new Art("g-square", null, 128),
+	gFloor: new Art("g-floor", null, 64),
+	gWall: new Art("g-wall", null, 64),
 
-	projectileBeam: a("projectile-beam", 32),
-	projectilePulse: a("projectile-pulse", 32),
+	pylon: new Art("pylon", "neutral", 8),
+	pylon_t1: new Art("pylon", "t1", 8),
+	pylon_t2: new Art("pylon", "t2", 8),
 
-	lowerHover: a("lower-hover", 16),
-	lowerTrike: a("lower-trike", 16),
-	lowerQuadcar: a("lower-quadcar", 16),
-	lowerTreads: a("lower-treads", 16),
+	spawn: new Art("spawn", "neutral", 16),
+	spawn_t1: new Art("spawn", "t1", 8),
+	spawn_t2: new Art("spawn", "t2", 8),
 
-	upperScout: a("upper-scout", 16),
-	upperPragmatist: a("upper-pragmatist", 16),
-	upperUtilitarian: a("upper-utilitarian", 16),
-	upperChonky: a("upper-chonky", 16),
-	upperDapper: a("upper-dapper", 16),
+	respawn: new Art("respawn", "neutral", 16),
+	respawn_t1: new Art("respawn", "t1", 8),
+	respawn_t2: new Art("respawn", "t2", 8),
 
-	aCannon: a("a-cannon", 16),
-	aDrill: a("a-drill", 16),
-	bDome: a("b-dome", 16),
+	plasmabox_t1: new Art("plasmabox", "t1", 64),
+	plasmabox_t2: new Art("plasmabox", "t2", 64),
 
-	oreCarbon: a("ore-carbon", 16),
-	oreColtan: a("ore-coltan", 16),
-	oreGold: a("ore-gold", 16),
+	robotQuadcar: new Art("robot-quadcar", "neutral", 16),
+	robotQuadcar_t1: new Art("robot-quadcar", "t1", 16),
+	robotQuadcar_t2: new Art("robot-quadcar", "t2", 16),
 
-	ingotTantalum: a("ingot-tantalum", 16),
-	ingotGold: a("ingot-gold", 16),
+	turretBase: new Art("turret-base", "neutral", 16),
+	turretBase_t1: new Art("turret-base", "t1", 16),
+	turretBase_t2: new Art("turret-base", "t2", 16),
 
-	structHub: a("struct-hub", 16),
-	structRefinery: a("struct-refinery", 16),
-	structConstructor: a("struct-constructor", 16),
+	turretCannon: new Art("turret-cannon", "neutral", 32),
+	turretCannon_t1: new Art("turret-cannon", "t1", 32),
+	turretCannon_t2: new Art("turret-cannon", "t2", 32),
+
+	projectileBeam: new Art("projectile-beam", "neutral", 64),
+	projectileBeam_t1: new Art("projectile-beam", "t1", 64),
+	projectileBeam_t2: new Art("projectile-beam", "t2", 64),
+
+	projectilePulse: new Art("projectile-pulse", "neutral", 64),
+	projectilePulse_t1: new Art("projectile-pulse", "t1", 64),
+	projectilePulse_t2: new Art("projectile-pulse", "t2", 64),
 }
 
