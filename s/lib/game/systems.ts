@@ -1,12 +1,13 @@
 
 import {consolidate} from "@benev/archimedes"
-import {GamePod} from "./parts/pod.js"
+import {Pod} from "./parts/graph.js"
+import {timing_update} from "./systems/timing_update.js"
 
-export const systems = (pod: GamePod) => consolidate(pod, {
-	// clock: {
-	// 	timing_update,
-	// },
-	//
+export const systems = (pod: Pod) => consolidate(pod, {
+	clock: {
+		timing_update,
+	},
+
 	// gridworld: {
 	// 	hologrid_lifecycle,
 	// 	hologrid_chunks,

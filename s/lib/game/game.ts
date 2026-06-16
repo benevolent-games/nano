@@ -4,10 +4,10 @@ import {Rand, seed} from "@e280/stz"
 import {applyDelta, Change, Entities, Id} from "@benev/archimedes"
 
 import {systems} from "./systems.js"
-import {GamePod} from "./parts/pod.js"
+import {Pod} from "./parts/graph.js"
 import {consts} from "../../consts.js"
 import {GameComponents} from "./parts/components.js"
-import { IntentBucketMap } from "./utils/intent-bucket-map.js"
+import {IntentBucketMap} from "./utils/intent-bucket-map.js"
 
 export class Game {
 	pod
@@ -17,7 +17,7 @@ export class Game {
 
 	constructor(players: IntentBucketMap | null) {
 		const change = new Change(delta => applyDelta(this.entities, delta))
-		this.pod = new GamePod(this.entities.readonly, change, players)
+		this.pod = new Pod(this.entities.readonly, change, players)
 		this.simulate = systems(this.pod)
 	}
 

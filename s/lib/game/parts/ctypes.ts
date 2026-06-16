@@ -1,7 +1,7 @@
 
 export type Equipment = (
 	| "none"
-	| "k15"
+	| "cannon"
 	| "editor"
 )
 
