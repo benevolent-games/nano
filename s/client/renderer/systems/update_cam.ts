@@ -2,12 +2,10 @@
 import {Realm} from "../realm.js"
 
 export const update_cam = (realm: Realm) => () => {
-	const {cam} = realm.venue
-
 	for (const [_id, components] of realm.entities.select("controlledBy", "position", "cam")) {
 		if (components.controlledBy === realm.playerId) {
 			realm.focal.from(components.position)
-			cam.lerpTowards({
+			realm.cam.lerpTowards({
 				focal: realm.focal.array(),
 				fov: components.cam.fov,
 				swivel: components.cam.swivel,

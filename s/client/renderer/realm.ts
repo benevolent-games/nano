@@ -3,14 +3,16 @@ import {Vec2} from "@benev/math"
 import {EntitiesReadonly} from "@benev/archimedes"
 import {AssetContainer} from "@babylonjs/core/assetContainer.js"
 
-import {Venue} from "./parts/venue.js"
+import {Venue} from "../../lib/buddy/venue.js"
 import {Timing} from "../../lib/tools/timing.js"
 import {PlayerId} from "../../lib/game2/types.js"
 import {GameComponents} from "../../lib/game2/parts/components.js"
+import { Cam } from "./parts/cam.js"
 
 export class Realm {
 	// artist
 	// graphics = new Graphics()
+	cam
 	timing = new Timing(10, 240)
 	readonly focal = new Vec2()
 
@@ -20,6 +22,10 @@ export class Realm {
 			public venue: Venue,
 			public assets: AssetContainer,
 		) {
+
+		this.cam = new Cam(venue.scene)
+		venue.scene.activeCamera = this.cam.camera
+
 		// const props = makePropMap(assets)
 		// validateProps(props, art)
 		// this.artist = new Artist(this.graphics, props)
