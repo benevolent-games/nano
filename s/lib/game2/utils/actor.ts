@@ -2,7 +2,7 @@
 import {guarantee} from "@e280/stz"
 import {makeActionsResolver} from "@benev/tact"
 
-import {PlayerId} from "./players.js"
+import {PlayerId} from "../types.js"
 import {bindings} from "../parts/bindings.js"
 
 export class Actor {

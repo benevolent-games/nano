@@ -6,11 +6,13 @@ import {Editor} from "./views/editor/view.js"
 import {EditorMenu} from "./views/editor-menu/view.js"
 
 export default async(basis: Basis) => {
-	console.log("editor fn")
+	const {deck} = basis.deckSetup
+
 	basis.benevMenu.render(html`
 		${basis.deckSetup.renderDesk()}
 		${EditorMenu()}
 	`)
-	dom.register({NanoEditor: Editor()}, {soft: true})
+
+	dom.register({NanoEditor: Editor(deck)}, {soft: true})
 }
 

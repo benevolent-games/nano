@@ -6,17 +6,19 @@ import {Change, EntitiesReadonly, Id} from "@benev/archimedes"
 import {Phys} from "../utils/phys.js"
 import {consts} from "../../../consts.js"
 import {ActorMap} from "../utils/actor.js"
-import {Timing} from "../../tools/timing.js"
+import {Timing} from "../../../lib/tools/timing.js"
+import {Hologrid} from "../utils/hologrid.js"
 import {GameComponents} from "./components.js"
-import {Physics} from "../../physics/physics.js"
-import { IntentBucketMap } from "../utils/intent-bucket-map.js"
+import {Physics} from "../../../lib/physics/physics.js"
+import {IntentBucketMap} from "../../../client/views/play/parts/recruiter.js"
 
-export class GamePod {
+export class Pod {
 	timing = new Timing(consts.simulationHz.min, consts.simulationHz.max)
 	physics = new Physics()
 	physLattice = new Lattice<Phys>(new Vec2(8, 8))
 	targetLattice = new Lattice<Id>(new Vec2(8, 8))
 	actors = new ActorMap()
+	hologrid?: Hologrid
 	rand = new Rand(seed(1))
 
 	constructor(

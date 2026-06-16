@@ -1,4 +1,6 @@
 
+export type PlayerId = string
+
 export type Faction = (
 	| "neutral"
 	| "t1"

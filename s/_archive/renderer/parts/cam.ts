@@ -6,8 +6,8 @@ import {ArcRotateCamera} from "@babylonjs/core/Cameras/arcRotateCamera.js"
 
 import {resolveGridspace} from "../utils/resolve.js"
 import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
-import {GameComponents} from "../../../lib/game2/parts/components.js"
-import {defaultCamSettings} from "../../../lib/game2/utils/default-cam.js"
+import {GameComponents} from "../../game/parts/components.js"
+import {defaultCamSettings} from "../../game/utils/default-cam.js"
 
 type Settings = GameComponents["cam"]
 

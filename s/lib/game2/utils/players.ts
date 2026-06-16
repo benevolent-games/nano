@@ -1,7 +1,6 @@
 
 import {IntentBucket} from "@benev/tact"
-
-export type PlayerId = string
+import {PlayerId} from "../types.js"
 
 export class Player {
 	intents = new IntentBucket()

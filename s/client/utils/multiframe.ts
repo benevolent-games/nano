@@ -2,10 +2,10 @@
 import {EntitiesReadonly} from "@benev/archimedes"
 import {RMap, wait, Waiter} from "@e280/strata"
 
+import {Recruiter} from "./recruiter.js"
+import {PlayerId} from "../../lib/game2/types.js"
 import {Viewframe, makeViewframe} from "./viewframe.js"
-import {PlayerId} from "../../lib/game/utils/players.js"
-import {Recruiter} from "../views/play/parts/recruiter.js"
-import {GameComponents} from "../../lib/game/parts/components.js"
+import {GameComponents} from "../../lib/game2/parts/components.js"
 
 export class Multiframe {
 	#frames = new RMap<PlayerId, Waiter<Viewframe>>()

@@ -7,7 +7,7 @@ import {systems} from "./systems.js"
 import {GamePod} from "./parts/pod.js"
 import {consts} from "../../consts.js"
 import {GameComponents} from "./parts/components.js"
-import {IntentBucketMap} from "../../client/views/play/parts/recruiter.js"
+import { IntentBucketMap } from "./utils/intent-bucket-map.js"
 
 export class Game {
 	pod

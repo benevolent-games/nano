@@ -1,31 +1,33 @@
 
 import {asBindings, Profile} from "@benev/tact"
-import {bindings} from "../../lib/game/parts/bindings.js"
+import {bindings} from "../../lib/game2/parts/bindings.js"
 
 export const stockProfiles = {
 	standard: {label: "📜standard", bindings},
 
 	xinput: {label: "🎮xinput", bindings: asBindings<typeof bindings>({
 		meta: {
-			menu: ["or", "gamepad.button.10", "KeyT", "Esc", "Tab"],
+			menu: ["or", "gamepad.button.10", "KeyT", "Esc"],
+			edtoggle: "Tab",
 		},
+
 		spectator: {
 			spawn: "gamepad.button.any",
 		},
-		mech: {
+
+		robot: {
+			use: "gamepad.button.3",
 			action1: "gamepad.axis.7.neg",
 			action2: "gamepad.axis.8.neg",
 			action3: "gamepad.button.6",
 			action4: "gamepad.button.5",
-			sprint: ["or", "gamepad.button.11", "gamepad.button.4"],
-			pickup: ["or", "gamepad.button.1", "gamepad.button.12"],
-			drop: "gamepad.button.2",
-			use: "gamepad.button.3",
-			unequip: "gamepad.button.4",
+
+			boost: ["or", "gamepad.button.11", "gamepad.button.4"],
 			move_up: "gamepad.axis.2.pos",
 			move_down: "gamepad.axis.2.neg",
 			move_left: "gamepad.axis.1.pos",
 			move_right: "gamepad.axis.1.neg",
+
 			look_up: "gamepad.axis.6.pos",
 			look_down: "gamepad.axis.6.neg",
 			look_left: "gamepad.axis.5.pos",
@@ -35,25 +37,27 @@ export const stockProfiles = {
 
 	micro: {label: "🦠micro", bindings: asBindings<typeof bindings>({
 		meta: {
-			menu: ["or", "gamepad.button.6", "KeyT", "Esc", "Tab"],
+			menu: ["or", "gamepad.button.6", "KeyT", "Esc"],
+			edtoggle: "Tab",
 		},
+
 		spectator: {
 			spawn: "gamepad.button.any",
 		},
-		mech: {
-			action1: "gamepad.button.20",
-			action2: "gamepad.button.3",
+
+		robot: {
+			use: "gamepad.button.3",
+			action1: "gamepad.axis.7.neg",
+			action2: "gamepad.axis.8.neg",
 			action3: "gamepad.button.6",
 			action4: "gamepad.button.5",
-			sprint: "gamepad.button.1",
-			pickup: "gamepad.button.1",
-			drop: "gamepad.button.2",
-			use: "gamepad.button.4",
-			unequip: "gamepad.button.19",
+
+			boost: ["or", "gamepad.button.11", "gamepad.button.4"],
 			move_up: "gamepad.axis.2.pos",
 			move_down: "gamepad.axis.2.neg",
 			move_left: "gamepad.axis.1.pos",
 			move_right: "gamepad.axis.1.neg",
+
 			look_up: "null",
 			look_down: "null",
 			look_left: "null",
