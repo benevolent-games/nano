@@ -10,6 +10,10 @@ export function resolvePosition({x, y, z = 0}: Xy & {z?: number}) {
 	return new Vec3(-x, z, -y)
 }
 
+export function unresolvePosition({x, y, z}: Xyz) {
+	return new Vec3(-x, -z, y)
+}
+
 export function resolveScale({x, y, z}: Xyz) {
 	return new Vec3(x, z, y)
 }

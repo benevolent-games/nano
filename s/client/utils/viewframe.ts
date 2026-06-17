@@ -16,7 +16,7 @@ export async function makeViewframe(entities: EntitiesReadonly<GameComponents>, 
 	const venue = await makeVenue(canvas)
 	const assets = await LoadAssetContainerAsync(consts.assets.art, venue.scene)
 
-	const realm = new Realm(entities, playerId, venue, assets)
+	const realm = new Realm(canvas, entities, playerId, venue, assets)
 	const render = setupRender(realm)
 
 	return {canvas, realm, render}

@@ -1,7 +1,7 @@
 
 import {Realm} from "../realm.js"
 
-export const update_cam = (realm: Realm) => () => {
+export const cam_update = (realm: Realm) => () => {
 	for (const [_id, components] of realm.entities.select("controlledBy", "position", "cam")) {
 		if (components.controlledBy === realm.playerId) {
 			realm.focal.from(components.position)

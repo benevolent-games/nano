@@ -32,6 +32,6 @@ export async function makeVenue(canvas: AnyCanvas) {
 	const light = new HemisphericLight(makeId(), new Vector3(0, 1, 0), scene)
 	light.intensity = 1.0
 
-	return {engine, scene, light}
+	return {canvas, engine, scene, light}
 }
 
