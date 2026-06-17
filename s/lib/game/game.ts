@@ -4,7 +4,7 @@ import {Rand, seed} from "@e280/stz"
 import {applyDelta, Change, Entities, Id} from "@benev/archimedes"
 
 import {systems} from "./systems.js"
-import {Pod} from "./parts/graph.js"
+import {Pod} from "./parts/pod.js"
 import {consts} from "../../consts.js"
 import {GameComponents} from "./parts/components.js"
 import {IntentBucketMap} from "./utils/intent-bucket-map.js"

@@ -1,6 +1,6 @@
 
 import {consolidate} from "@benev/archimedes"
-import {Pod} from "./parts/graph.js"
+import {Pod} from "./parts/pod.js"
 import {timing_update} from "./systems/timing_update.js"
 
 export const systems = (pod: Pod) => consolidate(pod, {

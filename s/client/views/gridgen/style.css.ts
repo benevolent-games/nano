@@ -12,7 +12,7 @@ export default css`
 
 header {
 	display: flex;
-	gap: var(--space);
+	gap: var(--benev-space);
 	align-items: center;
 	flex-wrap: wrap;
 }

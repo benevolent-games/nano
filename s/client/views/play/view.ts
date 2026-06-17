@@ -9,12 +9,12 @@ import styleCss from "./style.css.js"
 import {consts} from "../../../consts.js"
 import {themeCss} from "../../utils/theme.js"
 import {Game} from "../../../lib/game/game.js"
+import {Recruiter} from "../../utils/recruiter.js"
 import {Multiframe} from "../../utils/multiframe.js"
 import {Perspective} from "../perspective/perspective.js"
-import {Recruiter} from "../../utils/recruiter.js"
-import { IntentBucketMap } from "../../../lib/game/utils/intent-bucket-map.js"
+import {IntentBucketMap} from "../../../lib/game/utils/intent-bucket-map.js"
 
-export const Editor = (deck: Deck) => shadowElement(() => {
+export const Play = (deck: Deck, init: (game: Game) => () => void) => shadowElement(() => {
 	useCss(themeCss, styleCss)
 
 	// teeing off the game intent buckets vs meta intent buckets which are sampled at differing rates
@@ -25,6 +25,7 @@ export const Editor = (deck: Deck) => shadowElement(() => {
 	useMount(() => recruiter.samplingLoop())
 
 	const game = useOnce(() => new Game(gamePlayers).init())
+	useMount(() => init(game))
 
 	useMount(() => cycle(async() => {
 		// TODO probably inject intents into the game simulation from here (not from a system fn which is inside-out)
