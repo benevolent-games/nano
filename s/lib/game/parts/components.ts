@@ -4,7 +4,7 @@ import {XyArray} from "@benev/math"
 import {AsComponents, Id} from "@benev/archimedes"
 
 import {Equipment} from "./ctypes.js"
-import {artManifest} from "../art.js"
+import {manifest} from "../art.js"
 
 export type GameComponents = AsComponents<{
 
@@ -12,7 +12,7 @@ export type GameComponents = AsComponents<{
 	debug: true
 
 	/** which 3d model to display */
-	art: keyof typeof artManifest
+	art: keyof typeof manifest
 
 	/** total scaling of the art */
 	scale: number

@@ -7,11 +7,13 @@ export type Faction = (
 	| "t2"
 )
 
+export type Variant = "raw" | Faction
+export type Variants = Partial<Record<Variant, number>>
+
 export class Art {
 	constructor(
 		public name: string,
-		public faction: Faction | null,
-		public preload: number,
+		public variants: Variants,
 	) {}
 }
 
