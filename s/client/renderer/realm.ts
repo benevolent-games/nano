@@ -7,6 +7,7 @@ import {Cam} from "./parts/cam.js"
 import {Venue} from "./parts/venue.js"
 import {Timing} from "../../lib/tools/timing.js"
 import {PlayerId} from "../../lib/game/types.js"
+import {analyze} from "../../lib/buddy2/analyze.js"
 import {GameComponents} from "../../lib/game/parts/components.js"
 import {addToScene, AssetContainer, disposeScene} from "@babylonjs/lite"
 
@@ -30,6 +31,9 @@ export class Realm {
 			public venue: Venue,
 			public assets: AssetContainer,
 		) {
+
+		const analysis = analyze(assets)
+		console.log(analysis)
 
 		this.cam = new Cam()
 		addToScene(venue.scene, this.cam.camera)
