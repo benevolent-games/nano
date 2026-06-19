@@ -20,10 +20,12 @@ const deckSetup = setupDeck()
 benevMenu.render(deckSetup.renderDesk())
 
 const $hash = hashSignal()
-const artGlb = new Preloader(consts.assets.art)
 const loading = () => "loading..."
 const getBasis = async() => (<Basis>{
-	artGlbUrl: await artGlb.loadObjectUrl(),
+	// TODO reconsider loading strategy when this is fixed
+	// https://github.com/BabylonJS/Babylon-Lite/issues/260
+	artGlbUrl: consts.assets.art,
+
 	benevMenu,
 	benevHeader,
 	deckSetup,
@@ -51,7 +53,7 @@ effect(() => {
 				benevHeader.render(null)
 				const [basis, mod] = await Promise.all([
 					getBasis(),
-					import(new URL("./entry-play.bundle.min.js", import.meta.url).href),
+					import("./register-play.js"),
 				])
 				await mod.default(basis)
 				return html`<nano-play></nano-play>`
@@ -62,8 +64,9 @@ effect(() => {
 				benevHeader.render(null)
 				const [basis, mod] = await Promise.all([
 					getBasis(),
-					import(new URL("./entry-editor.bundle.min.js", import.meta.url).href),
+					import("./register-editor.js"),
 				])
+				console.log(basis.artGlbUrl)
 				await mod.default(basis)
 				return html`<nano-editor></nano-editor>`
 			})

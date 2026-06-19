@@ -1,10 +1,10 @@
 
 import {html} from "lit"
-import {Deck} from "@benev/tact"
 import {effect} from "@e280/strata"
 import {cycle, nap} from "@e280/stz"
 import {shadowElement, spinner, useCss, useMount, useOnce} from "@e280/sly"
 
+import {Basis} from "../../types.js"
 import styleCss from "./style.css.js"
 import {consts} from "../../../consts.js"
 import {themeCss} from "../../utils/theme.js"
@@ -14,8 +14,10 @@ import {Multiframe} from "../../utils/multiframe.js"
 import {Perspective} from "../perspective/perspective.js"
 import {IntentBucketMap} from "../../../lib/game/utils/intent-bucket-map.js"
 
-export const Play = (deck: Deck, init: (game: Game) => () => void) => shadowElement(() => {
+export const Play = (basis: Basis, init: (game: Game) => () => void) => shadowElement(() => {
 	useCss(themeCss, styleCss)
+
+	const {deck} = basis.deckSetup
 
 	// teeing off the game intent buckets vs meta intent buckets which are sampled at differing rates
 	const gamePlayers = useOnce(() => new IntentBucketMap())
@@ -33,7 +35,7 @@ export const Play = (deck: Deck, init: (game: Game) => () => void) => shadowElem
 		await nap(1000 / consts.simulationHz.max)
 	}))
 
-	const multiframe = useOnce(() => new Multiframe(game.entities.readonly))
+	const multiframe = useOnce(() => new Multiframe(basis, game.entities.readonly))
 	useMount(() => effect(() => multiframe.sync(recruiter)))
 
 	return html`
