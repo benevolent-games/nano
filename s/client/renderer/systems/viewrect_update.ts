@@ -15,8 +15,10 @@ export const viewrect_update = (realm: Realm) => () => {
 	const {camera} = realm.cam
 	const {viewrect} = realm
 
+	const aspectRatio = realm.canvas.width / realm.canvas.height
+
 	const gridspaceCorners = corners
-		.map(v => viewportToGridspace(camera, v))
+		.map(v => viewportToGridspace(camera, aspectRatio, v))
 		.filter(is.happy)
 
 	viewrect.min.x = Math.min(...gridspaceCorners.map(v => v.x))

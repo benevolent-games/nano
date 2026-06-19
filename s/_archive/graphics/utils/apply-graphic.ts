@@ -3,7 +3,7 @@ import {Xyz, Xyzw} from "@benev/math"
 import {Quaternion} from "@babylonjs/core/Maths/math.js"
 
 import {Graphic} from "../graphic.js"
-import {Prop} from "../../buddy/buddy.js"
+import {Prop} from "../../../lib/buddy/buddy.js"
 
 export function applyGraphic(graphic: Graphic, prop: Prop) {
 	if (prop.isEnabled() !== graphic.visible)

@@ -1,6 +1,8 @@
 
-import {AnyCanvas} from "./types.js"
+import {AnyCanvas} from "../../../lib/buddy2/types.js"
 import {addToScene, createEngine, createHemisphericLight, createSceneContext} from "@babylonjs/lite"
+
+export type Venue = Awaited<ReturnType<typeof makeVenue>>
 
 export async function makeVenue(canvas: AnyCanvas) {
 	const engine = await createEngine(canvas)

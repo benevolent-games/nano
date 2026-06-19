@@ -6,8 +6,10 @@ export const cursor_update = (realm: Realm) => () => {
 	const {camera} = realm.cam
 	const {cursorRaw, cursor} = realm
 
+	const aspectRatio = realm.canvas.width / realm.canvas.height
+
 	cursor.set(
-		viewportToGridspace(camera, cursorRaw)
+		viewportToGridspace(camera, aspectRatio, cursorRaw)
 			?? cursor
 	)
 }

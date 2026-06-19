@@ -3,8 +3,8 @@ import {Vec2} from "@benev/math"
 import {debounce} from "@e280/stz"
 import {Signal} from "@e280/strata"
 import {useEffect, useSignal} from "@e280/sly"
-import {consts} from "../../../../consts.js"
-import {generateGridworld} from "../../../../lib/gridworld/generate.js"
+import {consts} from "../../../consts.js"
+import {generateGridworld} from "../../gridworld/generate.js"
 
 export function useGridworld() {
 	const $seed: Signal<number> = useSignal(consts.map.seed)

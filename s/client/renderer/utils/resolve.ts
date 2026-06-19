@@ -1,8 +1,7 @@
 
 import {degrees, Quat, Vec3, Xy, Xyz} from "@benev/math"
-import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 
-export function resolveGridspace({x, y}: Gridspace, z = 0) {
+export function resolveGridspace({x, y}: Xy, z = 0) {
 	return resolvePosition({x, y, z})
 }
 

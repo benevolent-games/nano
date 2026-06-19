@@ -4,7 +4,7 @@ import {Art} from "./art.js"
 import {Graphic} from "./graphic.js"
 import {Pool} from "./utils/pool.js"
 import {Graphics} from "./graphics.js"
-import {instantiate, Prop} from "../buddy/buddy.js"
+import {instantiate, Prop} from "../../lib/buddy/buddy.js"
 import {applyGraphic} from "./utils/apply-graphic.js"
 
 /** responsible for rendering graphics with efficient instance pooling. */

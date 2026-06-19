@@ -1,6 +1,4 @@
 
-import "./renderer/babylon-side-effects.js"
-
 import {dom} from "@e280/sly"
 import {Rand, seed} from "@e280/stz"
 

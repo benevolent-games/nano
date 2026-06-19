@@ -1,20 +1,18 @@
 
-import {map, Vec2, Vec3, Xy} from "@benev/math"
-import {Vector3} from "@babylonjs/core/Maths/math.vector.js"
-import {Camera} from "@babylonjs/core/Cameras/camera.pure.js"
 import {unresolvePosition} from "./resolve.js"
+import {lerp, Mat4, Mat4Array, Vec2, Vec3, Xy} from "@benev/math"
+import {Camera, getViewProjectionMatrix, mat4Invert} from "@babylonjs/lite"
 
-export function viewportToGridspace(camera: Camera, {x, y}: Xy) {
-	const ivp = camera
-		.getViewMatrix()
-		.multiply(camera.getProjectionMatrix())
-		.invert()
+export function viewportToGridspace(camera: Camera, aspectRatio: number, {x, y}: Xy) {
+	const ivp = new Mat4(
+		mat4Invert(getViewProjectionMatrix(camera, aspectRatio)) as Mat4Array
+	)
 
-	const nx = map(x, -1, 1)
-	const ny = map(y, 1, -1)
+	const nx = lerp(x, -1, 1)
+	const ny = lerp(y, 1, -1)
 
-	const near = Vec3.from(Vector3.TransformCoordinates(new Vector3(nx, ny, 0), ivp))
-	const far = Vec3.from(Vector3.TransformCoordinates(new Vector3(nx, ny, 1), ivp))
+	const near = ivp.transformPoint(new Vec3(nx, ny, 0))
+	const far = ivp.transformPoint(new Vec3(nx, ny, 1))
 
 	const dir = far.sub(near).normalize()
 	if (Math.abs(dir.y) < 1e-5)

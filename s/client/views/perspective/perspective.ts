@@ -1,7 +1,7 @@
 
 import {html} from "lit"
+import {loadGltf, renderFrame} from "@babylonjs/lite"
 import {light, loot, useMount, useOnce, useSignal} from "@e280/sly"
-import {LoadAssetContainerAsync} from "@babylonjs/core/Loading/sceneLoader.js"
 
 import {rafloop} from "../../utils/rafloop.js"
 import {Viewframe} from "../../utils/viewframe.js"
@@ -28,7 +28,7 @@ export const Perspective = light(({canvas, realm, render}: Viewframe) => {
 		$ren(performance.now() - renStart)
 
 		const babStart = performance.now()
-		realm.venue.scene.render()
+		renderFrame(realm.venue.engine, 1000 / 60)
 		$bab(performance.now() - babStart)
 
 		$all(performance.now() - start)
@@ -38,8 +38,14 @@ export const Perspective = light(({canvas, realm, render}: Viewframe) => {
 		predicate: loot.hasFiles,
 		acceptDrop: async event => {
 			const [file] = loot.files(event)
-			const assets = await LoadAssetContainerAsync(file, realm.venue.scene, {pluginExtension: ".glb"})
-			realm.replaceAssets(assets)
+			const url = URL.createObjectURL(file)
+			try {
+				const assets = await loadGltf(realm.venue.engine, url)
+				realm.replaceAssets(assets)
+			}
+			finally {
+				URL.revokeObjectURL(url)
+			}
 		},
 	}))
 

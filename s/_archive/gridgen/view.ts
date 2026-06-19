@@ -3,10 +3,10 @@ import {html} from "lit"
 import {Signal} from "@e280/strata"
 import {shadow, useCss, useName, useEffect, useSignal, useOnce} from "@e280/sly"
 import styleCss from "./style.css.js"
-import {themeCss} from "../../utils/theme.js"
+import {themeCss} from "../../client/utils/theme.js"
 import {useGridworld} from "./parts/use-gridworld.js"
 import {renderGridworld} from "./parts/render-gridworld.js"
-import {useResizeObserver} from "../../utils/use-resize-observer.js"
+import {useResizeObserver} from "../../client/utils/use-resize-observer.js"
 
 export const Gridgen = shadow(() => {
 	useName("gridgen")

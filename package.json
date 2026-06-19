@@ -21,9 +21,7 @@
 		"classic-level@3.0.0": true
 	},
 	"dependencies": {
-		"@babylonjs/core": "^9.12.1",
 		"@babylonjs/lite": "^1.0.1",
-		"@babylonjs/loaders": "^9.12.1",
 		"@benev/archimedes": "^0.1.0-7",
 		"@benev/math": "^0.3.4",
 		"@benev/tact": "^0.2.0",
@@ -37,7 +35,7 @@
 		"@e280/hottie": "^0.1.1",
 		"@e280/octo": "^0.1.1",
 		"@e280/science": "^0.1.11",
-		"@e280/scute": "^0.4.0",
+		"@e280/scute": "^0.4.1",
 		"typescript": "^6.0.3"
 	},
 	"author": "Chase Moskal <chasemoskal@gmail.com>",

@@ -1,11 +1,8 @@
 
-import {degrees, Scalar} from "@benev/math"
-import {Scene} from "@babylonjs/core/scene.js"
-import {Vector3} from "@babylonjs/core/Maths/math.js"
-import {ArcRotateCamera} from "@babylonjs/core/Cameras/arcRotateCamera.js"
+import {degrees, Scalar, Vec2} from "@benev/math"
+import {createArcRotateCamera} from "@babylonjs/lite"
 
 import {resolveGridspace} from "../utils/resolve.js"
-import {Gridspace} from "../../../lib/gridworld/utils/gridspace.js"
 import {GameComponents} from "../../../lib/game/parts/components.js"
 import {defaultCamSettings} from "../../../lib/game/utils/default-cam.js"
 
@@ -17,21 +14,19 @@ export class Cam {
 	#anchorHeight = 0.5
 
 	#state = {
-		focal: new Gridspace(),
+		focal: new Vec2(),
 		zoom: new Scalar(),
 		tilt: new Scalar(),
 		swivel: new Scalar(),
 		fov: new Scalar(),
 	}
 
-	constructor(scene: Scene, settings = defaultCamSettings()) {
-		this.#camera = new ArcRotateCamera(
-			"camera",
+	constructor(settings = defaultCamSettings()) {
+		this.#camera = createArcRotateCamera(
 			this.#swivelOffset + settings.swivel, // swivel
 			settings.tilt, // verticality
 			settings.zoom,
-			new Vector3(...resolveGridspace(new Gridspace().from(settings.focal)), this.#anchorHeight),
-			scene,
+			resolveGridspace(Vec2.from(settings.focal), this.#anchorHeight),
 		)
 		this.#camera.fov = settings.fov
 	}
@@ -45,13 +40,13 @@ export class Cam {
 		const c = this.#camera
 		const state = this.#state
 
-		state.focal.lerp(new Gridspace().from(settings.focal), lerp)
+		state.focal.lerp(Vec2.from(settings.focal), lerp)
 		state.zoom.lerp(settings.zoom, lerp)
 		state.tilt.lerp(settings.tilt, lerp)
 		state.swivel.lerp(settings.swivel, lerp)
 		state.fov.lerp(settings.fov, lerp)
 
-		c.target.copyFrom(new Vector3(...resolveGridspace(state.focal, this.#anchorHeight)))
+		c.target = resolveGridspace(state.focal, this.#anchorHeight)
 		c.alpha = this.#swivelOffset + state.swivel.x
 		c.beta = state.tilt.x
 		c.radius = state.zoom.x

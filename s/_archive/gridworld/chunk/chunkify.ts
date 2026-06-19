@@ -3,7 +3,7 @@ import {Vec2} from "@benev/math"
 import {count2d, hex} from "@e280/stz"
 
 import {Gridworld} from "../types.js"
-import {index2d} from "../../tools/index2d.js"
+import {index2d} from "../../../lib/tools/index2d.js"
 import {gridChunkSize} from "../utils/grid-chunk-size.js"
 
 export function* chunkify(gridworld: Gridworld) {

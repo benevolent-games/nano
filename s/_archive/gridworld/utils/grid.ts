@@ -1,6 +1,6 @@
 import {Vec2} from "@benev/math"
 import {count2d} from "@e280/stz"
-import {index2d} from "../../tools/index2d.js"
+import {index2d} from "../../../lib/tools/index2d.js"
 import {Gridworld, TileKind} from "../types.js"
 
 export const initGridworld = (extent: Vec2): Gridworld => ({
