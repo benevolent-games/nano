@@ -2,14 +2,14 @@
 import {ev} from "@e280/stz"
 import {Rect, Vec2} from "@benev/math"
 import {EntitiesReadonly} from "@benev/archimedes"
+import {addToScene, AssetContainer, disposeScene} from "@babylonjs/lite"
 
 import {Cam} from "./parts/cam.js"
 import {Venue} from "./parts/venue.js"
-import {Timing} from "../../lib/tools/timing.js"
-import {PlayerId} from "../../lib/game/types.js"
-import {analyze} from "../../lib/buddy/analyze.js"
-import {GameComponents} from "../../lib/game/parts/components.js"
-import {addToScene, AssetContainer, disposeScene} from "@babylonjs/lite"
+import {Timing} from "../tools/timing.js"
+import {PlayerId} from "../game/types.js"
+import {AssetDepot} from "../buddy/asset-depot.js"
+import {GameComponents} from "../game/parts/components.js"
 
 export class Realm {
 	// artist
@@ -32,8 +32,8 @@ export class Realm {
 			public assets: AssetContainer,
 		) {
 
-		const analysis = analyze(assets)
-		console.log(analysis)
+		const depot = new AssetDepot(assets)
+		console.log(depot)
 
 		this.cam = new Cam()
 		addToScene(venue.scene, this.cam.camera)

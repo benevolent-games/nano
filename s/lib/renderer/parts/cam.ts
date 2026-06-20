@@ -3,8 +3,8 @@ import {degrees, Scalar, Vec2} from "@benev/math"
 import {createArcRotateCamera} from "@babylonjs/lite"
 
 import {resolveGridspace} from "../utils/resolve.js"
-import {GameComponents} from "../../../lib/game/parts/components.js"
-import {defaultCamSettings} from "../../../lib/game/utils/default-cam.js"
+import {GameComponents} from "../../game/parts/components.js"
+import {defaultCamSettings} from "../../game/utils/default-cam.js"
 
 type Settings = GameComponents["cam"]
 

@@ -3,10 +3,10 @@ import {loadGltf} from "@babylonjs/lite"
 import {EntitiesReadonly} from "@benev/archimedes"
 
 import {Basis} from "../types.js"
-import {Realm} from "../renderer/realm.js"
+import {Realm} from "../../lib/renderer/realm.js"
 import {PlayerId} from "../../lib/game/types.js"
-import {setupRender} from "../renderer/render.js"
-import {makeVenue} from "../renderer/parts/venue.js"
+import {setupRender} from "../../lib/renderer/render.js"
+import {makeVenue} from "../../lib/renderer/parts/venue.js"
 import {GameComponents} from "../../lib/game/parts/components.js"
 
 export type Viewframe = Awaited<ReturnType<typeof makeViewframe>>
