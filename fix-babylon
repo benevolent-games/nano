@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# delete all babylonjs index files because they are bad
-find node_modules/@babylonjs/core -type f \( -name index.js -o -name index.d.ts \) | xargs rm -f
-
