@@ -11,7 +11,7 @@
 	],
 	"scripts": {
 		"link": "npm link ../tact ../math ../archimedes ../web",
-		"build": "bash fix-babylon && rm -rf x && mkdir x x/client && ln -s ../../temp x/client/assets && tsc && scute --in=s/client --out=x/client --splitting=yes -v",
+		"build": "rm -rf x && mkdir x x/client && ln -s ../../temp x/client/assets && tsc && scute --in=s/client --out=x/client --splitting=yes -v",
 		"dev": "octo 'tsc -w' 'node --watch x/test.js' 'scute --in=s/client --out=x/client --splitting=yes -vw' 'hottie x/client --debounce=700'",
 		"test": "node x/test.js",
 		"count": "find s -path '*/_archive' -prune -o -name '*.ts' -exec wc -l {} +"
