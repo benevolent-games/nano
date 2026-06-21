@@ -2,26 +2,28 @@
 import {dedupe, got} from "@e280/stz"
 import {AssetContainer} from "@babylonjs/lite"
 import {Prop} from "./types.js"
-import {flatten} from "./internal/flatten.js"
-import {isLight, isMesh, isTransform} from "./discriminate.js"
+import {isLight, isMesh, isTransform} from "./is.js"
+import {flattenEntities} from "./internal/flatten-entities.js"
 
+/** comfy access to the stuff inside an asset container */
 export class AssetDepot {
 	flat
 	lights
 	meshes
 	transforms
+	nodes
 	materials
 	props
 
 	constructor(public assets: AssetContainer) {
-		this.flat = flatten(assets.entities)
+		this.flat = flattenEntities(assets.entities)
 		this.lights = this.flat.filter(isLight)
 		this.meshes = this.flat.filter(isMesh)
 		this.transforms = this.flat.filter(isTransform)
+		this.nodes = [...this.transforms, ...this.meshes]
 		this.materials = dedupe(this.meshes.map(m => m.material))
 		this.props = new Map<string, Prop>(
-			[...this.transforms, ...this.meshes]
-				.map(n => [n.name, n])
+			this.nodes.map(n => [n.name, n])
 		)
 	}
 

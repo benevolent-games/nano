@@ -1,5 +1,5 @@
 
-import {Prop} from "./types.js"
+import {Prop} from "../types.js"
 
 export class Art<Context> {
 	constructor(

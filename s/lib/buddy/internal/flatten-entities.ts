@@ -1,7 +1,7 @@
 
 import {Entity} from "../types.js"
 
-export function flatten(entities: Entity[]) {
+export function flattenEntities(entities: Entity[]) {
 	const flat: Entity[] = []
 
 	function crawl(e: Entity) {

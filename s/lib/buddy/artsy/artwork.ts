@@ -1,6 +1,6 @@
 
 import {Art} from "./art.js"
-import {Prop} from "./types.js"
+import {Prop} from "../types.js"
 
 export type NewArt<Context> = (capacity: number, resolve: (context: Context) => Prop) => Art<Context>
 

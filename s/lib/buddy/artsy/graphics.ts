@@ -1,10 +1,10 @@
 
 import {got, guarantee} from "@e280/stz"
-import {clamp, Mat4, matrix4Compose, matrix4ComposeInPlace, Quat, Vec3} from "@benev/math"
+import {Mat4, matrix4ComposeInPlace, Quat, Vec3} from "@benev/math"
 import {createHierarchyInstancePool, HierarchyInstancePool, setHierarchyInstanceCount, setHierarchyInstanceMatrix} from "@babylonjs/lite"
 
 import {Art} from "./art.js"
-import {Prop} from "./types.js"
+import {Prop} from "../types.js"
 import {Artwork} from "./artwork.js"
 
 export class Graphics {

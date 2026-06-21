@@ -8,7 +8,7 @@ import {Cam} from "./parts/cam.js"
 import {Venue} from "./parts/venue.js"
 import {Timing} from "../tools/timing.js"
 import {PlayerId} from "../game/types.js"
-import {AssetDepot} from "../buddy/asset-depot.js"
+import {AssetDepot} from "../buddy/depot.js"
 import {GameComponents} from "../game/parts/components.js"
 
 export class Realm {

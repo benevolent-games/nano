@@ -7,7 +7,7 @@ export function isLight(entity: Entity): entity is Light {
 }
 
 export function isMesh(entity: Entity): entity is Mesh {
-	return !isLight(entity) && ("_gpu" in entity)
+	return !isLight(entity) && ("_cpuPositions" in entity)
 }
 
 export function isTransform(entity: Entity): entity is TransformNode {
