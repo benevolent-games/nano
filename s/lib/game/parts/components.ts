@@ -1,6 +1,6 @@
 
 import {Intent} from "@benev/tact"
-import {XyArray} from "@benev/math"
+import {Tuple2} from "@benev/math"
 import {AsComponents, Id} from "@benev/archimedes"
 
 import {Equipment} from "./ctypes.js"
@@ -18,13 +18,13 @@ export type GameComponents = AsComponents<{
 	scale: number
 
 	/** centerpoint position in gridspace coordinates */
-	position: XyArray
+	position: Tuple2
 
 	/** rotation in radians where this entity is aiming/pointing */
 	rotation: number
 
 	/** rectangular extent */
-	size: XyArray
+	size: Tuple2
 
 	/** which player entity we're controlled by */
 	controlledBy: Id
@@ -34,8 +34,8 @@ export type GameComponents = AsComponents<{
 
 	/** how a user wants to move in the world */
 	wishMover: {
-		move: XyArray
-		aim: XyArray
+		move: Tuple2
+		aim: Tuple2
 		boost: boolean
 	}
 
@@ -52,7 +52,7 @@ export type GameComponents = AsComponents<{
 
 	/** camera settings */
 	cam: {
-		focal: XyArray
+		focal: Tuple2
 		zoom: number
 		tilt: number
 		swivel: number
@@ -61,7 +61,7 @@ export type GameComponents = AsComponents<{
 	}
 
 	/** actual movement right now */
-	velocity: XyArray
+	velocity: Tuple2
 
 	/** enabled if this entity can bump into things */
 	physical: boolean

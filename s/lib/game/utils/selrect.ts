@@ -1,8 +1,8 @@
 
-import {Rect, Vec2, XyArray} from "@benev/math"
+import {Rect, Tuple2, Vec2} from "@benev/math"
 
 export function selrect(components: {
-		position: XyArray,
+		position: Tuple2,
 		reach: number,
 		rotation: number,
 	}) {

@@ -1,5 +1,5 @@
 
-import {Scalar} from "@benev/math"
+import {clamp} from "@benev/math"
 
 export class Timing {
 	#tick = 0
@@ -21,7 +21,7 @@ export class Timing {
 	update() {
 		this.#tick++
 		const now = performance.now()
-		this.#delta = Scalar.clamp(now - this.#previous, this.#minDelta, this.#maxDelta)
+		this.#delta = clamp(now - this.#previous, this.#minDelta, this.#maxDelta)
 		this.#previous = now
 	}
 

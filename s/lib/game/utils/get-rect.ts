@@ -1,7 +1,7 @@
 
-import {Rect, Vec2, XyArray} from "@benev/math"
+import {Rect, Vec2, Tuple2} from "@benev/math"
 
-export function getRect(components: {position: XyArray, size: XyArray}) {
+export function getRect(components: {position: Tuple2, size: Tuple2}) {
 	return Rect.fromCenter(
 		Vec2.from(components.position),
 		Vec2.from(components.size),

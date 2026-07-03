@@ -1,5 +1,5 @@
 
-import {XyzArray} from "@benev/math"
+import {Tuple3} from "@benev/math"
 import {createMeshFromData, EngineContext, IWorldMatrixProvider, Mesh} from "@babylonjs/lite"
 import {superclone} from "../superclone.js"
 import {meshData} from "../utils/mesh-data.js"
@@ -37,8 +37,8 @@ export function supercloneMesh(
 
 	// clone various data
 	fresh.receiveShadows = mesh.receiveShadows
-	fresh.boundMin = mesh.boundMin?.slice() as XyzArray
-	fresh.boundMax = mesh.boundMax?.slice() as XyzArray
+	fresh.boundMin = mesh.boundMin?.slice() as Tuple3
+	fresh.boundMax = mesh.boundMax?.slice() as Tuple3
 	fresh.pickable = mesh.pickable
 	fresh.renderOrder = mesh.renderOrder
 	fresh.renderOnTop = mesh.renderOnTop

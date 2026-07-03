@@ -1,12 +1,10 @@
 
 import {unresolvePosition} from "./resolve.js"
-import {lerp, Mat4, Mat4Array, Vec2, Vec3, Xy} from "@benev/math"
-import {Camera, getViewProjectionMatrix, mat4Invert} from "@babylonjs/lite"
+import {lerp, Mat4, Vec2, Vec3, Xy} from "@benev/math"
+import {Camera, getViewProjectionMatrix} from "@babylonjs/lite"
 
 export function viewportToGridspace(camera: Camera, aspectRatio: number, {x, y}: Xy) {
-	const ivp = new Mat4(
-		mat4Invert(getViewProjectionMatrix(camera, aspectRatio)) as Mat4Array
-	)
+	const ivp = new Mat4(new Float32Array(getViewProjectionMatrix(camera, aspectRatio))).invert()
 
 	const nx = lerp(x, -1, 1)
 	const ny = lerp(y, 1, -1)

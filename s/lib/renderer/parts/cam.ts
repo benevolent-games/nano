@@ -1,5 +1,5 @@
 
-import {degrees, Scalar, Vec2} from "@benev/math"
+import {degrees, Vec2, lerp} from "@benev/math"
 import {createArcRotateCamera} from "@babylonjs/lite"
 
 import {resolveGridspace} from "../utils/resolve.js"
@@ -15,10 +15,10 @@ export class Cam {
 
 	#state = {
 		focal: new Vec2(),
-		zoom: new Scalar(),
-		tilt: new Scalar(),
-		swivel: new Scalar(),
-		fov: new Scalar(),
+		zoom: 0,
+		tilt: 0,
+		swivel: 0,
+		fov: 0,
 	}
 
 	constructor(settings = defaultCamSettings()) {
@@ -35,22 +35,21 @@ export class Cam {
 		return this.#camera
 	}
 
-	lerpTowards(settings: Settings) {
-		const {lerp} = settings
+	lerpTowards(target: Settings) {
 		const c = this.#camera
 		const state = this.#state
 
-		state.focal.lerp(Vec2.from(settings.focal), lerp)
-		state.zoom.lerp(settings.zoom, lerp)
-		state.tilt.lerp(settings.tilt, lerp)
-		state.swivel.lerp(settings.swivel, lerp)
-		state.fov.lerp(settings.fov, lerp)
+		state.focal.lerp(target.lerp, Vec2.from(target.focal))
+		state.zoom = lerp(target.lerp, state.zoom, target.zoom)
+		state.tilt = lerp(target.lerp, state.tilt, target.tilt)
+		state.swivel = lerp(target.lerp, state.swivel, target.swivel)
+		state.fov = lerp(target.lerp, state.fov, target.fov)
 
 		c.target = resolveGridspace(state.focal, this.#anchorHeight)
-		c.alpha = this.#swivelOffset + state.swivel.x
-		c.beta = state.tilt.x
-		c.radius = state.zoom.x
-		c.fov = state.fov.x
+		c.alpha = this.#swivelOffset + state.swivel
+		c.beta = state.tilt
+		c.radius = state.zoom
+		c.fov = state.fov
 	}
 }
 

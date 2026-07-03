@@ -6,7 +6,7 @@ export const cam_update = (realm: Realm) => () => {
 		if (components.controlledBy === realm.playerId) {
 			realm.focal.from(components.position)
 			realm.cam.lerpTowards({
-				focal: realm.focal.array(),
+				focal: realm.focal.tuple(),
 				fov: components.cam.fov,
 				swivel: components.cam.swivel,
 				tilt: components.cam.tilt,

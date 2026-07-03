@@ -1,6 +1,6 @@
 
 import {got, guarantee} from "@e280/stz"
-import {Mat4, matrix4ComposeInPlace, Quat, Vec3} from "@benev/math"
+import {compose, Mat4, Quat, Vec3} from "@benev/math"
 import {createHierarchyInstancePool, HierarchyInstancePool, setHierarchyInstanceCount, setHierarchyInstanceMatrix} from "@babylonjs/lite"
 
 import {Art} from "./art.js"
@@ -32,7 +32,7 @@ export class Instance {
 
 export class GraphicsReplicator<Context> {
 	#state = new Map<Art<Context>, {prop: Prop, pool: HierarchyInstancePool}>()
-	#matrix = Mat4.identityArray()
+	#matrix = new Mat4().tuple()
 
 	constructor(
 			public readonly context: Context,
@@ -60,7 +60,7 @@ export class GraphicsReplicator<Context> {
 					break
 				}
 
-				matrix4ComposeInPlace(this.#matrix, instance.position, instance.rotation, instance.scale)
+				compose(this.#matrix, instance.position, instance.rotation, instance.scale)
 				setHierarchyInstanceMatrix(pool, count, this.#matrix)
 				count++
 			}
@@ -71,7 +71,7 @@ export class GraphicsReplicator<Context> {
 	}
 
 	dispose() {
-		//??
+		// TODO ??
 	}
 }
 
