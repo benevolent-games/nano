@@ -1,20 +1,18 @@
 
 import {Art} from "./art.js"
-import {Prop} from "../types.js"
-
-export type NewArt<Context> = (capacity: number, resolve: (context: Context) => Prop) => Art<Context>
+import {ArtFn} from "./types.js"
 
 export class Artwork<Context, Manifest> {
 	static using<Context>() {
-		return <Manifest>(fn: (newArt: NewArt<Context>) => Manifest) =>
-			new Artwork<Context, Manifest>(fn)
+		return <Manifest>(manifestFn: (artFn: ArtFn<Context>) => Manifest) =>
+			new Artwork<Context, Manifest>(manifestFn)
 	}
 
 	readonly manifest
 	#set = new Set<Art<Context>>()
 
-	constructor(fn: (newArt: NewArt<Context>) => Manifest) {
-		this.manifest = fn((capacity, resolve) => {
+	constructor(manifestFn: (artFn: ArtFn<Context>) => Manifest) {
+		this.manifest = manifestFn((capacity, resolve) => {
 			const art = new Art(capacity, resolve)
 			this.#set.add(art)
 			return art
