@@ -4,15 +4,11 @@ import {Tuple2} from "@benev/math"
 import {AsComponents, Id} from "@benev/archimedes"
 
 import {Equipment} from "./ctypes.js"
-import {manifest} from "../art.js"
 
 export type GameComponents = AsComponents<{
 
 	/** render debug visualizers */
 	debug: true
-
-	/** which 3d model to display */
-	art: keyof typeof manifest
 
 	/** total scaling of the art */
 	scale: number
