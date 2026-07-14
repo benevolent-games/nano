@@ -28,19 +28,19 @@ export class AssetDepot {
 	}
 
 	prop(name: string) {
-		return got(this.props.get(name))
+		return got(this.props.get(name), `prop "${name}" not found`)
 	}
 
 	mesh(name: string) {
-		return got(this.meshes.find(n => n.name === name))
+		return got(this.meshes.find(n => n.name === name), `mesh "${name}" not found`)
 	}
 
 	transform(name: string) {
-		return got(this.transforms.find(n => n.name === name))
+		return got(this.transforms.find(n => n.name === name), `transform "${name}" not found`)
 	}
 
 	material(name: string) {
-		return got(this.materials.find(n => n.name === name))
+		return got(this.materials.find(n => n.name === name), `material "${name}" not found`)
 	}
 }
 

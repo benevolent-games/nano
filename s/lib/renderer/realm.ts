@@ -5,15 +5,18 @@ import {EntitiesReadonly} from "@benev/archimedes"
 import {addToScene, AssetContainer, disposeScene} from "@babylonjs/lite"
 
 import {Cam} from "./parts/cam.js"
+import {artwork} from "./artwork.js"
 import {Venue} from "./parts/venue.js"
 import {Timing} from "../tools/timing.js"
 import {PlayerId} from "../game/types.js"
 import {AssetDepot} from "../buddy/depot.js"
+import {Figures} from "../buddy/art/figures.js"
+import {Replicator} from "../buddy/replicator.js"
 import {GameComponents} from "../game/parts/components.js"
 
 export class Realm {
-	// artist
-	// graphics = new Graphics()
+	figures
+	replicator
 
 	cam
 	cursorRaw = new Vec2()
@@ -34,6 +37,9 @@ export class Realm {
 
 		const depot = new AssetDepot(assets)
 		console.log(depot)
+
+		this.figures = new Figures()
+		this.replicator = new Replicator(artwork, depot, this.figures)
 
 		this.cam = new Cam()
 		addToScene(venue.scene, this.cam.camera)

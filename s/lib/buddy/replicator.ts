@@ -30,22 +30,19 @@ export class Replicator {
 		for (const [art, figset] of this.figures.entries()) {
 			const {pool} = got(this.#state.get(art))
 
-			let count = 0
-			for (const figure of figset) {
-				if (!figure.visible) continue
+			const visible = [...figset]
+				.filter(figure => figure.visible)
+				.slice(0, art.population)
 
-				if (count >= art.population) {
-					console.warn("exceeded art capacity")
-					break
-				}
+			if (visible.length !== pool.count)
+				setHierarchyInstanceCount(pool, visible.length)
 
-				compose(this.#matrix, figure.position, figure.rotation, figure.scale)
-				setHierarchyInstanceMatrix(pool, count, this.#matrix)
-				count++
+			for (let index = 0; index < visible.length; index++) {
+				const figure = visible[index]
+				const {position, rotation, scale} = figure
+				compose(this.#matrix, position, rotation, scale)
+				setHierarchyInstanceMatrix(pool, index, this.#matrix)
 			}
-
-			if (pool.count !== count)
-				setHierarchyInstanceCount(pool, count)
 		}
 	}
 }
