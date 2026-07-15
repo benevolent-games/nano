@@ -17,7 +17,7 @@ export class Multiframe {
 	}
 
 	#addPlayer(playerId: string) {
-		const $viewframe = wait(makeViewframe(this.basis, this.entities, playerId))
+		const $viewframe = wait(makeViewframe(this.basis.artGlb, this.entities, playerId))
 		this.#frames.set(playerId, $viewframe)
 		return $viewframe
 	}

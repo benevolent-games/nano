@@ -38,14 +38,8 @@ export const Perspective = light(({canvas, realm, render}: Viewframe) => {
 		predicate: loot.hasFiles,
 		acceptDrop: async event => {
 			const [file] = loot.files(event)
-			const url = URL.createObjectURL(file)
-			try {
-				const assets = await loadGltf(realm.venue.engine, url)
-				realm.replaceAssets(assets)
-			}
-			finally {
-				URL.revokeObjectURL(url)
-			}
+			const assets = await loadGltf(realm.venue.engine, file)
+			realm.replaceAssets(assets)
 		},
 	}))
 

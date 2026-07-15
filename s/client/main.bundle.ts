@@ -1,11 +1,13 @@
 
 import {html} from "lit"
+import {once} from "@e280/stz"
 import {effect} from "@e280/strata"
 import {dom, hashSignal} from "@e280/sly"
 import {Loader, setupBenev} from "@benev/web"
+
 import {Basis} from "./types.js"
 import {consts} from "../consts.js"
-import {Preloader} from "./parts/preloader.js"
+import {load} from "./parts/load.js"
 import {setupDeck} from "./parts/setup-deck.js"
 import {RenderZone} from "./parts/render-zone.js"
 
@@ -21,22 +23,18 @@ benevMenu.render(deckSetup.renderDesk())
 
 const $hash = hashSignal()
 const loading = () => "loading..."
-const getBasis = async() => (<Basis>{
-	// TODO reconsider loading strategy when this is fixed
-	// https://github.com/BabylonJS/Babylon-Lite/issues/260
-	artGlbUrl: consts.assets.art,
-
+const getBasis = once(async() => (<Basis>{
+	deckSetup,
 	benevMenu,
 	benevHeader,
-	deckSetup,
-})
+	artGlb: await load(consts.assets.art),
+}))
 
 let count = 0
 
 effect(() => {
 	count++
 	const firstRun = (count === 1 && $hash() === "")
-
 	if (firstRun)
 		return
 
@@ -66,7 +64,6 @@ effect(() => {
 					getBasis(),
 					import("./register-editor.js"),
 				])
-				console.log(basis.artGlbUrl)
 				await mod.default(basis)
 				return html`<nano-editor></nano-editor>`
 			})
