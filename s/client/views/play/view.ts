@@ -22,8 +22,8 @@ export const Play = (basis: Basis, init: (game: Game) => () => void) => shadowEl
 	// teeing off the game intent buckets vs meta intent buckets which are sampled at differing rates
 	const gamePlayers = useOnce(() => new IntentBucketMap())
 	const metaPlayers = useOnce(() => new IntentBucketMap())
-	const recruiter = useOnce(() => new Recruiter(deck, [gamePlayers, metaPlayers]))
-	useMount(() => effect(() => recruiter.syncWithPorts()))
+	const recruiter = useOnce(() => new Recruiter([gamePlayers, metaPlayers]))
+	useMount(() => effect(() => recruiter.syncWithPorts(deck.ports)))
 	useMount(() => recruiter.samplingLoop())
 
 	const game = useOnce(() => new Game(gamePlayers).init())
@@ -36,11 +36,10 @@ export const Play = (basis: Basis, init: (game: Game) => () => void) => shadowEl
 	}))
 
 	const multiframe = useOnce(() => new Multiframe(basis, game.entities.readonly))
-	useMount(() => effect(() => multiframe.sync(recruiter)))
 
 	return html`
 		<div class=shell>
-			${multiframe.frames.map($frame => spinner($frame(), Perspective))}
+			${multiframe.sync(recruiter).map($frame => spinner($frame(), Perspective))}
 		</div>
 	`
 })

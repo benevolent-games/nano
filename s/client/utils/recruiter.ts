@@ -1,7 +1,7 @@
 
 import {RMap} from "@e280/strata"
 import {makeId} from "@benev/archimedes"
-import {Deck, IntentBucket, Port} from "@benev/tact"
+import {IntentBucket, Port} from "@benev/tact"
 import {cycle, guarantee, nap, need} from "@e280/stz"
 
 import {PlayerId} from "../../lib/game/types.js"
@@ -11,7 +11,7 @@ export class Recruiter {
 	#players = new RMap<Port, PlayerId>()
 	#ports = new RMap<PlayerId, Port>()
 
-	constructor(private deck: Deck, private intentBuckets: IntentBucketMap[]) {}
+	constructor(private intentBuckets: IntentBucketMap[]) {}
 
 	getPort(playerId: string) {
 		return need(this.#ports, playerId)
@@ -25,8 +25,8 @@ export class Recruiter {
 		return this.#ports.has(playerId)
 	}
 
-	syncWithPorts() {
-		for (const port of this.deck.ports) {
+	syncWithPorts(ports: Port[]) {
+		for (const port of ports) {
 			guarantee(this.#players, port, () => {
 				const id = makeId()
 				this.#ports.set(id, port)
@@ -37,7 +37,7 @@ export class Recruiter {
 		}
 
 		for (const [port, id] of this.#players.entries()) {
-			if (!this.deck.ports.includes(port)) {
+			if (!ports.includes(port)) {
 				this.#players.delete(port)
 				for (const map of this.intentBuckets)
 					map.delete(id)
