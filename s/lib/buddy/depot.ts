@@ -15,8 +15,8 @@ export class AssetDepot {
 	materials
 	props
 
-	constructor(public assets: AssetContainer) {
-		this.flat = flattenEntities(assets.entities)
+	constructor(public container: AssetContainer) {
+		this.flat = flattenEntities(container.entities)
 		this.lights = this.flat.filter(isLight)
 		this.meshes = this.flat.filter(isMesh)
 		this.transforms = this.flat.filter(isTransform)

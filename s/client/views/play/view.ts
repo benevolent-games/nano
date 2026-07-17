@@ -1,45 +1,44 @@
 
 import {html} from "lit"
-import {effect} from "@e280/strata"
-import {cycle, nap} from "@e280/stz"
-import {shadowElement, spinner, useCss, useMount, useOnce} from "@e280/sly"
+import {keyed} from "lit/directives/keyed.js"
+import {repeat} from "lit/directives/repeat.js"
+import {loot, shadowElement, useCss, useOnce, useSignal} from "@e280/sly"
 
-import {Basis} from "../../types.js"
 import styleCss from "./style.css.js"
-import {consts} from "../../../consts.js"
+import {useGame} from "./use/use-game.js"
 import {themeCss} from "../../utils/theme.js"
-import {Game} from "../../../lib/game/game.js"
-import {Recruiter} from "../../utils/recruiter.js"
-import {Multiframe} from "../../utils/multiframe.js"
-import {Perspective} from "../perspective/perspective.js"
-import {IntentBucketMap} from "../../../lib/game/utils/intent-bucket-map.js"
+import {Basis, GameInit} from "../../types.js"
+import { Viewport } from "./sub/viewport.js"
 
-export const Play = (basis: Basis, init: (game: Game) => () => void) => shadowElement(() => {
+export const Play = (basis: Basis, init: GameInit) => shadowElement(() => {
 	useCss(themeCss, styleCss)
 
 	const {deck} = basis.deckSetup
+	const {game, recruiter} = useGame(deck, init)
+	const $artGlb = useSignal(basis.artGlb)
 
-	// teeing off the game intent buckets vs meta intent buckets which are sampled at differing rates
-	const gamePlayers = useOnce(() => new IntentBucketMap())
-	const metaPlayers = useOnce(() => new IntentBucketMap())
-	const recruiter = useOnce(() => new Recruiter([gamePlayers, metaPlayers]))
-	useMount(() => effect(() => recruiter.syncWithPorts(deck.ports)))
-	useMount(() => recruiter.samplingLoop())
-
-	const game = useOnce(() => new Game(gamePlayers).init())
-	useMount(() => init(game))
-
-	useMount(() => cycle(async() => {
-		// TODO probably inject intents into the game simulation from here (not from a system fn which is inside-out)
-		game.simulate()
-		await nap(1000 / consts.simulationHz.max)
+	const drops = useOnce(() => new loot.Drops({
+		predicate: loot.hasFiles,
+		acceptDrop: async event => {
+			const [file] = loot.files(event)
+			const buffer = await file.arrayBuffer()
+			$artGlb(buffer)
+		},
 	}))
 
-	const multiframe = useOnce(() => new Multiframe(basis, game.entities.readonly))
-
 	return html`
-		<div class=shell>
-			${multiframe.sync(recruiter).map($frame => spinner($frame(), Perspective))}
+		<div
+			class=shell
+			?data-drop=${drops.$indicator()}
+			@dragover=${drops.dragover}
+			@dragleave=${drops.dragleave}
+			@drop=${drops.drop}>
+
+			${keyed($artGlb(), repeat(
+				recruiter.listPlayers(),
+				playerId => playerId,
+				playerId => Viewport($artGlb(), playerId, game.entities.readonly),
+			))}
 		</div>
 	`
 })

@@ -4,7 +4,6 @@ import {loadGltf, renderFrame} from "@babylonjs/lite"
 import {light, loot, useMount, useOnce, useSignal} from "@e280/sly"
 
 import {rafloop} from "../../utils/rafloop.js"
-import {Viewframe} from "../../utils/viewframe.js"
 import {useResizeObserver} from "../../utils/use-resize-observer.js"
 
 export const Perspective = light(({canvas, realm, render}: Viewframe) => {

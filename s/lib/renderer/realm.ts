@@ -1,15 +1,14 @@
 
 import {ev} from "@e280/stz"
 import {Rect, Vec2} from "@benev/math"
+import {addToScene} from "@babylonjs/lite"
 import {EntitiesReadonly} from "@benev/archimedes"
-import {addToScene, AssetContainer, disposeScene} from "@babylonjs/lite"
 
 import {Cam} from "./parts/cam.js"
 import {artwork} from "./artwork.js"
 import {Venue} from "./parts/venue.js"
 import {Timing} from "../tools/timing.js"
 import {PlayerId} from "../game/types.js"
-import {AssetDepot} from "../buddy/depot.js"
 import {Figures} from "../buddy/art/figures.js"
 import {Replicator} from "../buddy/replicator.js"
 import {GameComponents} from "../game/parts/components.js"
@@ -27,23 +26,20 @@ export class Realm {
 
 	#stopPointerListening
 
-	constructor(
-			public canvas: HTMLCanvasElement,
-			public entities: EntitiesReadonly<GameComponents>,
-			public playerId: PlayerId,
-			public venue: Venue,
-			public assets: AssetContainer,
-		) {
+	constructor(options: {
+			venue: Venue
+			entities: EntitiesReadonly<GameComponents>,
+			playerId: PlayerId,
+		}) {
 
-		const depot = new AssetDepot(assets)
-		console.log(depot)
+		const {canvas, scene, depot} = options.venue
 
 		this.figures = new Figures()
 		this.replicator = new Replicator(artwork, depot, this.figures)
 
 		this.cam = new Cam()
-		addToScene(venue.scene, this.cam.camera)
-		venue.scene.camera = this.cam.camera
+		addToScene(scene, this.cam.camera)
+		scene.camera = this.cam.camera
 
 		this.#stopPointerListening = ev(canvas, {
 			pointermove: ({clientX, clientY}: PointerEvent) => {
@@ -52,23 +48,9 @@ export class Realm {
 				this.cursorRaw.y = clientY / height
 			},
 		})
-
-		// const props = makePropMap(assets)
-		// validateProps(props, art)
-		// this.artist = new Artist(this.graphics, props)
-		// this.artist.preload(Object.values(art))
-	}
-
-	replaceAssets(assets: AssetContainer) {
-		// const props = makePropMap(assets)
-		// validateProps(props, art)
-		// this.artist.dispose()
-		// this.artist = new Artist(this.graphics, props)
-		// this.artist.preload(Object.values(art))
 	}
 
 	dispose() {
-		disposeScene(this.venue.scene)
 		this.#stopPointerListening()
 	}
 }

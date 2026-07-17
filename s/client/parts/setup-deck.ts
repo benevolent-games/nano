@@ -6,6 +6,8 @@ import {Controller, Deck, DeckState, Devices, GamepadDevice, KeyboardDevice, onP
 
 import {stockProfiles} from "./stock-profiles.js"
 
+export type GameDeck = ReturnType<typeof setupDeck>["deck"]
+
 export function setupDeck() {
 	const store = new LocalStore<DeckState>("tactDeck")
 	const deck = new Deck({store, stockProfiles})
