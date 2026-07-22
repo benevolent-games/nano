@@ -12,10 +12,11 @@ const corners = [
 ]
 
 export const viewrect_update = (realm: Realm) => () => {
+	const {canvas} = realm.venue
 	const {camera} = realm.cam
 	const {viewrect} = realm
 
-	const aspectRatio = realm.canvas.width / realm.canvas.height
+	const aspectRatio = canvas.width / canvas.height
 
 	const gridspaceCorners = corners
 		.map(v => viewportToGridspace(camera, aspectRatio, v))

@@ -14,6 +14,10 @@ import {Replicator} from "../buddy/replicator.js"
 import {GameComponents} from "../game/parts/components.js"
 
 export class Realm {
+	venue
+	entities
+	playerId
+
 	figures
 	replicator
 
@@ -28,12 +32,16 @@ export class Realm {
 
 	constructor(options: {
 			venue: Venue
-			entities: EntitiesReadonly<GameComponents>,
-			playerId: PlayerId,
+			entities: EntitiesReadonly<GameComponents>
+			playerId: PlayerId
 		}) {
 
 		const {canvas, scene, depot} = options.venue
 
+		this.venue = options.venue
+		this.entities = options.entities
+		this.playerId = options.playerId
+		
 		this.figures = new Figures()
 		this.replicator = new Replicator(artwork, depot, this.figures)
 
