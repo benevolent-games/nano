@@ -1,8 +1,6 @@
 
-import {html} from "lit"
 import {once} from "@e280/stz"
-import {effect} from "@e280/strata"
-import {dom, hashSignal} from "@e280/sly"
+import {dom} from "@e280/sly"
 import {Loader, setupBenev} from "@benev/web"
 
 import {Basis} from "./types.js"
@@ -10,6 +8,7 @@ import {consts} from "../consts.js"
 import {load} from "./parts/load.js"
 import {setupDeck} from "./parts/setup-deck.js"
 import {RenderZone} from "./parts/render-zone.js"
+import { setupNavigation } from "./parts/navigation.js"
 
 const benev = await setupBenev()
 dom.register(benev.elements)
@@ -21,52 +20,15 @@ const benevLoader = new Loader(dom("benev-loader"))
 const deckSetup = setupDeck()
 benevMenu.render(deckSetup.renderDesk())
 
-const $hash = hashSignal()
-const loading = () => "loading..."
-const getBasis = once(async() => (<Basis>{
-	deckSetup,
-	benevMenu,
-	benevHeader,
-	artGlb: await load(consts.assets.art),
-}))
-
-let count = 0
-
-effect(() => {
-	count++
-	const firstRun = (count === 1 && $hash() === "")
-	if (firstRun)
-		return
-
-	switch ($hash()) {
-		case "":
-			return benevLoader.load(loading, async() => {
-				benevMenu.reset()
-				benevHeader.render(null)
-				return Array.from(benevLoader.original.content.cloneNode(true).childNodes)
-			}).then(() => benevHeader.reset())
-
-		case "play":
-			return benevLoader.load(loading, async() => {
-				benevHeader.render(null)
-				const [basis, mod] = await Promise.all([
-					getBasis(),
-					import("./register-play.js"),
-				])
-				await mod.default(basis)
-				return html`<nano-play></nano-play>`
-			})
-
-		case "editor":
-			return benevLoader.load(loading, async() => {
-				benevHeader.render(null)
-				const [basis, mod] = await Promise.all([
-					getBasis(),
-					import("./register-editor.js"),
-				])
-				await mod.default(basis)
-				return html`<nano-editor></nano-editor>`
-			})
-	}
+setupNavigation({
+	menu: benevMenu,
+	header: benevHeader,
+	loader: benevLoader,
+	getBasis: once(async() => (<Basis>{
+		deckSetup,
+		benevMenu,
+		benevHeader,
+		artGlb: await load(consts.assets.art),
+	})),
 })
 
